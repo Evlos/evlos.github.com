@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Formulangel</title>
+  <meta name="author" content="Evlos / 莫法邪">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Formulangel"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Formulangel" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Formulangel</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-30T04:44:13.000Z"><a href="/2015/08/30/dockerfile-of-nodejs-and-ghost/">2015-08-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/30/dockerfile-of-nodejs-and-ghost/">升级 Windows 10 后 Git 因无权限无法 commit</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to <span class="operator"><span class="keyword">create</span> a <span class="keyword">new</span> <span class="keyword">commit</span>.</span><br><span class="line">GitHub.IO.ProcessException: <span class="keyword">error</span>: Unable <span class="keyword">to</span> append <span class="keyword">to</span> .git/<span class="keyword">logs</span>/refs/heads/<span class="keyword">master</span>: Permission denied</span><br><span class="line">fatal: cannot <span class="keyword">update</span> <span class="keyword">HEAD</span> <span class="keyword">ref</span></span></span><br></pre></td></tr></table></figure>
+<p>发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。</p>
+<p>然后勾选底部的 <code>使用可从此对象继承的权限项目替换所有子对象的权限项目</code>，再点确定，问题即修复，可以正常 commit 啦。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-29T20:29:32.000Z"><a href="/2015/08/30/git-cannot-commit-after-upgrading-to-win10/">2015-08-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/30/git-cannot-commit-after-upgrading-to-win10/">NodeJS 和 Ghost 的 Dockerfile</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>虽然在 Docker Hub 看到有标注 <em>OFFICIAL REPOSITORY</em> 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ ! <span class="operator">-e</span> <span class="string">"<span class="variable">$GHOST_CONTENT</span>/config.js"</span> ]; <span class="keyword">then</span></span><br><span class="line">truesed -r <span class="string">'</span><br><span class="line">truetrues/127\.0\.0\.1/0.0.0.0/g;</span><br><span class="line">truetrues!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g;</span><br><span class="line">true'</span> <span class="string">"<span class="variable">$GHOST_SOURCE</span>/config.example.js"</span> &gt; <span class="string">"<span class="variable">$GHOST_CONTENT</span>/config.js"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>这里会把所有 config.js 里的 <code>127.0.0.1</code> 替换为 <code>0.0.0.0</code> 以允许外网访问，却并没有提供数据库的自定义设置。我不想用 SQLite，所以希望能自定义一下 config.js，干脆自己动手。</p>
+<h2 id="NodeJS">NodeJS</h2><p>首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">FROM</span> ubuntu:latest</span><br><span class="line"></span><br><span class="line"><span class="built_in">MAINTAINER</span> Evlos &lt;<span class="number">4</span>tyle8@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="built_in">ADD</span> <span class="bash">sources.list /etc/apt/sources.list</span><br><span class="line"></span><span class="built_in">RUN</span> <span class="bash">apt-get update &amp;&amp; \</span><br><span class="line">trueapt-get -y upgrade &amp;&amp; \</span><br><span class="line">trueDEBIAN_FRONTEND=noninteractive apt-get -y install curl &amp;&amp; \</span><br><span class="line">truecurl --silent --location https://deb.nodesource.com/setup_0.<span class="number">12</span> | sudo bash - &amp;&amp; \</span><br><span class="line">trueDEBIAN_FRONTEND=noninteractive apt-get -y install nodejs</span></span><br></pre></td></tr></table></figure>
+<p>我这里写了 <code>ADD sources.list /etc/apt/sources.list</code>，这样如果是阿里云的环境，在执行 <code>docker build</code> 之前可以先用 <code>cp /etc/apt/sources.list ./</code> 把系统的 <code>sources.list</code> 放到当前目录，在执行 <code>docker build</code> 之后会被自动添加到容器中，以加速 <code>apt-get</code>。</p>
+<p>接下来按照 NodeJS 官方 Wiki 的教程安装，之前我还画蛇添足写上了 <code>apt-get -y install npm</code> 导致无法 build，因为从 NodeJS v0.10.0 开始 nodejs 直接包含了 npm，所以不需要单独安装。</p>
+<h2 id="Ghost">Ghost</h2><p>完成 NodeJS 的 Dockerfile 之后就开始写 Ghost 的 Dockerfile，其实 Dockerfile 除了其语法不一样一点，大部分都是 shell script，就不多解释了。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">FROM</span> evlos/nodejs</span><br><span class="line"></span><br><span class="line"><span class="built_in">MAINTAINER</span> Evlos &lt;<span class="number">4</span>tyle8@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="built_in">ADD</span> <span class="bash">sources.list /etc/apt/sources.list</span><br><span class="line"></span><span class="built_in">RUN</span> <span class="bash">apt-get update &amp;&amp; \</span><br><span class="line">trueapt-get -y upgrade &amp;&amp; \</span><br><span class="line">trueDEBIAN_FRONTEND=noninteractive apt-get -y install curl unzip &amp;&amp; \</span><br><span class="line">truemkdir -p /app &amp;&amp; \</span><br><span class="line">true<span class="built_in">cd</span> /app &amp;&amp; \</span><br><span class="line">truecurl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip &amp;&amp; \</span><br><span class="line">trueunzip -uo ghost.zip &amp;&amp; \</span><br><span class="line">truerm *.zip &amp;&amp; \</span><br><span class="line">truenpm install --production &amp;&amp; \</span><br><span class="line">truemv /app/content /app/content_ &amp;&amp; \</span><br><span class="line">truemkdir /app/content</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">ENV</span> NODE_ENV production</span><br><span class="line"><span class="built_in">ADD</span> <span class="bash">config.js /app/config.js</span><br><span class="line"></span><span class="built_in">ADD</span> <span class="bash">start.sh /app/start.sh</span><br><span class="line"></span><span class="built_in">VOLUME</span> <span class="bash">[<span class="string">"/app/content"</span>]</span><br><span class="line"></span><span class="built_in">WORKDIR</span> <span class="bash">/app</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">EXPOSE</span> <span class="number">2368</span></span><br><span class="line">CMD [<span class="string">"bash"</span>, <span class="string">"/app/start.sh"</span>]</span><br></pre></td></tr></table></figure>
+<p>我用 <code>mv /app/content /app/content_</code> 把 <code>content</code> 文件夹改成 <code>content_</code> 的原因是因为之后要把 <code>/app/content</code> 这个路径作为 VOLUME 连接容器外的指定路径，这样数据文件就可以存在容器外面了。而据我所知使用 docker 的 -v 参数会导致容器内指定文件夹被重建，导致里面的数据消失，所有一开始需要把里面的数据移走，然后我的 Ghost 启动脚本会把内容在启动的时候再移回来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="operator">-d</span> <span class="string">"/app/content_"</span> ]; <span class="keyword">then</span></span><br><span class="line">truecp -R /app/content_/* /app/content/</span><br><span class="line">truerm -rf /app/content_</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">NODE_ENV=<span class="variable">$&#123;NODE_ENV:-production&#125;</span> npm start</span><br></pre></td></tr></table></figure>
+<p>另外我把 Ghost 自带的 config.example.js 重命名为 config.js 放在 Dockerfile 目录里，再用 <code>ADD config.js /app/config.js</code> 让它在 build 的时候自动添加 config.js。因为一般配置文件的格式在接下来的升级里并不会有太大改变，如果有改变再更新这个文件。在 <code>docker build</code> 之前自定义一下 config.js 的内容，先设置好数据库再 build 即可。</p>
+<h2 id="Summary">Summary</h2><p>总的来说要执行以下命令完成 Ghost 的安装：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/Evlos/dockerfile.git</span></span><br><span class="line">cd dockerfile</span><br><span class="line"></span><br><span class="line">cd nodejs</span><br><span class="line">rm sources<span class="class">.list</span></span><br><span class="line">cp /etc/apt/sources<span class="class">.list</span> ./</span><br><span class="line">docker build -t evlos/nodejs .</span><br><span class="line"></span><br><span class="line">cd ../ghost</span><br><span class="line">vim config<span class="class">.js</span></span><br><span class="line">rm sources<span class="class">.list</span></span><br><span class="line">cp /etc/apt/sources<span class="class">.list</span> ./</span><br><span class="line">docker build -t evlos/ghost .</span><br><span class="line">docker run -d -v /root/storage/ghost:/app/<span class="attribute">content</span> -<span class="tag">p</span> <span class="number">8080</span>:<span class="number">2368</span> evlos/ghost</span><br></pre></td></tr></table></figure>
+<p>嘛，如果你只是用 SQLite 并且 VPS 在国外只需要一行就可以了，因为我已经把镜像发布到 Docker hub 上啦：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -v <span class="regexp">/root/</span>storage<span class="regexp">/ghost:/</span>app<span class="regexp">/content -p 8080:2368 evlos/g</span>host</span><br></pre></td></tr></table></figure>
+<p>这里把 <code>/root/storage/ghost</code> 改成你要设置的数据文件在当前系统的存储路径，<code>/root/storage/</code> 必须是已存在的文件夹，<code>8080</code> 改成你要开放的端口即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-29T02:39:20.000Z"><a href="/2015/08/29/hello-world/">2015-08-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/29/hello-world/">Hello World</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>:)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+<nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:blog.formulangel.com">
+  </form>
+</div>
+
+  
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Evlos / 莫法邪
+  
+</div>
+<div class="clearfix"></div></footer>
+  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
+<!--<script src="/js/jquery.imagesloaded.min.js"></script>-->
+<!--<script src="/js/gallery.js"></script>-->
+
+
+
+
+</body>
+</html>

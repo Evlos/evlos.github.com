@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>升级 Windows 10 后 Git 因无权限无法 commit | Formulangel</title>
+  <meta name="author" content="Evlos / 莫法邪">
+  
+  <meta name="description" content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
+1232015-08-30 20:37:35.1597|WARN|thread: 1|StandardUser">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="升级 Windows 10 后 Git 因无权限无法 commit"/>
+  <meta property="og:site_name" content="Formulangel"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Formulangel" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Formulangel</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-30T04:44:13.000Z"><a href="/2015/08/30/dockerfile-of-nodejs-and-ghost/">2015-08-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/30/dockerfile-of-nodejs-and-ghost/" rel="nofollow">升级 Windows 10 后 Git 因无权限无法 commit</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to <span class="operator"><span class="keyword">create</span> a <span class="keyword">new</span> <span class="keyword">commit</span>.</span><br><span class="line">GitHub.IO.ProcessException: <span class="keyword">error</span>: Unable <span class="keyword">to</span> append <span class="keyword">to</span> .git/<span class="keyword">logs</span>/refs/heads/<span class="keyword">master</span>: Permission denied</span><br><span class="line">fatal: cannot <span class="keyword">update</span> <span class="keyword">HEAD</span> <span class="keyword">ref</span></span></span><br></pre></td></tr></table></figure>
+<p>发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。</p>
+<p>然后勾选底部的 <code>使用可从此对象继承的权限项目替换所有子对象的权限项目</code>，再点确定，问题即修复，可以正常 commit 啦。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:blog.formulangel.com">
+  </form>
+</div>
+
+  
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Evlos / 莫法邪
+  
+</div>
+<div class="clearfix"></div></footer>
+  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
+<!--<script src="/js/jquery.imagesloaded.min.js"></script>-->
+<!--<script src="/js/gallery.js"></script>-->
+
+
+
+
+</body>
+</html>
