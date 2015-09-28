@@ -49,6 +49,40 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-09-28T12:01:44.000Z"><a href="/2015/09/28/raspbian-mirror-in-china/">2015-09-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/28/raspbian-mirror-in-china/">Raspbian 的国内源配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>很多国外的源在国内连接的速度十分感人，所以基本上安装好 RPI 后的第一件事情就是寻找 Raspbian 的国内镜像，然后发现阿里云镜像站就有提供。</p>
+<p>但是现在 Raspbian 除了系统的源之外还会用到基金会源，也就是 <code>archive.raspberrypi.org</code>，阿里云镜像站并没有提供这个源，幸好还有中科大的镜像站。</p>
+<p>所以只要把 <code>/etc/apt/sources.list</code> 的内容修改为如下即可：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deb <span class="string">http:</span><span class="comment">//mirrors.aliyun.com/raspbian/raspbian/ wheezy main contrib non-free rpi</span></span><br><span class="line">deb-src <span class="string">http:</span><span class="comment">//mirrors.aliyun.com/raspbian/raspbian/ wheezy main contrib non-free rpi</span></span><br><span class="line">deb <span class="string">http:</span><span class="comment">//mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ wheezy main</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-30T04:44:13.000Z"><a href="/2015/08/30/dockerfile-of-nodejs-and-ghost/">2015-08-30</a></time>
       
       
@@ -140,7 +174,14 @@
     </header>
     <div class="entry">
       
-        <p>:)</p>
+        <p>以下内容生成自 Lorem Ipsum，用以抒发我复杂的思想感情：</p>
+<blockquote>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nulla ante, iaculis et dignissim at, condimentum vitae augue. Donec quis ante vitae orci aliquet aliquam. Nunc ut arcu neque. Fusce non scelerisque augue, at maximus erat. Maecenas quis lorem sed mi ornare molestie. Pellentesque dictum purus cursus dui ornare, nec convallis elit iaculis. Morbi in consectetur orci. Quisque augue massa, convallis vitae ullamcorper non, laoreet at risus. Nulla in mollis lectus. Cras accumsan ac velit eu mollis. Nullam sit amet magna id odio fermentum tincidunt vitae vitae velit. Curabitur vitae mi a libero pellentesque sollicitudin in vel libero. Praesent congue tellus quis diam euismod laoreet.</p>
+<p>Vestibulum auctor rhoncus arcu. Fusce gravida ex ac sollicitudin fringilla. In consequat metus mi, id bibendum urna efficitur non. Aliquam blandit, turpis nec cursus lobortis, leo lectus ullamcorper metus, et volutpat justo risus vel nunc. Donec fermentum, metus sed ornare bibendum, nibh enim sollicitudin lacus, vel vulputate leo est vitae nisl. Maecenas suscipit, purus a sollicitudin lobortis, lorem felis sollicitudin dui, sed rutrum mauris leo iaculis orci. Nam vel est neque. Integer scelerisque quis nulla in aliquet. Integer id urna non nulla venenatis bibendum a non mi. Suspendisse vitae ullamcorper massa, vel rhoncus lorem. Donec non felis consequat, rhoncus purus in, elementum mi. Ut ultricies interdum consectetur.</p>
+<p>Nam a tellus odio. Vestibulum tempor ultrices sapien quis lacinia. Praesent luctus dolor dolor, vel accumsan augue condimentum convallis. Nunc vel enim mattis, suscipit erat eu, vulputate tortor. Curabitur sollicitudin turpis eu ullamcorper vestibulum. Nullam ac dui massa. Cras lobortis metus mi, eget aliquam arcu laoreet a. Vivamus nec porta arcu, et tempus diam. Vestibulum felis neque, molestie at arcu sit amet, bibendum lacinia massa. Nunc imperdiet turpis nunc, at iaculis nulla tempus in. Integer vulputate ipsum dolor, quis malesuada sapien ornare ut. Suspendisse eleifend scelerisque tortor at cursus. Nullam sed imperdiet nisi, ac sodales elit. Praesent condimentum convallis mollis.</p>
+<p>Ut lobortis luctus blandit. Phasellus sollicitudin est ligula, et gravida ante molestie nec. Nulla porta, eros non ultrices dictum, arcu ex suscipit ex, vitae accumsan arcu ante a sapien. In ultricies urna nec urna porta interdum. Donec vel condimentum nunc. Sed imperdiet sem finibus finibus rhoncus. Proin mattis, ligula sit amet molestie fermentum, purus ex sagittis orci, ac laoreet mauris leo ac odio. Aenean bibendum diam vitae dui interdum, et laoreet velit finibus.</p>
+<p>Nunc eget ligula ipsum. Integer a bibendum ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque ut odio a ante blandit convallis. Aliquam pretium sed tortor id posuere. Integer a lacus eget elit porttitor luctus mattis et neque. Proin rutrum quam et sollicitudin laoreet. Nulla facilisi. Aenean molestie, lectus eu placerat tempor, turpis odio porta nisi, eget sagittis metus nisi a lorem. Suspendisse lobortis porttitor dignissim. Quisque semper, eros eget rhoncus porta, purus eros imperdiet velit, ut scelerisque lacus sem eu risus. Quisque at est sodales risus interdum semper eget id diam. Aenean nunc urna, tincidunt vitae rutrum quis, varius ac arcu.</p>
+</blockquote>
 
       
     </div>
