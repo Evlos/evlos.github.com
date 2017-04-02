@@ -417,7 +417,8 @@ table {
     vertical-align: text-top; }
 
 header {
-  min-height: 60px; }
+  min-height: 60px;
+  border-bottom: 1px solid #ccc; }
   header .logo-link {
     padding: 4px 7px;
     font-weight: bold;
@@ -768,7 +769,7 @@ section.container {
     padding: 0 24px;
     box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.2); }
   header {
-    padding: 20px 10px 0; } }
+    padding: 20px 0; } }
 
 @media screen and (max-width: 700px) {
   .wrap {
@@ -785,7 +786,7 @@ section.container {
     header .logo-link {
       margin-right: 0;
       margin-top: -20px;
-      padding: 7px 7px 4px; }
+      padding: 14px 7px 10px; }
   footer {
     text-align: center; }
     footer .copyright {
