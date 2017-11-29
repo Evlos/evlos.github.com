@@ -1,19 +1,309 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> NodeJS 和 Ghost 的 Dockerfile · Formulangel</title><meta name="description" content="NodeJS 和 Ghost 的 Dockerfile - Evlos / 莫法邪"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.formulangel.com/atom.xml" title="Formulangel"></head><body><div class="wrap"><header><a href="/" class="logo-link">Formulangel.com</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">NodeJS 和 Ghost 的 Dockerfile</h1><div class="post-info">Aug 30, 2015</div><div class="post-content"><p>虽然在 Docker Hub 看到有标注 <em>OFFICIAL REPOSITORY</em> 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [ ! <span class="_">-e</span> <span class="string">"<span class="variable">$GHOST_CONTENT</span>/config.js"</span> ]; <span class="keyword">then</span></div><div class="line">truesed -r <span class="string">'</span></div><div class="line">truetrues/127\.0\.0\.1/0.0.0.0/g;</div><div class="line">truetrues!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g;</div><div class="line">true' <span class="string">"<span class="variable">$GHOST_SOURCE</span>/config.example.js"</span> &gt; <span class="string">"<span class="variable">$GHOST_CONTENT</span>/config.js"</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<meta name="description" content="虽然在 Docker Hub 看到有标注 OFFICIAL REPOSITORY 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：
+ if [ ! -e &quot;$GHOST_CONTENT/config.js&quot; ]; then sed -r &#39; s/127\.0\.0\.1/0.0.0.0/g; s!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g; &#39; &quot;$GHOST_SOURCE/config.example.js&quot; &gt; &quot;$GHOST_CONTENT/config.js&quot; fi  这里会把所有 config.js 里的 127.0.0.1 替换为 0.0.0.0 以允许外网访问，却并没有提供数据库的自定义设置。我不想用 SQLite，所以希望能自定义一下 config.js，干脆自己动手。
+NodeJS 首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：
+FROM ubuntu:latest MAINTAINER Evlos &lt;4tyle8@gmail.com&gt; ADD sources.list /etc/apt/sources.list RUN apt-get update &amp;&amp; \ apt-get -y upgrade &amp;&amp; \ DEBIAN_FRONTEND=noninteractive apt-get -y install curl &amp;&amp; \ curl --silent --location https://deb.">
+
+<meta property="og:title" content="NodeJS 和 Ghost 的 Dockerfile" />
+<meta property="og:description" content="虽然在 Docker Hub 看到有标注 OFFICIAL REPOSITORY 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：
+ if [ ! -e &quot;$GHOST_CONTENT/config.js&quot; ]; then sed -r &#39; s/127\.0\.0\.1/0.0.0.0/g; s!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g; &#39; &quot;$GHOST_SOURCE/config.example.js&quot; &gt; &quot;$GHOST_CONTENT/config.js&quot; fi  这里会把所有 config.js 里的 127.0.0.1 替换为 0.0.0.0 以允许外网访问，却并没有提供数据库的自定义设置。我不想用 SQLite，所以希望能自定义一下 config.js，干脆自己动手。
+NodeJS 首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：
+FROM ubuntu:latest MAINTAINER Evlos &lt;4tyle8@gmail.com&gt; ADD sources.list /etc/apt/sources.list RUN apt-get update &amp;&amp; \ apt-get -y upgrade &amp;&amp; \ DEBIAN_FRONTEND=noninteractive apt-get -y install curl &amp;&amp; \ curl --silent --location https://deb." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://formulangel.com/2015/08/30/git-cannot-commit-after-upgrading-to-win10/" />
+
+
+
+<meta property="article:published_time" content="2015-08-30T04:29:32&#43;08:00"/>
+
+<meta property="article:modified_time" content="2015-08-30T04:29:32&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     NodeJS 和 Ghost 的 Dockerfile 
+
+</title>
+<link rel="canonical" href="https://formulangel.com/2015/08/30/git-cannot-commit-after-upgrading-to-win10/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+            
+            <a href="/"><div class="name"></div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-index"><a href="https://formulangel.com/"><span>[Evlos&#39; blog]</span></a></li>
+                    
+                        <li class="nav-blog"><a href="https://formulangel.com/blog/"><span>Posts</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+
+        
+            <a href="https://formulangel.com/index.xml"><img class="icon" src="/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    NodeJS 和 Ghost 的 Dockerfile
+
+</div>
+
+                    <div class="initials"><a href="https://formulangel.com/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Sun Aug 30 2015 04:29:32 CST'>Aug 30, 2015</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>虽然在 Docker Hub 看到有标注 <em>OFFICIAL REPOSITORY</em> 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：</p>
+
+<pre><code>  if [ ! -e &quot;$GHOST_CONTENT/config.js&quot; ]; then
+    sed -r '
+      s/127\.0\.0\.1/0.0.0.0/g;
+      s!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g;
+    ' &quot;$GHOST_SOURCE/config.example.js&quot; &gt; &quot;$GHOST_CONTENT/config.js&quot;
+  fi
+</code></pre>
+
 <p>这里会把所有 config.js 里的 <code>127.0.0.1</code> 替换为 <code>0.0.0.0</code> 以允许外网访问，却并没有提供数据库的自定义设置。我不想用 SQLite，所以希望能自定义一下 config.js，干脆自己动手。</p>
-<h2 id="NodeJS"><a href="#NodeJS" class="headerlink" title="NodeJS"></a>NodeJS</h2><p>首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">FROM ubuntu:latest</div><div class="line"></div><div class="line">MAINTAINER Evlos &lt;<span class="number">4</span>tyle8@gmail.<span class="keyword">com</span>&gt;</div><div class="line"></div><div class="line">ADD sources.<span class="keyword">list</span> /etc/apt/sources.<span class="keyword">list</span></div><div class="line">RUN apt-<span class="built_in">get</span> <span class="keyword">update</span> &amp;&amp; \</div><div class="line">trueapt-<span class="built_in">get</span> -<span class="keyword">y</span> upgrade &amp;&amp; \</div><div class="line">trueDEBIAN_FRONTEND=noninteractive apt-<span class="built_in">get</span> -<span class="keyword">y</span> install curl &amp;&amp; \</div><div class="line">truecurl --<span class="keyword">silent</span> --location http<span class="variable">s:</span>//<span class="keyword">deb</span>.nodesource.<span class="keyword">com</span>/setup_0.<span class="number">12</span> | sudo bash - &amp;&amp; \</div><div class="line">trueDEBIAN_FRONTEND=noninteractive apt-<span class="built_in">get</span> -<span class="keyword">y</span> install nodejs</div></pre></td></tr></table></figure>
+
+<h2 id="nodejs">NodeJS</h2>
+
+<p>首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：</p>
+
+<pre><code>FROM ubuntu:latest
+
+MAINTAINER Evlos &lt;4tyle8@gmail.com&gt;
+
+ADD sources.list /etc/apt/sources.list
+RUN apt-get update &amp;&amp; \
+  apt-get -y upgrade &amp;&amp; \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install curl &amp;&amp; \
+  curl --silent --location https://deb.nodesource.com/setup_0.12 | sudo bash - &amp;&amp; \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs
+</code></pre>
+
 <p>我这里写了 <code>ADD sources.list /etc/apt/sources.list</code>，这样如果是阿里云的环境，在执行 <code>docker build</code> 之前可以先用 <code>cp /etc/apt/sources.list ./</code> 把系统的 <code>sources.list</code> 放到当前目录，在执行 <code>docker build</code> 之后会被自动添加到容器中，以加速 <code>apt-get</code>。</p>
+
 <p>接下来按照 NodeJS 官方 Wiki 的教程安装，之前我还画蛇添足写上了 <code>apt-get -y install npm</code> 导致无法 build，因为从 NodeJS v0.10.0 开始 nodejs 直接包含了 npm，所以不需要单独安装。</p>
-<h2 id="Ghost"><a href="#Ghost" class="headerlink" title="Ghost"></a>Ghost</h2><p>完成 NodeJS 的 Dockerfile 之后就开始写 Ghost 的 Dockerfile，其实 Dockerfile 除了其语法不一样一点，大部分都是 shell script，就不多解释了。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">FROM</span> evlos/nodejs</div><div class="line"></div><div class="line"><span class="keyword">MAINTAINER</span> Evlos &lt;<span class="number">4</span>tyle8@gmail.com&gt;</div><div class="line"></div><div class="line"><span class="keyword">ADD</span><span class="bash"> sources.list /etc/apt/sources.list</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; \</span></div><div class="line">trueapt-get -y upgrade &amp;&amp; \</div><div class="line">trueDEBIAN_FRONTEND=noninteractive apt-get -y install curl unzip &amp;&amp; \</div><div class="line">truemkdir -p /app &amp;&amp; \</div><div class="line">true<span class="built_in">cd</span> /app &amp;&amp; \</div><div class="line">truecurl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip &amp;&amp; \</div><div class="line">trueunzip -uo ghost.zip &amp;&amp; \</div><div class="line">truerm *.zip &amp;&amp; \</div><div class="line">truenpm install --production &amp;&amp; \</div><div class="line">truemv /app/content /app/content_ &amp;&amp; \</div><div class="line">truemkdir /app/content</div><div class="line"></div><div class="line"><span class="keyword">ENV</span> NODE_ENV production</div><div class="line"><span class="keyword">ADD</span><span class="bash"> config.js /app/config.js</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> start.sh /app/start.sh</span></div><div class="line"><span class="keyword">VOLUME</span><span class="bash"> [<span class="string">"/app/content"</span>]</span></div><div class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></div><div class="line"></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">2368</span></div><div class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"bash"</span>, <span class="string">"/app/start.sh"</span>]</span></div></pre></td></tr></table></figure>
+
+<h2 id="ghost">Ghost</h2>
+
+<p>完成 NodeJS 的 Dockerfile 之后就开始写 Ghost 的 Dockerfile，其实 Dockerfile 除了其语法不一样一点，大部分都是 shell script，就不多解释了。</p>
+
+<pre><code>FROM evlos/nodejs
+
+MAINTAINER Evlos &lt;4tyle8@gmail.com&gt;
+
+ADD sources.list /etc/apt/sources.list
+RUN apt-get update &amp;&amp; \
+  apt-get -y upgrade &amp;&amp; \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install curl unzip &amp;&amp; \
+  mkdir -p /app &amp;&amp; \
+  cd /app &amp;&amp; \
+  curl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip &amp;&amp; \
+  unzip -uo ghost.zip &amp;&amp; \
+  rm *.zip &amp;&amp; \
+  npm install --production &amp;&amp; \
+  mv /app/content /app/content_ &amp;&amp; \
+  mkdir /app/content
+
+ENV NODE_ENV production
+ADD config.js /app/config.js
+ADD start.sh /app/start.sh
+VOLUME [&quot;/app/content&quot;]
+WORKDIR /app
+
+EXPOSE 2368
+CMD [&quot;bash&quot;, &quot;/app/start.sh&quot;]
+</code></pre>
+
 <p>我用 <code>mv /app/content /app/content_</code> 把 <code>content</code> 文件夹改成 <code>content_</code> 的原因是因为之后要把 <code>/app/content</code> 这个路径作为 VOLUME 连接容器外的指定路径，这样数据文件就可以存在容器外面了。而据我所知使用 docker 的 -v 参数会导致容器内指定文件夹被重建，导致里面的数据消失，所有一开始需要把里面的数据移走，然后我的 Ghost 启动脚本会把内容在启动的时候再移回来：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [ -d <span class="string">"/app/content_"</span> ]; then</div><div class="line">truecp -R <span class="regexp">/app/</span>content_<span class="regexp">/* /</span>app<span class="regexp">/content/</span></div><div class="line">truerm -rf <span class="regexp">/app/</span>content_</div><div class="line">fi</div><div class="line"></div><div class="line">NODE_ENV=<span class="variable">$&#123;NODE_ENV:-production&#125;</span> npm start</div></pre></td></tr></table></figure>
+
+<pre><code>if [ -d &quot;/app/content_&quot; ]; then
+  cp -R /app/content_/* /app/content/
+  rm -rf /app/content_
+fi
+
+NODE_ENV=${NODE_ENV:-production} npm start
+</code></pre>
+
 <p>另外我把 Ghost 自带的 config.example.js 重命名为 config.js 放在 Dockerfile 目录里，再用 <code>ADD config.js /app/config.js</code> 让它在 build 的时候自动添加 config.js。因为一般配置文件的格式在接下来的升级里并不会有太大改变，如果有改变再更新这个文件。在 <code>docker build</code> 之前自定义一下 config.js 的内容，先设置好数据库再 build 即可。</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>总的来说要执行以下命令完成 Ghost 的安装：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/Evlos/dockerfile.git</div><div class="line"><span class="keyword">cd</span> dockerfile</div><div class="line"></div><div class="line"><span class="keyword">cd</span> nodejs</div><div class="line">rm sources.<span class="keyword">list</span></div><div class="line"><span class="keyword">cp</span> /etc/apt/sources.<span class="keyword">list</span> ./</div><div class="line">docker build -t evlos/nodejs .</div><div class="line"></div><div class="line"><span class="keyword">cd</span> ../ghost</div><div class="line"><span class="keyword">vim</span> config.js</div><div class="line">rm sources.<span class="keyword">list</span></div><div class="line"><span class="keyword">cp</span> /etc/apt/sources.<span class="keyword">list</span> ./</div><div class="line">docker build -t evlos/ghost .</div><div class="line">docker run -d -v /root/storage/ghos<span class="variable">t:</span>/app/content -<span class="keyword">p</span> <span class="number">8080</span>:<span class="number">2368</span> evlos/ghost</div></pre></td></tr></table></figure>
+
+<h2 id="summary">Summary</h2>
+
+<p>总的来说要执行以下命令完成 Ghost 的安装：</p>
+
+<pre><code>git clone https://github.com/Evlos/dockerfile.git
+cd dockerfile
+
+cd nodejs
+rm sources.list
+cp /etc/apt/sources.list ./
+docker build -t evlos/nodejs .
+
+cd ../ghost
+vim config.js
+rm sources.list
+cp /etc/apt/sources.list ./
+docker build -t evlos/ghost .
+docker run -d -v /root/storage/ghost:/app/content -p 8080:2368 evlos/ghost
+</code></pre>
+
 <p>嘛，如果你只是用 SQLite 并且 VPS 在国外只需要一行就可以了，因为我已经把镜像发布到 Docker hub 上啦：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -d -v <span class="regexp">/root/</span>storage<span class="regexp">/ghost:/</span>app<span class="regexp">/content -p 8080:2368 evlos/g</span>host</div></pre></td></tr></table></figure>
+
+<pre><code>docker run -d -v /root/storage/ghost:/app/content -p 8080:2368 evlos/ghost
+</code></pre>
+
 <p>这里把 <code>/root/storage/ghost</code> 改成你要设置的数据文件在当前系统的存储路径，<code>/root/storage/</code> 必须是已存在的文件夹，<code>8080</code> 改成你要开放的端口即可。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2015/08/30/dockerfile-of-nodejs-and-ghost/" class="prev">PREV</a><a href="/2015/08/29/hello-world/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://blog.formulangel.com">Evlos / 莫法邪</a>, powered by <a rel="nofollow" href="https://hexo.io/" target="_blank">Hexo</a> and <a rel="nofollow" href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
+
+                <br>
+		<p class="back-to-posts"><a href="/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,11 +1,246 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 如何在 angular2-webpack-starter 中使用 font-awesome · Formulangel</title><meta name="description" content="如何在 angular2-webpack-starter 中使用 font-awesome - Evlos / 莫法邪"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.formulangel.com/atom.xml" title="Formulangel"></head><body><div class="wrap"><header><a href="/" class="logo-link">Formulangel.com</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">如何在 angular2-webpack-starter 中使用 font-awesome</h1><div class="post-info">Jun 23, 2016</div><div class="post-content"><p>如果你跟我一样是用 <a href="https://github.com/AngularClass/angular2-webpack-starter" target="_blank" rel="external">angular2-webpack-starter</a> 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<meta name="description" content="如果你跟我一样是用 angular2-webpack-starter 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。
+因为此脚手架的设定是用 raw-loader 来载入 CSS：
+/* * Raw loader support for *.css files * Returns file content as string * * See: https://github.com/webpack/raw-loader */ { test: /\.css$/, loader: &#39;raw-loader&#39; },  而 font-awesome 因为资源文件需要导入的原因就要用到 css-loader 和 style-loader，用 raw-loader 就载入不了图标了。
+解决方案 首先安装 css-loader 和 style-loader:
+cnpm install -D css-loader style-loader  因为 raw-loader 的匹配正则被设置为 \.css$, 所以我们可以把 ? 问号加在行尾来 bypass 此正则，即使用以下代码来载入 font-awesome：
+require(&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;);  然后图标就可以正常显示了：">
+
+<meta property="og:title" content="如何在 angular2-webpack-starter 中使用 font-awesome" />
+<meta property="og:description" content="如果你跟我一样是用 angular2-webpack-starter 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。
+因为此脚手架的设定是用 raw-loader 来载入 CSS：
+/* * Raw loader support for *.css files * Returns file content as string * * See: https://github.com/webpack/raw-loader */ { test: /\.css$/, loader: &#39;raw-loader&#39; },  而 font-awesome 因为资源文件需要导入的原因就要用到 css-loader 和 style-loader，用 raw-loader 就载入不了图标了。
+解决方案 首先安装 css-loader 和 style-loader:
+cnpm install -D css-loader style-loader  因为 raw-loader 的匹配正则被设置为 \.css$, 所以我们可以把 ? 问号加在行尾来 bypass 此正则，即使用以下代码来载入 font-awesome：
+require(&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;);  然后图标就可以正常显示了：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://formulangel.com/2016/06/23/integrate-font-awesome-with-angular2-webpack-starter/" />
+
+
+
+<meta property="article:published_time" content="2016-06-23T15:23:13&#43;08:00"/>
+
+<meta property="article:modified_time" content="2016-06-23T15:23:13&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     如何在 angular2-webpack-starter 中使用 font-awesome 
+
+</title>
+<link rel="canonical" href="https://formulangel.com/2016/06/23/integrate-font-awesome-with-angular2-webpack-starter/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+            
+            <a href="/"><div class="name"></div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-index"><a href="https://formulangel.com/"><span>[Evlos&#39; blog]</span></a></li>
+                    
+                        <li class="nav-blog"><a href="https://formulangel.com/blog/"><span>Posts</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+
+        
+            <a href="https://formulangel.com/index.xml"><img class="icon" src="/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    如何在 angular2-webpack-starter 中使用 font-awesome
+
+</div>
+
+                    <div class="initials"><a href="https://formulangel.com/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Jun 23 2016 15:23:13 CST'>Jun 23, 2016</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>如果你跟我一样是用 <a href="https://github.com/AngularClass/angular2-webpack-starter">angular2-webpack-starter</a> 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。</p>
+
 <p>因为此脚手架的设定是用 <code>raw-loader</code> 来载入 CSS：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * Raw loader support <span class="keyword">for</span> *.css <span class="keyword">files</span></div><div class="line"> * Returns <span class="keyword">file</span> content <span class="keyword">as</span> <span class="built_in">string</span></div><div class="line"> *</div><div class="line"> * See: http<span class="variable">s:</span>//github.<span class="keyword">com</span>/webpack/raw-loader</div><div class="line"> */</div><div class="line">&#123;</div><div class="line">  tes<span class="variable">t:</span> /\.css$/,</div><div class="line">  loader: <span class="string">'raw-loader'</span></div><div class="line">&#125;,</div></pre></td></tr></table></figure>
-<p>而 font-awesome 因为资源文件需要导入的原因就要用到 <code>css-loader</code> 和 <code>style-loader</code>，用 <code>raw-loader</code> 就载入不了图标了。<br><a id="more"></a></p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>首先安装 <code>css-loader</code> 和 <code>style-loader</code>:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnpm <span class="keyword">install</span> -D css-loader <span class="keyword">style</span>-loader</div></pre></td></tr></table></figure>
+
+<pre><code>/*
+ * Raw loader support for *.css files
+ * Returns file content as string
+ *
+ * See: https://github.com/webpack/raw-loader
+ */
+{
+  test: /\.css$/,
+  loader: 'raw-loader'
+},
+</code></pre>
+
+<p>而 font-awesome 因为资源文件需要导入的原因就要用到 <code>css-loader</code> 和 <code>style-loader</code>，用 <code>raw-loader</code> 就载入不了图标了。</p>
+
+<h3 id="解决方案">解决方案</h3>
+
+<p>首先安装 <code>css-loader</code> 和 <code>style-loader</code>:</p>
+
+<pre><code>cnpm install -D css-loader style-loader
+</code></pre>
+
 <p>因为 <code>raw-loader</code> 的匹配正则被设置为 <code>\.css$</code>, 所以我们可以把 <code>?</code> 问号加在行尾来 bypass 此正则，即使用以下代码来载入 <code>font-awesome</code>：</p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require('<span class="built_in">style</span>-loader!css-loader!<span class="built_in">font</span>-awesome/css/<span class="built_in">font</span>-awesome.css?');</div></pre></td></tr></table></figure>
+
+<pre><code>require('style-loader!css-loader!font-awesome/css/font-awesome.css?');
+</code></pre>
+
 <p>然后图标就可以正常显示了：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">"fa fa-floppy-o"</span> aria-hidden=<span class="string">"true"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></div></pre></td></tr></table></figure>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/10/26/integrate-sass-with-dva/" class="prev">PREV</a><a href="/2015/09/28/raspbian-mirror-in-china/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://blog.formulangel.com">Evlos / 莫法邪</a>, powered by <a rel="nofollow" href="https://hexo.io/" target="_blank">Hexo</a> and <a rel="nofollow" href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
+
+<pre><code>&lt;i class=&quot;fa fa-floppy-o&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+</code></pre>
+
+                <br>
+		<p class="back-to-posts"><a href="/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

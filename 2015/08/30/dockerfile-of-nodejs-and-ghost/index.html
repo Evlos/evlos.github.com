@@ -1,6 +1,214 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 升级 Windows 10 后 Git 因无权限无法 commit · Formulangel</title><meta name="description" content="升级 Windows 10 后 Git 因无权限无法 commit - Evlos / 莫法邪"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.formulangel.com/atom.xml" title="Formulangel"></head><body><div class="wrap"><header><a href="/" class="logo-link">Formulangel.com</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">升级 Windows 10 后 Git 因无权限无法 commit</h1><div class="post-info">Aug 30, 2015</div><div class="post-content"><p>我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to <span class="keyword">create</span> a <span class="keyword">new</span> commit.</div><div class="line">GitHub.IO.ProcessException: <span class="keyword">error</span>: Unable <span class="keyword">to</span> append <span class="keyword">to</span> .git/<span class="keyword">logs</span>/refs/heads/<span class="keyword">master</span>: Permission denied</div><div class="line">fatal: cannot <span class="keyword">update</span> <span class="keyword">HEAD</span> <span class="keyword">ref</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<meta name="description" content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
+2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit. GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied fatal: cannot update HEAD ref  发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。
+然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。">
+
+<meta property="og:title" content="升级 Windows 10 后 Git 因无权限无法 commit" />
+<meta property="og:description" content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
+2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit. GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied fatal: cannot update HEAD ref  发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。
+然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://formulangel.com/2015/08/30/dockerfile-of-nodejs-and-ghost/" />
+
+
+
+<meta property="article:published_time" content="2015-08-30T12:44:13&#43;08:00"/>
+
+<meta property="article:modified_time" content="2015-08-30T12:44:13&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     升级 Windows 10 后 Git 因无权限无法 commit 
+
+</title>
+<link rel="canonical" href="https://formulangel.com/2015/08/30/dockerfile-of-nodejs-and-ghost/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+            
+            <a href="/"><div class="name"></div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-index"><a href="https://formulangel.com/"><span>[Evlos&#39; blog]</span></a></li>
+                    
+                        <li class="nav-blog"><a href="https://formulangel.com/blog/"><span>Posts</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+
+        
+            <a href="https://formulangel.com/index.xml"><img class="icon" src="/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    升级 Windows 10 后 Git 因无权限无法 commit
+
+</div>
+
+                    <div class="initials"><a href="https://formulangel.com/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Sun Aug 30 2015 12:44:13 CST'>Aug 30, 2015</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：</p>
+
+<pre><code>2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit.
+GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied
+fatal: cannot update HEAD ref
+</code></pre>
+
 <p>发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。</p>
+
 <p>然后勾选底部的 <code>使用可从此对象继承的权限项目替换所有子对象的权限项目</code>，再点确定，问题即修复，可以正常 commit 啦。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2015/09/28/raspbian-mirror-in-china/" class="prev">PREV</a><a href="/2015/08/30/git-cannot-commit-after-upgrading-to-win10/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://blog.formulangel.com">Evlos / 莫法邪</a>, powered by <a rel="nofollow" href="https://hexo.io/" target="_blank">Hexo</a> and <a rel="nofollow" href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
+
+                <br>
+		<p class="back-to-posts"><a href="/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+
