@@ -5,7 +5,10 @@
   <meta charset="utf-8" />
 
   
-  <title>Evlos&#39; blog</title>
+  <title>
+  Posts
+   | Evlos&#39; blog
+</title>
 
   
   
@@ -19,11 +22,13 @@
   <meta name="description" content="" />
 
   
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@gohugoio" />
-  <meta name="twitter:title" content="Evlos&#39; blog" />
-  <meta name="twitter:description" content="" />
-  <meta name="twitter:image" content="https://formulangel.com/img/avatar.jpg" />
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="Posts" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="https://formulangel.com/img/avatar.jpg" />
+  
 
 
 
@@ -31,7 +36,7 @@
 <meta name="generator" content="Hugo 0.31.1" />
 
 
-<link rel="canonical" href="https://formulangel.com/" />
+<link rel="canonical" href="https://formulangel.com/post/" />
 <link rel="alternative" href="https://formulangel.com/index.xml" title="Evlos&#39; blog" type="application/atom+xml" />
 
 
@@ -66,6 +71,8 @@
 
 
 
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
 <link rel="stylesheet" href="https://formulangel.com/css/bundle.css" />
 
 
@@ -99,7 +106,7 @@
   <header class="site-header">
   <img class="avatar" src="https://formulangel.com/img/avatar.jpg" alt="Avatar">
   
-  <h1 class="title">Evlos&#39; blog</h1>
+  <h2 class="title">Evlos&#39; blog</h2>
   
   <p class="subtitle"></p>
   <button class="menu-toggle" type="button">
@@ -114,9 +121,9 @@
       
         <li class="menu-item
             
+            
+            
               is-active
-            
-            
             ">
             <a href="https://formulangel.com/">Home</a>
           </li>
@@ -179,7 +186,7 @@
 
   <section class="main post-list">
     <header class="list-header offscreen">
-      <h2 class="list-label">All Posts</h2>
+      <h2 class="list-label">Posts List</h2>
     </header>
     
     
@@ -303,6 +310,30 @@ FROM ubuntu:latest MAINTAINER Evlos &lt;4tyle8@gmail.com&gt; ADD sources.list /e
 </footer>
 
 
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\[','\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
 
 <script src="https://formulangel.com/js/bundle.js"></script>
 
