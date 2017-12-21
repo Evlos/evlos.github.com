@@ -1,50 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
 
-  <meta charset="utf-8" />
+<meta name="description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &lt;&lt; self def validate! end end end def User.">
 
-  
-  <title>Ruby 学习笔记</title>
-
-  
-  
-
-
-
-
-
-  
-  <meta name="author" content="" />
-  <meta name="description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &amp;lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &amp;lt;&amp;lt; self def validate! end end end def User." />
-
-  
-  
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@gohugoio" />
-    <meta name="twitter:title" content="Ruby 学习笔记" />
-    <meta name="twitter:description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &amp;lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &amp;lt;&amp;lt; self def validate! end end end def User." />
-    <meta name="twitter:image" content="https://formulangel.com/img/avatar.jpg" />
-  
+<meta property="og:title" content="Ruby 学习笔记" />
+<meta property="og:description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &lt;&lt; self def validate! end end end def User." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://formulangel.com/2017/02/08/tips-in-ruby/" />
 
 
 
+<meta property="article:published_time" content="2017-02-08T19:01:22&#43;08:00"/>
 
-<meta name="generator" content="Hugo 0.31.1" />
-
-
-<link rel="canonical" href="https://formulangel.com/2017/02/08/tips-in-ruby/" />
-<link rel="alternative" href="https://formulangel.com/index.xml" title="Evlos&#39; blog" type="application/atom+xml" />
-
-
-<meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="format-detection" content="telephone=no,email=no,adress=no" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-
-
-<meta name="robots" content="index,follow" />
-<meta name="referrer" content="origin-when-cross-origin" />
+<meta property="article:modified_time" content="2017-02-08T19:01:22&#43;08:00"/>
 
 
 
@@ -52,143 +28,142 @@
 
 
 
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Evlos&#39; blog" />
-<meta name="msapplication-tooltip" content="Evlos&#39; blog" />
-<meta name='msapplication-navbutton-color' content="#5fbf5e" />
-<meta name="msapplication-TileColor" content="#5fbf5e" />
-<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
-<link rel="icon" href="https://formulangel.com/img/favicon.ico" />
-<link rel="icon" type="image/png" sizes="16x16" href="https://formulangel.com/img/favicon-16x16.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="https://formulangel.com/img/favicon-32x32.png" />
-<link rel="icon" sizes="192x192" href="https://formulangel.com/img/touch-icon-android.png" />
-<link rel="apple-touch-icon" href="https://formulangel.com/img/touch-icon-apple.png" />
-<link rel="mask-icon" href="https://formulangel.com/img/safari-pinned-tab.svg" color="#5fbf5e" />
 
 
 
-<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
-
-<link rel="stylesheet" href="https://formulangel.com/css/bundle.css" />
 
 
-  
-  <!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
-  <![endif]-->
-
-<!--[if lte IE 11]>
-    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
-  <![endif]-->
+<title>
 
 
-<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+     Ruby 学习笔记 
+
+</title>
+<link rel="canonical" href="https://formulangel.com/2017/02/08/tips-in-ruby/">
 
 
-<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="https://formulangel.com/css/reset.css">
+    <link rel="stylesheet" href="https://formulangel.com/css/pygments.css">
+    <link rel="stylesheet" href="https://formulangel.com/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://formulangel.com/img/favicon.ico"
+
+>
+
+
+
+
+
+
 
 
 </head>
-  <body>
-    
-    <div class="suspension">
-      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
-      
-        
-      
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="https://formulangel.com/"><img class="avatar" src="//img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+            
+            <a href="https://formulangel.com/"><div class="name"></div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-home"><a href="https://formulangel.com/"><span>Home</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
     </div>
-    
-    
-  <header class="site-header">
-  <img class="avatar" src="https://formulangel.com/img/avatar.jpg" alt="Avatar">
-  
-  <h2 class="title">Evlos&#39; blog</h2>
-  
-  <p class="subtitle"></p>
-  <button class="menu-toggle" type="button">
-    <span class="icon icon-menu"></span>
-  </button>
-  <nav class="site-menu collapsed">
-    <h2 class="offscreen">Main Menu</h2>
-    <ul class="menu-list">
-      
-      
-      
-      
-        <li class="menu-item
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
             
-            
-            
-              is-active
-            ">
-            <a href="https://formulangel.com/">Home</a>
-          </li>
-      
-    </ul>
-  </nav>
-  <nav class="social-menu collapsed">
-    <h2 class="offscreen">Social Networks</h2>
-    <ul class="social-list">
+        
 
-      
+        
 
-      
+        
 
-      
+        
+            <a href="https://formulangel.com/index.xml"><img class="icon" src="https://formulangel.com/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
 
-      
 
-      
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-      
+    Ruby 学习笔记
 
-      
+</div>
 
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <li class="social-item">
-        <a href="https://formulangel.com/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
-      </li>
-
-    </ul>
-  </nav>
-</header>
-
-  <section class="main post-detail">
-    <header class="post-header">
-      <h1 class="post-title">Ruby 学习笔记</h1>
-      <p class="post-meta">@ · Feb 8, 2017 · 1 min read</p>
-    </header>
-    <article class="post-content">
+                    <div class="initials"><a href="https://formulangel.com/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Wed Feb 8 2017 19:01:22 CST'>Feb 8, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
 
 <h3 id="class-variable">Class variable</h3>
 
@@ -256,53 +231,27 @@ User.validate!
   end
 end
 </code></pre>
-</article>
-    <footer class="post-footer">
-      
-      <p class="post-copyright">
-        This post was published <strong>306</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
-      </p>
-    </footer>
-    
-      
-    
-  </section>
-  <footer class="site-footer">
-  <p>© 2017 Evlos&#39; blog</p>
-  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
-  
-</footer>
 
-
-
-<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
-<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      displayMath: [['$$','$$'], ['\[','\]']],
-      processEscapes: true,
-      processEnvironments: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-      TeX: { equationNumbers: { autoNumber: "AMS" },
-      extensions: ["AMSmath.js", "AMSsymbols.js"] }
-    }
-  });
-</script>
-<script type="text/x-mathjax-config">
-  // Fix <code> tags after MathJax finishes running. This is a
-  // hack to overcome a shortcoming of Markdown. Discussion at
-  // https://github.com/mojombo/jekyll/issues/199
-  MathJax.Hub.Queue(() => {
-    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
-  });
-</script>
-
-<script src="https://formulangel.com/js/bundle.js"></script>
+                <br>
+		<p class="back-to-posts"><a href="https://formulangel.com/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
 
 
 
 
-  </body>
+
+
+
+
+
+</body>
 </html>
+
