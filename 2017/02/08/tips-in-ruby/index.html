@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-
-<meta name="description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &lt;&lt; self def validate! end end end def User.">
-
-<meta property="og:title" content="Ruby 学习笔记" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  
+  <meta name="description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &lt;&lt; self def validate! end end end def User.">
+  <meta property="og:title" content="Ruby 学习笔记" />
 <meta property="og:description" content="Class variable class Network def self.get(url, options) @@result = :test_result end end  Instance variable class Network def self.get(url, options) @result = :test_result end end  Temporary attribute on ApplicationRecord class Tester &lt; ApplicationRecord attr_accessor :name # for read and write end  Method nameing def available? end def update! end  Class method class User def self.validate! end end class User class &lt;&lt; self def validate! end end end def User." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://formulangel.com/2017/02/08/tips-in-ruby/" />
@@ -32,138 +30,40 @@
 
 
 
-
-<title>
-
-
-     Ruby 学习笔记 
-
-</title>
-<link rel="canonical" href="https://formulangel.com/2017/02/08/tips-in-ruby/">
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
-
-
-
-    <link rel="stylesheet" href="https://formulangel.com/css/reset.css">
-    <link rel="stylesheet" href="https://formulangel.com/css/pygments.css">
-    <link rel="stylesheet" href="https://formulangel.com/css/main.css">
+  <title>
     
-
-
-
-
-<link rel="shortcut icon"
-
-    href="https://formulangel.com/img/favicon.ico"
-
->
-
-
-
-
-
-
-
-
+    
+         Ruby 学习笔记 
+    
+  </title>
+  <link rel="canonical" href="https://formulangel.com/2017/02/08/tips-in-ruby/">
+  
 </head>
-
-
 <body lang="">
 
-<section class="header">
-    <div class="container">
-        <div class="content">
+
+<section class="main post">
+  <div class="container">
+    <div class="content">
+      <div class="front-matter">
+        <div class="title-container">
+          <h2>
             
-                
-                
-                
-                
-                
-                    
-                
-                
-                <a href="https://formulangel.com/"><img class="avatar" src="//img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+                Ruby 学习笔记
             
-            <a href="https://formulangel.com/"><div class="name"></div></a>
-            
-            <nav>
-                <ul>
-                    
-                        <li class="nav-home"><a href="https://formulangel.com/"><span>Home</span></a></li>
-                    
-                </ul>
-            </nav>
+          </h2>
         </div>
-    </div>
-</section>
-
-<section class="icons">
-    <div class="container">
-        <div class="content">
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-            
-        
-
-        
-
-        
-
-        
-            <a href="https://formulangel.com/index.xml"><img class="icon" src="https://formulangel.com/img/rss.svg" alt="rss" /></a>
-        
-        
+        <div class="meta">
+          
+            <div class="date" title='Wed Feb 8 2017 19:01:22 CST'>Feb 8, 2017</div>
+          
+          
+            <div class="reading-time"><div class="middot"></div></div>
+          
         </div>
-    </div>
-</section>
-
-
-<section class="main post non-narrow zero-top-spacing">
-    <div class="container">
-        <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
-
-    Ruby 学习笔记
-
-</div>
-
-                    <div class="initials"><a href="https://formulangel.com/"></a></div>
-                </div>
-                <div class="meta">
-                    
-                    <div class="date" title='Wed Feb 8 2017 19:01:22 CST'>Feb 8, 2017</div>
-                    
-                    
-		    <div class="reading-time"><div class="middot"></div>One minute read</div>
-                    
-                </div>
-            </div>
-            <div class="markdown">
-                
+      </div>
+      <div class="markdown">
+        
 
 <h3 id="class-variable">Class variable</h3>
 
@@ -232,26 +132,10 @@ User.validate!
 end
 </code></pre>
 
-                <br>
-		<p class="back-to-posts"><a href="https://formulangel.com/blog/">Back to posts</a></p>
-            </div>
-            <br>
-            <div class="disqus">
-                
-            </div>
-            
-        </div>
+        <br>
+        <p class="back-to-posts"><a href="https://formulangel.com/">[back]</a></p>
+      </div>
+      <br>
     </div>
+  </div>
 </section>
-
-
-
-
-
-
-
-
-
-</body>
-</html>
-

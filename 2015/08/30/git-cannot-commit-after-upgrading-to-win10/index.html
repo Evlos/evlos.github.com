@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-
-<meta name="description" content="虽然在 Docker Hub 看到有标注 OFFICIAL REPOSITORY 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  
+  <meta name="description" content="虽然在 Docker Hub 看到有标注 OFFICIAL REPOSITORY 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：
  if [ ! -e &quot;$GHOST_CONTENT/config.js&quot; ]; then sed -r &#39; s/127\.0\.0\.1/0.0.0.0/g; s!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g; &#39; &quot;$GHOST_SOURCE/config.example.js&quot; &gt; &quot;$GHOST_CONTENT/config.js&quot; fi  这里会把所有 config.js 里的 127.0.0.1 替换为 0.0.0.0 以允许外网访问，却并没有提供数据库的自定义设置。我不想用 SQLite，所以希望能自定义一下 config.js，干脆自己动手。
 NodeJS 首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：
 FROM ubuntu:latest MAINTAINER Evlos &lt;4tyle8@gmail.com&gt; ADD sources.list /etc/apt/sources.list RUN apt-get update &amp;&amp; \ apt-get -y upgrade &amp;&amp; \ DEBIAN_FRONTEND=noninteractive apt-get -y install curl &amp;&amp; \ curl --silent --location https://deb.">
-
-<meta property="og:title" content="NodeJS 和 Ghost 的 Dockerfile" />
+  <meta property="og:title" content="NodeJS 和 Ghost 的 Dockerfile" />
 <meta property="og:description" content="虽然在 Docker Hub 看到有标注 OFFICIAL REPOSITORY 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：
  if [ ! -e &quot;$GHOST_CONTENT/config.js&quot; ]; then sed -r &#39; s/127\.0\.0\.1/0.0.0.0/g; s!path.join\(__dirname, (.)/content!path.join(process.env.GHOST_CONTENT, \1!g; &#39; &quot;$GHOST_SOURCE/config.example.js&quot; &gt; &quot;$GHOST_CONTENT/config.js&quot; fi  这里会把所有 config.js 里的 127.0.0.1 替换为 0.0.0.0 以允许外网访问，却并没有提供数据库的自定义设置。我不想用 SQLite，所以希望能自定义一下 config.js，干脆自己动手。
 NodeJS 首先写一个 NodeJS 环境的 Dockerfile，这样下次要用到 NodeJS 我可以直接引用它：
@@ -38,138 +36,40 @@ FROM ubuntu:latest MAINTAINER Evlos &lt;4tyle8@gmail.com&gt; ADD sources.list /e
 
 
 
-
-<title>
-
-
-     NodeJS 和 Ghost 的 Dockerfile 
-
-</title>
-<link rel="canonical" href="https://formulangel.com/2015/08/30/git-cannot-commit-after-upgrading-to-win10/">
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
-
-
-
-    <link rel="stylesheet" href="https://formulangel.com/css/reset.css">
-    <link rel="stylesheet" href="https://formulangel.com/css/pygments.css">
-    <link rel="stylesheet" href="https://formulangel.com/css/main.css">
+  <title>
     
-
-
-
-
-<link rel="shortcut icon"
-
-    href="https://formulangel.com/img/favicon.ico"
-
->
-
-
-
-
-
-
-
-
+    
+         NodeJS 和 Ghost 的 Dockerfile 
+    
+  </title>
+  <link rel="canonical" href="https://formulangel.com/2015/08/30/git-cannot-commit-after-upgrading-to-win10/">
+  
 </head>
-
-
 <body lang="">
 
-<section class="header">
-    <div class="container">
-        <div class="content">
+
+<section class="main post">
+  <div class="container">
+    <div class="content">
+      <div class="front-matter">
+        <div class="title-container">
+          <h2>
             
-                
-                
-                
-                
-                
-                    
-                
-                
-                <a href="https://formulangel.com/"><img class="avatar" src="//img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+                NodeJS 和 Ghost 的 Dockerfile
             
-            <a href="https://formulangel.com/"><div class="name"></div></a>
-            
-            <nav>
-                <ul>
-                    
-                        <li class="nav-home"><a href="https://formulangel.com/"><span>Home</span></a></li>
-                    
-                </ul>
-            </nav>
+          </h2>
         </div>
-    </div>
-</section>
-
-<section class="icons">
-    <div class="container">
-        <div class="content">
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-            
-        
-
-        
-
-        
-
-        
-            <a href="https://formulangel.com/index.xml"><img class="icon" src="https://formulangel.com/img/rss.svg" alt="rss" /></a>
-        
-        
+        <div class="meta">
+          
+            <div class="date" title='Sun Aug 30 2015 04:29:32 CST'>Aug 30, 2015</div>
+          
+          
+            <div class="reading-time"><div class="middot"></div></div>
+          
         </div>
-    </div>
-</section>
-
-
-<section class="main post non-narrow zero-top-spacing">
-    <div class="container">
-        <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
-
-    NodeJS 和 Ghost 的 Dockerfile
-
-</div>
-
-                    <div class="initials"><a href="https://formulangel.com/"></a></div>
-                </div>
-                <div class="meta">
-                    
-                    <div class="date" title='Sun Aug 30 2015 04:29:32 CST'>Aug 30, 2015</div>
-                    
-                    
-		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
-                    
-                </div>
-            </div>
-            <div class="markdown">
-                
+      </div>
+      <div class="markdown">
+        
 
 <p>虽然在 Docker Hub 看到有标注 <em>OFFICIAL REPOSITORY</em> 的 Dockerfile，但是我还是想自己写一个，因为他们的 Dockerfile 里有一个叫 docker-entrypoint.sh 的文件包含以下内容：</p>
 
@@ -273,26 +173,10 @@ docker run -d -v /root/storage/ghost:/app/content -p 8080:2368 evlos/ghost
 
 <p>这里把 <code>/root/storage/ghost</code> 改成你要设置的数据文件在当前系统的存储路径，<code>/root/storage/</code> 必须是已存在的文件夹，<code>8080</code> 改成你要开放的端口即可。</p>
 
-                <br>
-		<p class="back-to-posts"><a href="https://formulangel.com/blog/">Back to posts</a></p>
-            </div>
-            <br>
-            <div class="disqus">
-                
-            </div>
-            
-        </div>
+        <br>
+        <p class="back-to-posts"><a href="https://formulangel.com/">[back]</a></p>
+      </div>
+      <br>
     </div>
+  </div>
 </section>
-
-
-
-
-
-
-
-
-
-</body>
-</html>
-

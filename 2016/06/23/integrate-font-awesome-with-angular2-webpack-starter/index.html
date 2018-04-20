@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-
-<meta name="description" content="如果你跟我一样是用 angular2-webpack-starter 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  
+  <meta name="description" content="如果你跟我一样是用 angular2-webpack-starter 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。
 因为此脚手架的设定是用 raw-loader 来载入 CSS：
 /* * Raw loader support for *.css files * Returns file content as string * * See: https://github.com/webpack/raw-loader */ { test: /\.css$/, loader: &#39;raw-loader&#39; },  而 font-awesome 因为资源文件需要导入的原因就要用到 css-loader 和 style-loader，用 raw-loader 就载入不了图标了。
 解决方案 首先安装 css-loader 和 style-loader:
 cnpm install -D css-loader style-loader  因为 raw-loader 的匹配正则被设置为 \.css$, 所以我们可以把 ? 问号加在行尾来 bypass 此正则，即使用以下代码来载入 font-awesome：
 require(&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;);  然后图标就可以正常显示了：">
-
-<meta property="og:title" content="如何在 angular2-webpack-starter 中使用 font-awesome" />
+  <meta property="og:title" content="如何在 angular2-webpack-starter 中使用 font-awesome" />
 <meta property="og:description" content="如果你跟我一样是用 angular2-webpack-starter 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。
 因为此脚手架的设定是用 raw-loader 来载入 CSS：
 /* * Raw loader support for *.css files * Returns file content as string * * See: https://github.com/webpack/raw-loader */ { test: /\.css$/, loader: &#39;raw-loader&#39; },  而 font-awesome 因为资源文件需要导入的原因就要用到 css-loader 和 style-loader，用 raw-loader 就载入不了图标了。
@@ -42,138 +40,40 @@ require(&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;);  
 
 
 
-
-<title>
-
-
-     如何在 angular2-webpack-starter 中使用 font-awesome 
-
-</title>
-<link rel="canonical" href="https://formulangel.com/2016/06/23/integrate-font-awesome-with-angular2-webpack-starter/">
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
-
-
-
-    <link rel="stylesheet" href="https://formulangel.com/css/reset.css">
-    <link rel="stylesheet" href="https://formulangel.com/css/pygments.css">
-    <link rel="stylesheet" href="https://formulangel.com/css/main.css">
+  <title>
     
-
-
-
-
-<link rel="shortcut icon"
-
-    href="https://formulangel.com/img/favicon.ico"
-
->
-
-
-
-
-
-
-
-
+    
+         如何在 angular2-webpack-starter 中使用 font-awesome 
+    
+  </title>
+  <link rel="canonical" href="https://formulangel.com/2016/06/23/integrate-font-awesome-with-angular2-webpack-starter/">
+  
 </head>
-
-
 <body lang="">
 
-<section class="header">
-    <div class="container">
-        <div class="content">
+
+<section class="main post">
+  <div class="container">
+    <div class="content">
+      <div class="front-matter">
+        <div class="title-container">
+          <h2>
             
-                
-                
-                
-                
-                
-                    
-                
-                
-                <a href="https://formulangel.com/"><img class="avatar" src="//img/avatar.jpg" srcset="https://formulangel.com/img/avatar.jpg 1x"></a>
+                如何在 angular2-webpack-starter 中使用 font-awesome
             
-            <a href="https://formulangel.com/"><div class="name"></div></a>
-            
-            <nav>
-                <ul>
-                    
-                        <li class="nav-home"><a href="https://formulangel.com/"><span>Home</span></a></li>
-                    
-                </ul>
-            </nav>
+          </h2>
         </div>
-    </div>
-</section>
-
-<section class="icons">
-    <div class="container">
-        <div class="content">
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-            
-        
-
-        
-
-        
-
-        
-            <a href="https://formulangel.com/index.xml"><img class="icon" src="https://formulangel.com/img/rss.svg" alt="rss" /></a>
-        
-        
+        <div class="meta">
+          
+            <div class="date" title='Thu Jun 23 2016 15:23:13 CST'>Jun 23, 2016</div>
+          
+          
+            <div class="reading-time"><div class="middot"></div></div>
+          
         </div>
-    </div>
-</section>
-
-
-<section class="main post non-narrow zero-top-spacing">
-    <div class="container">
-        <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
-
-    如何在 angular2-webpack-starter 中使用 font-awesome
-
-</div>
-
-                    <div class="initials"><a href="https://formulangel.com/"></a></div>
-                </div>
-                <div class="meta">
-                    
-                    <div class="date" title='Thu Jun 23 2016 15:23:13 CST'>Jun 23, 2016</div>
-                    
-                    
-		    <div class="reading-time"><div class="middot"></div>One minute read</div>
-                    
-                </div>
-            </div>
-            <div class="markdown">
-                
+      </div>
+      <div class="markdown">
+        
 
 <p>如果你跟我一样是用 <a href="https://github.com/AngularClass/angular2-webpack-starter">angular2-webpack-starter</a> 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。</p>
 
@@ -210,26 +110,10 @@ require(&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;);  
 <pre><code>&lt;i class=&quot;fa fa-floppy-o&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
 </code></pre>
 
-                <br>
-		<p class="back-to-posts"><a href="https://formulangel.com/blog/">Back to posts</a></p>
-            </div>
-            <br>
-            <div class="disqus">
-                
-            </div>
-            
-        </div>
+        <br>
+        <p class="back-to-posts"><a href="https://formulangel.com/">[back]</a></p>
+      </div>
+      <br>
     </div>
+  </div>
 </section>
-
-
-
-
-
-
-
-
-
-</body>
-</html>
-
