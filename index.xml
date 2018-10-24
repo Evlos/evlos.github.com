@@ -6,10 +6,25 @@
     <description>Recent content on [[Evlos]]</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 08 Feb 2017 19:01:22 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Oct 2018 13:47:25 +0800</lastBuildDate>
     
 	<atom:link href="https://formulangel.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leetcode Part 1</title>
+      <link>https://formulangel.com/2018/10/24/leetcode_part1/</link>
+      <pubDate>Wed, 24 Oct 2018 13:47:25 +0800</pubDate>
+      
+      <guid>https://formulangel.com/2018/10/24/leetcode_part1/</guid>
+      <description>https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
+Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] + nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
+nums[:] = (nums[:-k][::-1] + nums[-k:][::-1])[::-1]   25 / 34 test cases passed.
+ 卡在了 nums = [1,2]; k = 3，于是加上
+k = k % len(nums)  终于 accepted 了
+Strings Reverse String 用 Python 写简单
+## Reverse Integer x = str(x) y = -int(x.replace(&amp;lsquo;-&amp;rsquo;, &amp;ldquo;)[::-1]) if &amp;lsquo;-&amp;rsquo; in x else int(x[::-1]) return y if -1 &amp;lt;&amp;lt; 31 &amp;lt;= y and y &amp;lt;= (1 &amp;lt;&amp;lt; 31) - 1 else 0</description>
+    </item>
     
     <item>
       <title>Ruby 学习笔记</title>
