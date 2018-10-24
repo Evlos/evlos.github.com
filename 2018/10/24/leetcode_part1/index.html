@@ -14,7 +14,7 @@ nums[:] = (nums[:-k][::-1] &#43; nums[-k:][::-1])[::-1]   25 / 34 test cases pas
  卡在了 nums = [1,2]; k = 3，于是加上
 k = k % len(nums)  终于 accepted 了
 Strings Reverse String 用 Python 写简单
-## Reverse Integer x = str(x) y = -int(x.replace(&lsquo;-&rsquo;, &ldquo;)[::-1]) if &lsquo;-&rsquo; in x else int(x[::-1]) return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0">
+s[::-1]  Reverse Integer x = str(x) y = -int(x.replace(&#39;-&#39;, &#39;&#39;)[::-1]) if &#39;-&#39; in x else int(x[::-1]) return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0  这里用 2**31 或者 (1 &lt;&lt; 31) - 1 都行">
   <meta property="og:title" content="Leetcode Part 1" />
 <meta property="og:description" content="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
 Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] &#43; nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
@@ -22,7 +22,7 @@ nums[:] = (nums[:-k][::-1] &#43; nums[-k:][::-1])[::-1]   25 / 34 test cases pas
  卡在了 nums = [1,2]; k = 3，于是加上
 k = k % len(nums)  终于 accepted 了
 Strings Reverse String 用 Python 写简单
-## Reverse Integer x = str(x) y = -int(x.replace(&lsquo;-&rsquo;, &ldquo;)[::-1]) if &lsquo;-&rsquo; in x else int(x[::-1]) return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0" />
+s[::-1]  Reverse Integer x = str(x) y = -int(x.replace(&#39;-&#39;, &#39;&#39;)[::-1]) if &#39;-&#39; in x else int(x[::-1]) return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0  这里用 2**31 或者 (1 &lt;&lt; 31) - 1 都行" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://formulangel.com/2018/10/24/leetcode_part1/" /><meta property="article:published_time" content="2018-10-24T13:47:25&#43;08:00"/>
 <meta property="article:modified_time" content="2018-10-24T13:47:25&#43;08:00"/>
@@ -87,23 +87,26 @@ Strings Reverse String 用 Python 写简单
 <h3 id="reverse-string">Reverse String</h3>
 
 <p>用 Python 写简单</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s[::-1]```" data-lang="s[::-1]```">## Reverse Integer</code></pre></div>
-<p>x = str(x)
-y = -int(x.replace(&lsquo;-&rsquo;, &ldquo;)[::-1]) if &lsquo;-&rsquo; in x else int(x[::-1])
-return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0</p>
 
-<pre><code>
-这里用 2**31 或者 (1 &lt;&lt; 31) - 1 都行
-
-### Best practise:
-
+<pre><code>s[::-1]
 </code></pre>
 
-<p>def reverse(self, x):
+<h2 id="reverse-integer">Reverse Integer</h2>
+
+<pre><code>x = str(x)
+y = -int(x.replace('-', '')[::-1]) if '-' in x else int(x[::-1])
+return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0
+</code></pre>
+
+<p>这里用 2**31 或者 (1 &lt;&lt; 31) - 1 都行</p>
+
+<h3 id="best-practise">Best practise:</h3>
+
+<pre><code>def reverse(self, x):
   s = cmp(x, 0)
-  r = int(<code>s*x</code>[::-1])
+  r = int(`s*x`[::-1])
   return s*r * (r &lt; 2**31)
-```</p>
+</code></pre>
 
         <br>
         <p class="back-to-posts"><a href="https://formulangel.com/">[back]</a></p>
