@@ -9,7 +9,7 @@
   <meta name="referrer" content="no-referrer">
   
   <meta name="description" content="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
-Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] &#43; nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
+Array Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] &#43; nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
 nums[:] = (nums[:-k][::-1] &#43; nums[-k:][::-1])[::-1]   25 / 34 test cases passed.
  卡在了 nums = [1,2]; k = 3，于是加上
 k = k % len(nums)  终于 accepted 了
@@ -17,7 +17,7 @@ Strings Reverse String 用 Python 写简单
 s[::-1]  Reverse Integer x = str(x) y = -int(x.replace(&#39;-&#39;, &#39;&#39;)[::-1]) if &#39;-&#39; in x else int(x[::-1]) return y if -1 &lt;&lt; 31 &lt;= y and y &lt;= (1 &lt;&lt; 31) - 1 else 0  这里用 2**31 或者 (1 &lt;&lt; 31) - 1 都行">
   <meta property="og:title" content="Leetcode Part 1" />
 <meta property="og:description" content="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
-Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] &#43; nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
+Array Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] &#43; nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
 nums[:] = (nums[:-k][::-1] &#43; nums[-k:][::-1])[::-1]   25 / 34 test cases passed.
  卡在了 nums = [1,2]; k = 3，于是加上
 k = k % len(nums)  终于 accepted 了
@@ -64,7 +64,9 @@ s[::-1]  Reverse Integer x = str(x) y = -int(x.replace(&#39;-&#39;, &#39;&#39;)[
 
 <p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/">https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p>
 
-<h2 id="rotate-array">Rotate Array</h2>
+<h2 id="array">Array</h2>
+
+<h3 id="rotate-array">Rotate Array</h3>
 
 <p>刚开始没仔细看题，就写了个 <code>nums[-k:] + nums[:k]</code>，后来发现题目中要求 <strong>do it in-place</strong>，并且要兼容各种 cases，最终写成</p>
 

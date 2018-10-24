@@ -18,7 +18,7 @@
       
       <guid>https://formulangel.com/2018/10/24/leetcode_part1/</guid>
       <description>https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
-Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] + nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
+Array Rotate Array 刚开始没仔细看题，就写了个 nums[-k:] + nums[:k]，后来发现题目中要求 do it in-place，并且要兼容各种 cases，最终写成
 nums[:] = (nums[:-k][::-1] + nums[-k:][::-1])[::-1]   25 / 34 test cases passed.
  卡在了 nums = [1,2]; k = 3，于是加上
 k = k % len(nums)  终于 accepted 了
