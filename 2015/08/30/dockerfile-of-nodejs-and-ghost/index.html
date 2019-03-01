@@ -16,23 +16,8 @@
 2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit. GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied fatal: cannot update HEAD ref  发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。
 然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://formulangel.com/2015/08/30/dockerfile-of-nodejs-and-ghost/" />
-
-
-
-<meta property="article:published_time" content="2015-08-30T12:44:13&#43;08:00"/>
-
+<meta property="og:url" content="https://formulangel.com/2015/08/30/dockerfile-of-nodejs-and-ghost/" /><meta property="article:published_time" content="2015-08-30T12:44:13&#43;08:00"/>
 <meta property="article:modified_time" content="2015-08-30T12:44:13&#43;08:00"/>
-
-
-
-
-
-
-
-
-
-
 
   <title>
     
@@ -59,7 +44,7 @@
         </div>
         <div class="meta">
           
-            <div class="date" title='Sun Aug 30 2015 12:44:13 &#43;0800'>Aug 30, 2015</div>
+            <div class="date" title='Sun Aug 30 2015 12:44:13 CST'>Aug 30, 2015</div>
           
           
             <div class="reading-time"><div class="middot"></div></div>

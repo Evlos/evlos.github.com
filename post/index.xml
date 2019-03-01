@@ -6,10 +6,21 @@
     <description>Recent content in Posts on [[Evlos]]</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 25 Oct 2018 19:09:12 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 01 Mar 2019 16:54:40 +0800</lastBuildDate>
     
 	<atom:link href="https://formulangel.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leetcode Part 3</title>
+      <link>https://formulangel.com/2019/03/01/leetcode_part_3/</link>
+      <pubDate>Fri, 01 Mar 2019 16:54:40 +0800</pubDate>
+      
+      <guid>https://formulangel.com/2019/03/01/leetcode_part_3/</guid>
+      <description>https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
+Strings Implement strStr() 忘记用 Python 的 [x:y] 来一段段匹配了：
+if haystack == needle or not needle: return 0 for i, j in enumerate(haystack): if i &amp;gt; len(haystack) - len(needle) + 1: break if needle and haystack[i] == needle[0]: if i + len(needle) &amp;lt;= len(haystack): notMatch = False for l, m in enumerate(needle): if haystack[i + l] != needle[l]: notMatch = True break if not notMatch: return i return -1   Runtime: 44 ms, faster than 55.</description>
+    </item>
     
     <item>
       <title>Leetcode Part 2</title>
