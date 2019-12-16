@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>[[Evlos]]  | Leetcode Part 3</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
+	<meta name="generator" content="Hugo 0.40.2" />
+	
+	
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+	
+
+	
+	
+	
+
+	
+
+	
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-66839894-6');
+  </script>
+</head>
+
+<body>
+	
+
+<header>
+	<div>
+		<nav role="navigation">
+	<div>
+		<a href="/">
+			[[Evlos]]
+		</a>
+		<div>
+			
+			
+			<ul>
+				
+				<li>
+					<a href="/" title="Home page">
+						Home
+					</a>
+				</li>
+				
+			</ul>
+			
+			
+
+
+
+
+
+
+
+
+
+		</div>
+	</div>
+</nav>
+	</div>
+</header>
+
+	<main role="main">
+		
+
+<article>
+
+	<header>
+		<p>
+			
+			POSTS
+		</p>
+		<h1>Leetcode Part 3</h1>
+		
+		<time datetime="2019-03-01T16:54:40&#43;08:00">March 1, 2019</time>
+	</header>
+
+	<section>
+
+<p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/">https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p>
+
+<h2 id="strings">Strings</h2>
+
+<h3 id="implement-strstr">Implement strStr()</h3>
+
+<p>忘记用 Python 的 [x:y] 来一段段匹配了：</p>
+
+<pre><code>if haystack == needle or not needle:
+  return 0
+for i, j in enumerate(haystack):
+  if i &gt; len(haystack) - len(needle) + 1:
+    break
+  if needle and haystack[i] == needle[0]:
+    if i + len(needle) &lt;= len(haystack):
+      notMatch = False
+      for l, m in enumerate(needle):
+        if haystack[i + l] != needle[l]:
+          notMatch = True
+          break
+      if not notMatch:
+        return i
+return -1
+</code></pre>
+
+<blockquote>
+<p>Runtime: 44 ms, faster than 55.70% of Python3 online submissions for Implement strStr().</p>
+
+<p>Memory Usage: 13.4 MB, less than 5.13% of Python3 online submissions for Implement strStr().</p>
+</blockquote>
+
+<h3 id="two-sum">Two Sum</h3>
+
+<p><a href="https://leetcode.com/problems/two-sum/">https://leetcode.com/problems/two-sum/</a></p>
+
+<pre><code>for i in range(len(nums)):
+  for j in range(i + 1, len(nums)):
+    if nums[i] + nums[j] == target:
+      return [i, j]
+</code></pre>
+
+<blockquote>
+<p>Runtime: 5424 ms, faster than 12.11% of Python3 online submissions for Two Sum.</p>
+
+<p>Memory Usage: 13.6 MB, less than 42.31% of Python3 online submissions for Two Sum.</p>
+</blockquote>
+
+<h3 id="add-two-numbers">Add Two Numbers</h3>
+
+<p><a href="https://leetcode.com/problems/add-two-numbers/">https://leetcode.com/problems/add-two-numbers/</a></p>
+
+<pre><code>class Solution:
+  def addTwoNumbers(self, l1, l2):
+    head = None
+    last = None
+    while l1 is not None or l2 is not None:
+      i = (0 if l1 is None else l1.val) + (0 if l2 is None else l2.val)
+      if l1 is not None:
+        l1 = l1.next
+      if l2 is not None:
+        l2 = l2.next
+      if last is None:
+        head = ListNode(i)
+        last = head
+      else:
+        if last.next is None:
+          last.next = ListNode(i)
+        else:
+          last.next.val += i
+        last = last.next
+      if last.val &gt;= 10:
+        last.val -= 10
+        last.next = ListNode(1)
+    return head
+</code></pre>
+
+<blockquote>
+<p>Runtime: 112 ms, faster than 61.12% of Python3 online submissions for Add Two Numbers.</p>
+
+<p>Memory Usage: 13.4 MB, less than 5.21% of Python3 online submissions for Add Two Numbers.</p>
+</blockquote>
+
+<h3 id="longest-substring-without-repeating-characters">Longest Substring Without Repeating Characters</h3>
+
+<p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">https://leetcode.com/problems/longest-substring-without-repeating-characters/</a></p>
+
+<pre><code>class Solution:
+  def lengthOfLongestSubstring(self, s: str) -&gt; int:
+    count_max = 0
+    for i in range(len(s)):
+      k = []
+      count = 0
+      for j in range(i, len(s)):
+        if s[j] in k:
+          break
+        else:
+          k.append(s[j])
+          count += 1
+      if count &gt; count_max:
+        count_max = count
+    return count_max
+</code></pre>
+
+<blockquote>
+<p>Runtime: 1796 ms, faster than 5.02% of Python3 online submissions for Longest Substring Without Repeating Characters.</p>
+
+<p>Memory Usage: 13.4 MB, less than 5.05% of Python3 online submissions for Longest Substring Without Repeating Characters.</p>
+</blockquote>
+<ul>
+	
+</ul></section>
+
+	<aside>
+
+
+
+</aside>
+
+</article>
+
+<p class="back-to-posts"><a href="/">[back]</a></p>
+
+	</main>
+	<footer role="contentinfo">
+	<br />
+	&copy; 2017-2019 <a href="/">[[Evlos]]</a>
+  <p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p>
+	<div>
+
+
+
+
+
+
+
+
+</div>
+</footer>
+
+	
+
+</body>
+
+</html>

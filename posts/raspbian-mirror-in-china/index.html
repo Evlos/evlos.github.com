@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>[[Evlos]]  | Raspbian 的国内源配置</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
+	<meta name="generator" content="Hugo 0.40.2" />
+	
+	
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+	
+
+	
+	
+	
+
+	
+
+	
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-66839894-6');
+  </script>
+</head>
+
+<body>
+	
+
+<header>
+	<div>
+		<nav role="navigation">
+	<div>
+		<a href="/">
+			[[Evlos]]
+		</a>
+		<div>
+			
+			
+			<ul>
+				
+				<li>
+					<a href="/" title="Home page">
+						Home
+					</a>
+				</li>
+				
+			</ul>
+			
+			
+
+
+
+
+
+
+
+
+
+		</div>
+	</div>
+</nav>
+	</div>
+</header>
+
+	<main role="main">
+		
+
+<article>
+
+	<header>
+		<p>
+			
+			POSTS
+		</p>
+		<h1>Raspbian 的国内源配置</h1>
+		
+		<time datetime="2015-09-28T20:01:44&#43;08:00">September 28, 2015</time>
+	</header>
+
+	<section><p>很多国外的源在国内连接的速度十分感人，所以基本上安装好 RPI 后的第一件事情就是寻找 Raspbian 的国内镜像，然后发现阿里云镜像站就有提供。</p>
+
+<p>但是现在 Raspbian 除了系统的源之外还会用到基金会源，也就是 <code>archive.raspberrypi.org</code>，阿里云镜像站并没有提供这个源，幸好还有中科大的镜像站。</p>
+
+<p>所以只要把 <code>/etc/apt/sources.list</code> 的内容修改为如下即可：</p>
+
+<pre><code>deb http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main contrib non-free rpi
+deb-src http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main contrib non-free rpi
+deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ wheezy main
+</code></pre>
+<ul>
+	
+</ul></section>
+
+	<aside>
+
+
+
+</aside>
+
+</article>
+
+<p class="back-to-posts"><a href="/">[back]</a></p>
+
+	</main>
+	<footer role="contentinfo">
+	<br />
+	&copy; 2017-2019 <a href="/">[[Evlos]]</a>
+  <p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p>
+	<div>
+
+
+
+
+
+
+
+
+</div>
+</footer>
+
+	
+
+</body>
+
+</html>
