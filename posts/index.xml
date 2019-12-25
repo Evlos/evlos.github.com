@@ -6,10 +6,25 @@
     <description>Recent content in Posts on [[Evlos]]</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Mar 2019 16:54:40 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 18:13:42 +0800</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leetcode Part 4</title>
+      <link>/posts/leetcode_part_4/</link>
+      <pubDate>Wed, 25 Dec 2019 18:13:42 +0800</pubDate>
+      
+      <guid>/posts/leetcode_part_4/</guid>
+      <description>The Operators:
+x &amp;lt;&amp;lt; y
+Returns x with the bits shifted to the left by y places (and new bits on the right-hand-side are zeros). This is the same as multiplying x by 2**y.
+x &amp;gt;&amp;gt; y
+Returns x with the bits shifted to the right by y places. This is the same as //&amp;lsquo;ing x by 2**y.
+x &amp;amp; y
+Does a &amp;ldquo;bitwise and&amp;rdquo;. Each bit of the output is 1 if the corresponding bit of x AND of y is 1, otherwise it&amp;rsquo;s 0.</description>
+    </item>
     
     <item>
       <title>Leetcode Part 3</title>
