@@ -7,7 +7,7 @@
 	
 	<title>[[Evlos]]  | Leetcode Part 3</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<meta name="generator" content="Hugo 0.40.2" />
+	<meta name="generator" content="Hugo 0.73.0" />
 	
 	
 	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -85,16 +85,10 @@
 		<time datetime="2019-03-01T16:54:40&#43;08:00">March 1, 2019</time>
 	</header>
 
-	<section>
-
-<p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/">https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p>
-
+	<section><p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/">https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p>
 <h2 id="strings">Strings</h2>
-
 <h3 id="implement-strstr">Implement strStr()</h3>
-
 <p>忘记用 Python 的 [x:y] 来一段段匹配了：</p>
-
 <pre><code>if haystack == needle or not needle:
   return 0
 for i, j in enumerate(haystack):
@@ -110,34 +104,26 @@ for i, j in enumerate(haystack):
       if not notMatch:
         return i
 return -1
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Runtime: 44 ms, faster than 55.70% of Python3 online submissions for Implement strStr().</p>
-
+</blockquote>
+<blockquote>
 <p>Memory Usage: 13.4 MB, less than 5.13% of Python3 online submissions for Implement strStr().</p>
 </blockquote>
-
 <h3 id="1-two-sum">1. Two Sum</h3>
-
 <p><a href="https://leetcode.com/problems/two-sum/">https://leetcode.com/problems/two-sum/</a></p>
-
 <pre><code>for i in range(len(nums)):
   for j in range(i + 1, len(nums)):
     if nums[i] + nums[j] == target:
       return [i, j]
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Runtime: 5424 ms, faster than 12.11% of Python3 online submissions for Two Sum.</p>
-
+</blockquote>
+<blockquote>
 <p>Memory Usage: 13.6 MB, less than 42.31% of Python3 online submissions for Two Sum.</p>
 </blockquote>
-
 <h3 id="2-add-two-numbers">2. Add Two Numbers</h3>
-
 <p><a href="https://leetcode.com/problems/add-two-numbers/">https://leetcode.com/problems/add-two-numbers/</a></p>
-
 <pre><code>class Solution:
   def addTwoNumbers(self, l1, l2):
     head = None
@@ -161,18 +147,14 @@ return -1
         last.val -= 10
         last.next = ListNode(1)
     return head
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Runtime: 112 ms, faster than 61.12% of Python3 online submissions for Add Two Numbers.</p>
-
+</blockquote>
+<blockquote>
 <p>Memory Usage: 13.4 MB, less than 5.21% of Python3 online submissions for Add Two Numbers.</p>
 </blockquote>
-
 <h3 id="3-longest-substring-without-repeating-characters">3. Longest Substring Without Repeating Characters</h3>
-
 <p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">https://leetcode.com/problems/longest-substring-without-repeating-characters/</a></p>
-
 <pre><code>class Solution:
   def lengthOfLongestSubstring(self, s: str) -&gt; int:
     count_max = 0
@@ -188,11 +170,10 @@ return -1
       if count &gt; count_max:
         count_max = count
     return count_max
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Runtime: 1796 ms, faster than 5.02% of Python3 online submissions for Longest Substring Without Repeating Characters.</p>
-
+</blockquote>
+<blockquote>
 <p>Memory Usage: 13.4 MB, less than 5.05% of Python3 online submissions for Longest Substring Without Repeating Characters.</p>
 </blockquote>
 <ul>

@@ -7,7 +7,7 @@
 	
 	<title>[[Evlos]]  | Ruby 学习笔记</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<meta name="generator" content="Hugo 0.40.2" />
+	<meta name="generator" content="Hugo 0.73.0" />
 	
 	
 	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -85,44 +85,29 @@
 		<time datetime="2017-02-08T19:01:22&#43;08:00">February 8, 2017</time>
 	</header>
 
-	<section>
-
-<h3 id="class-variable">Class variable</h3>
-
+	<section><h3 id="class-variable">Class variable</h3>
 <pre><code>class Network
   def self.get(url, options)
     @@result = :test_result
   end
 end
-</code></pre>
-
-<h3 id="instance-variable">Instance variable</h3>
-
+</code></pre><h3 id="instance-variable">Instance variable</h3>
 <pre><code>class Network
   def self.get(url, options)
     @result = :test_result
   end
 end
-</code></pre>
-
-<h3 id="temporary-attribute-on-applicationrecord">Temporary attribute on ApplicationRecord</h3>
-
+</code></pre><h3 id="temporary-attribute-on-applicationrecord">Temporary attribute on ApplicationRecord</h3>
 <pre><code>class Tester &lt; ApplicationRecord
   attr_accessor :name  # for read and write
 end
-</code></pre>
-
-<h3 id="method-nameing">Method nameing</h3>
-
+</code></pre><h3 id="method-nameing">Method nameing</h3>
 <pre><code>def available?
 end
 
 def update!
 end
-</code></pre>
-
-<h3 id="class-method">Class method</h3>
-
+</code></pre><h3 id="class-method">Class method</h3>
 <pre><code>class User
   def self.validate!
   end
@@ -140,10 +125,7 @@ end
 
 
 User.validate!
-</code></pre>
-
-<h3 id="rewrite">Rewrite</h3>
-
+</code></pre><h3 id="rewrite">Rewrite</h3>
 <pre><code>class SubAccount &lt; ApplicationRecord
   attr_reader :password  # provide instance variable with getter only
 
@@ -152,8 +134,7 @@ User.validate!
     @password = val
   end
 end
-</code></pre>
-<ul>
+</code></pre><ul>
 	
 </ul></section>
 

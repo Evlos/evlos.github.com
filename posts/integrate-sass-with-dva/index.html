@@ -7,7 +7,7 @@
 	
 	<title>[[Evlos]]  | 如何在 dva 中使用 sass</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<meta name="generator" content="Hugo 0.40.2" />
+	<meta name="generator" content="Hugo 0.73.0" />
 	
 	
 	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -86,25 +86,15 @@
 	</header>
 
 	<section><p>安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中</p>
-
 <pre><code>webpackConfig.module.loaders.forEach(function(loader, index) {
-</code></pre>
-
-<p>之上（其实只要在这个 function 里面都可以），添加以下代码：</p>
-
+</code></pre><p>之上（其实只要在这个 function 里面都可以），添加以下代码：</p>
 <pre><code>webpackConfig.module.loaders.push({
   test: /\.module\.sass$/,
   loader: path.join(path.dirname(require.resolve('extract-text-webpack-plugin')), 'loader.js') + '?{&quot;remove&quot;:true}!css?sourceMap&amp;modules&amp;localIdentName=[local]___[hash:base64:5]&amp;-autoprefixer!' + 'postcss-loader!'+ 'sass-loader?sourceMap'
 });
-</code></pre>
-
-<p>然后在</p>
-
+</code></pre><p>然后在</p>
 <pre><code>webpackConfig.module.loaders.forEach(function(loader, index) {
-</code></pre>
-
-<p>之下添加以下代码即可：</p>
-
+</code></pre><p>之下添加以下代码即可：</p>
 <pre><code>if (typeof loader.test === 'function' &amp;&amp; loader.test.toString().indexOf('\\.sass$') &gt; -1) {
   loader.include = /node_modules/;
   loader.test = /\.sass$/;
@@ -113,8 +103,7 @@ if (loader.test.toString() === '/\\.module\\.sass$/') {
   loader.exclude = /node_modules/;
   loader.test = /\.sass$/;
 }
-</code></pre>
-<ul>
+</code></pre><ul>
 	
 </ul></section>
 

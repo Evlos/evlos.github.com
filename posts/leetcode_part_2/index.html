@@ -7,7 +7,7 @@
 	
 	<title>[[Evlos]]  | Leetcode Part 2</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<meta name="generator" content="Hugo 0.40.2" />
+	<meta name="generator" content="Hugo 0.73.0" />
 	
 	
 	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -85,16 +85,10 @@
 		<time datetime="2018-10-25T19:09:12&#43;08:00">October 25, 2018</time>
 	</header>
 
-	<section>
-
-<p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/">https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p>
-
+	<section><p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/">https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p>
 <h2 id="strings">Strings</h2>
-
 <h3 id="first-unique-character-in-a-string">First Unique Character in a String</h3>
-
 <p>暂不做优化，啥时候要炫技吓人再说：</p>
-
 <pre><code>count = {}
 for i, j in enumerate(s):
     if j in count:
@@ -105,31 +99,18 @@ for i, j in enumerate(s):
     if count[j] == 1:
         return i
 return -1
-</code></pre>
-
-<p>做完之后看到有别人用 set，find 和 rfind 来提高效率，以后可以参考。</p>
-
+</code></pre><p>做完之后看到有别人用 set，find 和 rfind 来提高效率，以后可以参考。</p>
 <h3 id="valid-anagram">Valid Anagram</h3>
-
 <p>我这个答案不说效率，应该是最精简的了：</p>
-
 <pre><code>return sorted(s) == sorted(t)
-</code></pre>
-
-<p>而且效率也不算很低：</p>
-
+</code></pre><p>而且效率也不算很低：</p>
 <blockquote>
 <p>Your runtime beats 31.55 % of python3 submissions.</p>
 </blockquote>
-
 <p>顺便提交到了评论区，看看别人的看法：</p>
-
-<p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/882/discuss/185617/Python-1-line-(using-only-1-built-in-function">https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/882/discuss/185617/Python-1-line-(using-only-1-built-in-function</a>)</p>
-
+<p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/882/discuss/185617/Python-1-line-(using-only-1-built-in-function)">https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/882/discuss/185617/Python-1-line-(using-only-1-built-in-function)</a></p>
 <h3 id="valid-palindrome">Valid Palindrome</h3>
-
 <p>排除了字母和数字之外的数据之后，就好办了：</p>
-
 <pre><code>j = ''
 for i in s:
     if i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789':
@@ -139,57 +120,38 @@ for i in range(0, len(j)):
     if j[i] != k[i]:
         return False
 return True
-</code></pre>
-
-<p>做完之后看到有人用 &ldquo;.isalpha() 和 &ldquo;.isdigit() 两个函数，写起来可以更加精简。</p>
-
+</code></pre><p>做完之后看到有人用 &lsquo;'.isalpha() 和 &lsquo;'.isdigit() 两个函数，写起来可以更加精简。</p>
 <h3 id="string-to-integer-atoi">String to Integer (atoi)</h3>
-
 <p>一点 <strong>Debug code in playground</strong> 之后，第一眼就看到了：</p>
-
 <pre><code>def myAtoi(self, str):
     &quot;&quot;&quot;
     :type str: str
     :rtype: int
-</code></pre>
-
-<p>估计 leetcode 的题目 Python 基础代码是自动生成的，才会出现变量名和 Python 关键字冲突的情况。</p>
-
+</code></pre><p>估计 leetcode 的题目 Python 基础代码是自动生成的，才会出现变量名和 Python 关键字冲突的情况。</p>
 <p>这题的 cases 也太变态了吧 &hellip;</p>
-
 <blockquote>
 <p>1024 / 1079 test cases passed.
 Input: &ldquo;-5-&rdquo;
 Output: 0
 Expected: -5</p>
 </blockquote>
-
 <p>我整个人都 <strong>-5-</strong> 了！</p>
-
 <p>果然有人抱怨了：</p>
-
 <p><a href="https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/884/discuss/4640/Such-a-shitty-problem">https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/884/discuss/4640/Such-a-shitty-problem</a></p>
-
 <blockquote>
 <p>1077 / 1079 test cases passed.
 Input: &ldquo;-13+8&rdquo;
 Output: 0
 Expected: -13</p>
 </blockquote>
-
 <p>简直了，这玩意是数字？！说好的 atoi 呢？问题是之前有个 case 是</p>
-
 <blockquote>
 <p>Input: &ldquo;1-1&rdquo;
 Expected: 0</p>
 </blockquote>
-
 <p>的呀？？</p>
-
 <p>这都 1000 多个 case 了，所以是大家开始互相伤害了吗？</p>
-
 <p>过了，就这样吧：</p>
-
 <pre><code>s = s.strip().rstrip('+').rstrip('-')
 found = False
 found_num = False
@@ -232,8 +194,7 @@ if res &gt; (1 &lt;&lt; 31) - 1:
 elif res &lt; -1 &lt;&lt; 31:
     res = -1 &lt;&lt; 31
 return res
-</code></pre>
-<ul>
+</code></pre><ul>
 	
 </ul></section>
 

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>[[Evlos]]  | SwiftUI Note</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
+	<meta name="generator" content="Hugo 0.73.0" />
+	
+	
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+	
+
+	
+	
+	
+
+	
+
+	
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-66839894-6');
+  </script>
+</head>
+
+<body>
+	
+
+<header>
+	<div>
+		<nav role="navigation">
+	<div>
+		<a href="/">
+			[[Evlos]]
+		</a>
+		<div>
+			
+			
+			<ul>
+				
+				<li>
+					<a href="/" title="Home page">
+						Home
+					</a>
+				</li>
+				
+			</ul>
+			
+			
+
+
+
+
+
+
+
+
+
+		</div>
+	</div>
+</nav>
+	</div>
+</header>
+
+	<main role="main">
+		
+
+<article>
+
+	<header>
+		<p>
+			
+			POSTS
+		</p>
+		<h1>SwiftUI Note</h1>
+		
+		<time datetime="2020-01-03T15:02:43&#43;08:00">January 3, 2020</time>
+	</header>
+
+	<section><h2 id="icon">Icon</h2>
+<pre><code>Image(systemName: &quot;star.fill&quot;).imageScale(.medium).foregroundColor(.yellow)
+</code></pre><h2 id="bool">Bool</h2>
+<pre><code>bool.toggle()
+</code></pre><h2 id="binding">Binding</h2>
+<pre><code>@State private var isPlaying: Bool = false
+
+PlayButton(isPlaying: $isPlaying)
+</code></pre><pre><code>struct PlayButton : View {
+
+@Binding var isPlaying: Bool
+</code></pre><h2 id="onreceive">OnReceive</h2>
+<pre><code>.onReceive(PodcastPlayer.currentTimePublisher) { newCurrentTime in
+  self.currentTime = newCurrentTime
+}
+</code></pre><h2 id="weak">Weak</h2>
+<pre><code>DispatchQueue.main.async { [weak self] in
+DispatchQueue.global(qos: .background).async { [weak self] in
+  guard let strongSelf = self else { return }
+
+weak var owner: Person?
+</code></pre><p><a href="https://www.appcoda.com/memory-management-swift/">https://www.appcoda.com/memory-management-swift/</a></p>
+<p>Product &gt; Profile &gt; Leaks</p>
+<h2 id="ui-tweaking">UI Tweaking</h2>
+<pre><code>.padding([.leading, .trailing])
+.font(.caption)
+
+HStack {
+ Text(&quot;Delicious&quot;)
+ Image(&quot;20x20_avocado&quot;)
+ Text(&quot;Avocado Toast&quot;).layoutPriority(1) // so it will not be compressed when HStack width is not enough
+}
+.lineLimit(1)
+
+</code></pre><p>237_building_custom_views_with_swiftui.pdf</p>
+<p>// Animation and draw grphaic</p>
+<pre><code>List(previousOrders) { order in
+ HStack {
+ VStack(alignment: .leading) {
+ Text(order.summary)
+ Text(order.purchaseDate)
+ .font(.subheadline)
+ .foregroundColor(.secondary)
+ }
+ Spacer()
+ if order.includeSalt {
+ SaltIcon()
+ }
+ }
+}
+
+struct IconOrientationEditor : View {
+ let flipped: Bool
+ var body: some View {
+ ZStack {
+ Color.gray
+ AppIcon()
+ .rotationEffect(.degrees(flipped ? 180 : 0))
+ }
+ }
+}
+
+Form {
+ Button(action: submitOrder) { Text(&quot;Order&quot;) }
+ Section(header: ) { Text(&quot;Avocado Toast&quot;).font(.title)
+ }.
+ Toggle(isOn: $order.includeSalt) { }
+ Toggle(isOn: $order.includeRedPepperFlakes) { }
+ Stepper(value: $order.quantity, in: 1...10) { }
+ }
+ Section {
+ Button(action: submitOrder) { Text(&quot;Order&quot;) }
+ }
+}
+
+Button(action: submitOrder) {
+ VStack {
+ Image(&quot;Toast&quot;)
+ Text(&quot;Order&quot;)
+ }
+}
+
+@State private var order: Order
+struct Order {
+
+enum Spread : CaseIterable, Hashable, Identifiable {
+ case none
+ case almondButter
+ case peanutButter
+ case honey
+ case almou
+ case tapenade
+ case hummus
+ case mayonnaise
+ case kyopolou
+ case adjvar
+ case pindjur
+ case vegemite
+ case chutney
+ case cannedCheese
+ case feroce
+ case kartoffelkase
+ case tartarSauce
+}
+Picker(selection: $order.spread, label: Text(&quot;Spread&quot;)) {
+ ForEach(Spread.allCases) { spread in
+ Text(spread.name).tag(spread)
+ }.
+}
+
+Button(action: submitOrder) { Text(&quot;Order&quot;) }
+ .disabled(order.quantity == 0)
+Toggle(isOn: $order.includeSalt) {}
+
+Form {}
+.accentColor(Color(&quot;avocadoGreen&quot;))
+.disabled(!connectedToToastNetwork)
+</code></pre><p>216_swiftui_essentials.pdf</p>
+<h2 id="combine">Combine</h2>
+<pre><code>@Published var username: String = &quot;&quot;
+var validatedUsername: AnyPublisher&lt;String?, Never&gt; {
+ return $username
+ .debounce(for: 0.5, scheduler: RunLoop.main)
+ .removeDuplicates()
+ .flatMap { username in
+ return Future { promise in
+ self.usernameAvailable(username) { available in
+ promise(.success(available ? username : nil))
+ }
+ }
+ }
+ .eraseToAnyPublisher()
+}
+
+@Published var password: String = &quot;&quot;
+@Published var passwordAgain: String = &quot;&quot;
+var validatedPassword: AnyPublisher&lt;String?, Never&gt; {
+ return CombineLatest($password, $passwordAgain) { password, passwordAgain in
+ guard password == passwordAgain, password.count &gt; 8 else { return nil }
+ return password
+ }
+ .map { $0 == &quot;password1&quot; ? nil : $0 }
+ .eraseToAnyPublisher()
+}
+
+var validatedCredentials: AnyPublisher&lt;(String, String)?, Never&gt; {
+ return CombineLatest(validatedUsername, validatedPassword) { username, password in
+ guard let uname = username, let pwd = password else { return nil }
+ return (uname, pwd)
+ }
+ .eraseToAnyPublisher()
+}
+
+@IBOutlet var signupButton: UIButton!
+var signupButtonStream: AnyCancellable?
+override func viewDidLoad() {
+ super.viewDidLoad()
+ self.signupButtonStream = self.validatedCredentials
+ .map { $0 != nil }
+ .receive(on: RunLoop.main)
+ .assign(to: \.isEnabled, on: signupButton)
+}
+</code></pre><h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://www.jianshu.com/p/441930138de2">https://www.jianshu.com/p/441930138de2</a></li>
+<li><a href="https://fuckingswiftui.com/">https://fuckingswiftui.com/</a></li>
+<li><a href="https://www.hackingwithswift.com/quick-start/swiftui">https://www.hackingwithswift.com/quick-start/swiftui</a></li>
+<li><a href="https://www.hackingwithswift.com/100/swiftui">https://www.hackingwithswift.com/100/swiftui</a></li>
+<li><a href="https://swiftui-lab.com/">https://swiftui-lab.com/</a></li>
+<li><a href="https://swiftui-lab.com/custom-styling/">https://swiftui-lab.com/custom-styling/</a></li>
+</ul>
+<ul>
+	
+</ul></section>
+
+	<aside>
+
+
+
+</aside>
+
+</article>
+
+<p class="back-to-posts"><a href="/">[back]</a></p>
+
+	</main>
+	<footer role="contentinfo">
+	<br />
+	&copy; 2017-2020 <a href="/">[[Evlos]]</a>
+  <p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p>
+	<div>
+
+
+
+
+
+
+
+
+</div>
+</footer>
+
+	
+
+</body>
+
+</html>
