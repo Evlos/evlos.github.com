@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Evlos.blog()  | Wordpress 的 Linux VPS 时间校正</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
+	<meta name="generator" content="Hugo 0.75.1" />
+	
+	
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+	
+
+	
+	
+	
+
+	
+
+	
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-66839894-6');
+  </script>
+</head>
+
+<body>
+	
+
+<header>
+	<div>
+		<nav role="navigation">
+	<div>
+		<a href="/">
+			Evlos.blog()
+		</a>
+		<div>
+			
+			
+			<ul>
+				
+				<li>
+					<a href="/" title="Home page">
+						Home
+					</a>
+				</li>
+				
+			</ul>
+			
+			
+
+
+
+
+
+
+
+
+
+		</div>
+	</div>
+</nav>
+	</div>
+</header>
+
+	<main role="main">
+		
+
+<article>
+
+	<header>
+		<p>
+			
+			POSTS
+		</p>
+		<h1>Wordpress 的 Linux VPS 时间校正</h1>
+		
+		<time datetime="2010-07-08T22:36:20&#43;08:00">July 8, 2010</time>
+	</header>
+
+	<section><p>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。</p>
+<hr>
+<p>这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。</p>
+<pre><code>&lt;img src=\'http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\' /&gt;
+</code></pre><h2 id="一-wordpress-的-linux-vps-时间校正">一. Wordpress 的 Linux VPS 时间校正：</h2>
+<p>在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。</p>
+<p>而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。</p>
+<pre><code>-bash-3.2# date
+// \&quot;-bash-3.2#\&quot; 是命令提示，就像 Win 下面的 \&quot;C:\\Documents and Settings\\Administrator&gt;\&quot; 一样
+// date 是显示当前服务器时间的函数
+Thu Jul  8 04:03:59 CST 2010
+</code></pre><p>而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。</p>
+<p>数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。</p>
+<pre><code>function get_comment_time( $d = \'\', $gmt = false, $translate = true ) {
+	global $comment;
+	$comment_date = $gmt ? $comment-&gt;comment_date_gmt : $comment-&gt;comment_date_gmt;
+	if ( \'\' == $d )
+		$date = mysql2date(get_option(\'time_format\'), $comment_date, $translate);
+	else
+		$date = mysql2date($d, $comment_date, $translate);
+	return apply_filters(\'get_comment_time\', $date, $d, $gmt, $translate);
+}
+</code></pre><pre><code>function get_comment_date( $d = \'\' ) {
+	global $comment;
+	if ( \'\' == $d )
+		$date = mysql2date(get_option(\'date_format\'), $comment-&gt;comment_date_gmt);
+	else
+		$date = mysql2date($d, $comment-&gt;comment_date_gmt);
+	return apply_filters(\'get_comment_date\', $date, $d);
+}
+</code></pre><p>我把 $comment-&gt;comment_date 修改为 $comment-&gt;comment_date_gmt 就正常了。</p>
+<p>搞定了，现在直接显示 GMT 处的时间，修改的文件是 /wp-includes/comment-template.php。</p>
+<h2 id="二-linux-常用命令">二. Linux 常用命令：</h2>
+<pre><code>-bash-3.2# ls
+bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
+//这个命令和 Windows 下面的 Dir 原理相同
+</code></pre><pre><code>-bash-3.2# ls -al
+//这个命令可以同时查看文件的权限大小以及修改日期等等信息
+total 40
+drwxr-x---  3 root root 4096 Jul  8 05:43 .
+drwxr-xr-x 21 root root 4096 Jul  6 02:16 ..
+-rw-------  1 root root 9858 Jul  8 22:03 .bash_history
+-rwxrwxrwx  1 root root  575 Jul  8 04:55 bak.sh
+drwxr-xr-x  3 root root 4096 Jul  6 08:14 downloads
+lrwxrwxrwx  1 root root    5 Jul  6 06:53 home -&gt; /home
+-rwxr-xr-x  1 root root 2628 Jul  5 23:53 lnmp
+lrwxrwxrwx  1 root root   21 Jul  8 05:43 nconf -&gt; /usr/local/nginx/conf
+-rwxr-xr-x  1 root root 1335 Jul  6 09:03 pureftpd
+-rwxrwxrwx  1 root root   80 Jul  5 23:53 run.sh
+</code></pre><pre><code>-bash-3.2# df -lh
+//这个命令可以查看磁盘信息
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1             9.6G  2.3G  6.9G  25% /
+</code></pre><pre><code>-bash-3.2# top
+//这个命令就像任务管理器一样，按 Shift+&lt; Shift+&gt; 翻页
+top - 22:25:53 up 2 days, 20:10,  1 user,  load average: 0.02, 0.03, 0.00
+Tasks:  53 total,   1 running,  52 sleeping,   0 stopped,   0 zombie
+Cpu(s):  0.4%us,  0.0%sy,  0.0%ni, 99.5%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Mem:    262320k total,   249892k used,    12428k free,    21116k buffers
+Swap:   524280k total,       32k used,   524248k free,    84420k cached
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+    1 root      15   0  2172  740  640 S  0.0  0.3   0:00.06 init
+    2 root      RT  -5     0    0    0 S  0.0  0.0   0:00.00 migration/0
+    3 root      34  19     0    0    0 S  0.0  0.0   0:00.00 ksoftirqd/0
+    4 root      RT  -5     0    0    0 S  0.0  0.0   0:00.00 watchdog/0
+    5 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 events/0
+    6 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 khelper
+    7 root      12  -5     0    0    0 S  0.0  0.0   0:00.00 kthread
+    9 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 xenwatch
+   10 root      17  -5     0    0    0 S  0.0  0.0   0:00.00 xenbus
+   16 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 kblockd/0
+   17 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 cqueue/0
+   21 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 khubd
+   23 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 kseriod
+   83 root      15   0     0    0    0 S  0.0  0.0   0:00.02 pdflush
+   84 root      15   0     0    0    0 S  0.0  0.0   0:00.02 pdflush
+   85 root      10  -5     0    0    0 S  0.0  0.0   0:00.08 kswapd0
+   86 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 aio/0
+</code></pre><pre><code>-bash-3.2# ls
+bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
+-bash-3.2# cd downloads
+//cd 命令和 Windows 下面用法几乎一样，但是返回上层目录是 cd ../
+-bash-3.2# ls
+lnmp0.4-full.tar.gz  openvpn-as-1.5.0-CentOS5.x86_64.rpm
+lnmpi                pptpd-1.3.4-1.rhel5.1.i386.rpm
+-bash-3.2#
+</code></pre><ul>
+	
+</ul></section>
+
+	<aside>
+
+
+
+</aside>
+
+</article>
+
+<p class="back-to-posts"><a href="/">[back]</a></p>
+
+	</main>
+	<footer role="contentinfo">
+	<br />
+	&copy; 2017-2020 <a href="/">Evlos.blog()</a>
+  <p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p>
+	<div>
+
+
+
+
+
+
+
+
+</div>
+</footer>
+
+	
+
+</body>
+
+</html>

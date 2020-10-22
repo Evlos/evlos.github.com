@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>[[Evlos]]</title>
+    <title>Evlos.blog()</title>
     <link>/</link>
-    <description>Recent content on [[Evlos]]</description>
+    <description>Recent content on Evlos.blog()</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Jan 2020 02:15:35 +0800</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 29 Jan 2020 02:15:35 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Unheard (本体 / DLC 1 / 2 / 3) 剧情解析</title>
       <link>/posts/unheard/</link>
@@ -172,6 +168,90 @@ FROM ubuntu:latest MAINTAINER Evlos &amp;lt;4tyle8@gmail.com&amp;gt; ADD sources
       <guid>/posts/hello-world/</guid>
       <description>以下内容生成自 Lorem Ipsum，用以抒发我复杂的思想感情：
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nulla ante, iaculis et dignissim at, condimentum vitae augue. Donec quis ante vitae orci aliquet aliquam. Nunc ut arcu neque. Fusce non scelerisque augue, at maximus erat. Maecenas quis lorem sed mi ornare molestie. Pellentesque dictum purus cursus dui ornare, nec convallis elit iaculis. Morbi in consectetur orci. Quisque augue massa, convallis vitae ullamcorper non, laoreet at risus.</description>
+    </item>
+    
+    <item>
+      <title>成功把 Ajax 提交评论效果添加到 Zbench</title>
+      <link>/posts/1966_add-ajax-comment-to-zbench/</link>
+      <pubDate>Thu, 22 Jul 2010 02:05:25 +0800</pubDate>
+      
+      <guid>/posts/1966_add-ajax-comment-to-zbench/</guid>
+      <description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+ 话说我碰巧在 5d6d 子论坛看到个很牛的 Ajax 评论提交效果，显示非常好，与一般提交几乎一样呢。
+所以立马开始动手折腾。不过具体折腾内容我只能透露一部分额，不然影响原作者的销售就不好了。
+&amp;lt;img src=\&#39;http://www.evlos.org/ev-box/myimg/uploads/Cap0000535.png\&#39; /&amp;gt; 一. 部分 Zbench 的 CSS 修正： 上次的修改还是没有达到我心中的完美样式，所以咱们继续补充，添加 Wp-pagenavi 的 CSS 代码。
+.wp-pagenavi .page{padding:0 4px;} .wp-pagenavi .pages{padding-right:5px} .wp-pagenavi .current{padding:0 4px;} .wp-pagenavi .nextpostslink{padding:0 4px;} .wp-pagenavi .larger{} .wp-pagenavi .last{padding:0 5px;} //补上 Wp-pagenavi 插件的 CSS .post .entry img{position:relative;left:-2px;} //文章中图片整体向左偏移 2px #footer-inside #back-to-top{position:absolute;top:5px;right:10px;font-size:12px;border:none;color:#AAA;} //TOP按键向右偏移 20px 二. Ajax 效果预览： 标题下方的图片是进行 AJAX 提交之后的效果图，看起来和无 AJAX 提交的时候的效果几乎一摸一样。 下面则是点击提交按键之后的效果。
+&amp;lt;img src=\&#39;http://www.evlos.org/ev-box/myimg/uploads/Cap0000534.png\&#39; /&amp;gt; 三. 添加 Ajax 效果的部分步骤： 我只能透露一部分的修改过程，需要的童鞋请到 &amp;lt;a target=&#39;_blank&#39; rel=&#39;nofollow&#39; href=&#39;http://zww.</description>
+    </item>
+    
+    <item>
+      <title>Wordpress 的 Linux VPS 时间校正</title>
+      <link>/posts/1957_correct-the-time-of-linux_vps/</link>
+      <pubDate>Thu, 08 Jul 2010 22:36:20 +0800</pubDate>
+      
+      <guid>/posts/1957_correct-the-time-of-linux_vps/</guid>
+      <description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+ 这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
+&amp;lt;img src=\&#39;http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\&#39; /&amp;gt; 一. Wordpress 的 Linux VPS 时间校正： 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。
+而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
+-bash-3.2# date // \&amp;quot;-bash-3.2#\&amp;quot; 是命令提示，就像 Win 下面的 \&amp;quot;C:\\Documents and Settings\\Administrator&amp;gt;\&amp;quot; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。
+数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
+function get_comment_time( $d = \&#39;\&#39;, $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?</description>
+    </item>
+    
+    <item>
+      <title>Gregarius 0.6.1 的错误函数修正</title>
+      <link>/posts/1261_fix-the-function-of-gregarius-061/</link>
+      <pubDate>Thu, 03 Dec 2009 00:47:09 +0800</pubDate>
+      
+      <guid>/posts/1261_fix-the-function-of-gregarius-061/</guid>
+      <description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+ 最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。
+由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。
+&amp;lt;img src=\&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg\&amp;quot; /&amp;gt; 像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
+因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。
+1. Eregi 函数的语法： int eregi(string pattern,string string [,array regs]); 2. Eregi 函数的解释： 搜寻 string 来和 pattern 的正规表示比对。
+若找到比对则会呼叫第三个参数 regs，比对的结果会储存在 regs 的元素之中。
+$regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs[2] 为符合第二个括弧的部份字符串。
+以此类推，$regs[0] 为参数 string。
+如果 ereg() 找到比对，则 $regs 会被十个元素来填满，即使是多于或少于十个括弧内的部份字符串。
+也可以比对，这将不影响 ereg() 去比对更多部份字符串的能力。如果比对不到，$regs 将不会被 ereg() 改变。
+搜寻是不区分大小写的。</description>
+    </item>
+    
+    <item>
+      <title>使用本地 DNS 缓存加速上网</title>
+      <link>/posts/1292_use-local-dns-cache-to-speed-up/</link>
+      <pubDate>Wed, 02 Dec 2009 14:36:36 +0800</pubDate>
+      
+      <guid>/posts/1292_use-local-dns-cache-to-speed-up/</guid>
+      <description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+ 一般来说查询一次 DNS 需要 20-120ms 的时间，查询几次看起来不多，但是累积起来就大了。
+图上是我 24 小时进行查询的网址数，大概 2893 条。
+&amp;lt;img src=\&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0562.jpg\&amp;quot; /&amp;gt; 1. 使用说明： 下载并运行 Dnsspeeder 即可，他会自动把你的 DNS 服务器设置为 127.0.0.1 的本地地址。
+左上角的下拉菜单是缓存时间，默认是一个小时，不过我是设置成了 24 小时，效果可能更明显一点。
+左下角的表示启动时自动隐藏在系统托盘，这样需要开机启动只要勾选并拉到开始菜单的启动项里就好了。
+缓存 24 小时的弊端是某些网站使用了动态的 IP ，这样会是它们无法被访问。
+要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description>
+    </item>
+    
+    <item>
+      <title>博客架设完成</title>
+      <link>/posts/1_init/</link>
+      <pubDate>Sat, 03 Oct 2009 00:40:50 +0800</pubDate>
+      
+      <guid>/posts/1_init/</guid>
+      <description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+ 以前是 toblog.net
+但是因为 ASP 和 Boblog 的原因关闭了
+域名也送给我的一个老师
+这个可以说是它的延续
+2009.10：
+ 正式开放
+ 2009.9：
+ Evlos.org
+  Host by Gegehost
+ </description>
     </item>
     
   </channel>
