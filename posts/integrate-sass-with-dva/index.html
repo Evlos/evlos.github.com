@@ -1,101 +1,11 @@
-<!DOCTYPE html>
-<html lang="en-us">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	
-	<title>Evlos.blog()  | 如何在 dva 中使用 sass</title>
-	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<meta name="generator" content="Hugo 0.75.1" />
-	
-	
-	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-	
-
-	
-	
-	
-
-	
-
-	
-
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-66839894-6');
-  </script>
-</head>
-
-<body>
-	
-
-<header>
-	<div>
-		<nav role="navigation">
-	<div>
-		<a href="/">
-			Evlos.blog()
-		</a>
-		<div>
-			
-			
-			<ul>
-				
-				<li>
-					<a href="/" title="Home page">
-						Home
-					</a>
-				</li>
-				
-			</ul>
-			
-			
-
-
-
-
-
-
-
-
-
-		</div>
-	</div>
-</nav>
-	</div>
-</header>
-
-	<main role="main">
-		
-
-<article>
-
-	<header>
-		<p>
-			
-			POSTS
-		</p>
-		<h1>如何在 dva 中使用 sass</h1>
-		
-		<time datetime="2016-10-26T17:47:01&#43;08:00">October 26, 2016</time>
-	</header>
-
-	<section><p>安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中</p>
-<pre><code>webpackConfig.module.loaders.forEach(function(loader, index) {
-</code></pre><p>之上（其实只要在这个 function 里面都可以），添加以下代码：</p>
-<pre><code>webpackConfig.module.loaders.push({
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Evlos.blog() | 如何在 dva 中使用 sass</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=generator content="Hugo 0.76.5"><meta name=ROBOTS content="NOINDEX, NOFOLLOW"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-66839894-6');</script></head><body><header><div><nav role=navigation><div><a href=/>Evlos.blog()</a><div><ul><li><a href=/ title="Home page">Home</a></li></ul></div></div></nav></div></header><main role=main><article><header><p>POSTS</p><h1>如何在 dva 中使用 sass</h1><time datetime=2016-10-26T17:47:01+08:00>October 26, 2016</time></header><section><p>安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中</p><pre><code>webpackConfig.module.loaders.forEach(function(loader, index) {
+</code></pre><p>之上（其实只要在这个 function 里面都可以），添加以下代码：</p><pre><code>webpackConfig.module.loaders.push({
   test: /\.module\.sass$/,
   loader: path.join(path.dirname(require.resolve('extract-text-webpack-plugin')), 'loader.js') + '?{&quot;remove&quot;:true}!css?sourceMap&amp;modules&amp;localIdentName=[local]___[hash:base64:5]&amp;-autoprefixer!' + 'postcss-loader!'+ 'sass-loader?sourceMap'
 });
-</code></pre><p>然后在</p>
-<pre><code>webpackConfig.module.loaders.forEach(function(loader, index) {
-</code></pre><p>之下添加以下代码即可：</p>
-<pre><code>if (typeof loader.test === 'function' &amp;&amp; loader.test.toString().indexOf('\\.sass$') &gt; -1) {
+</code></pre><p>然后在</p><pre><code>webpackConfig.module.loaders.forEach(function(loader, index) {
+</code></pre><p>之下添加以下代码即可：</p><pre><code>if (typeof loader.test === 'function' &amp;&amp; loader.test.toString().indexOf('\\.sass$') &gt; -1) {
   loader.include = /node_modules/;
   loader.test = /\.sass$/;
 }
@@ -103,39 +13,4 @@ if (loader.test.toString() === '/\\.module\\.sass$/') {
   loader.exclude = /node_modules/;
   loader.test = /\.sass$/;
 }
-</code></pre><ul>
-	
-</ul></section>
-
-	<aside>
-
-
-
-</aside>
-
-</article>
-
-<p class="back-to-posts"><a href="/">[back]</a></p>
-
-	</main>
-	<footer role="contentinfo">
-	<br />
-	&copy; 2009-2020 <a href="/">Evlos.blog()</a>
-  <p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p>
-	<div>
-
-
-
-
-
-
-
-
-</div>
-</footer>
-
-	
-
-</body>
-
-</html>
+</code></pre><ul></ul></section><aside></aside></article><p class=back-to-posts><a href=/>[back]</a></p></main><footer role=contentinfo><br>&copy; 2009-2020 <a href=/>Evlos.blog()</a><p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p><div></div></footer></body></html>

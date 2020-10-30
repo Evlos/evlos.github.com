@@ -1,115 +1,21 @@
-<!DOCTYPE html>
-<html lang="en-us">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	
-	<title>Evlos.blog()  | SwiftUI Note</title>
-	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<meta name="generator" content="Hugo 0.75.1" />
-	
-	
-	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-	
-
-	
-	
-	
-
-	
-
-	
-
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-66839894-6');
-  </script>
-</head>
-
-<body>
-	
-
-<header>
-	<div>
-		<nav role="navigation">
-	<div>
-		<a href="/">
-			Evlos.blog()
-		</a>
-		<div>
-			
-			
-			<ul>
-				
-				<li>
-					<a href="/" title="Home page">
-						Home
-					</a>
-				</li>
-				
-			</ul>
-			
-			
-
-
-
-
-
-
-
-
-
-		</div>
-	</div>
-</nav>
-	</div>
-</header>
-
-	<main role="main">
-		
-
-<article>
-
-	<header>
-		<p>
-			
-			POSTS
-		</p>
-		<h1>SwiftUI Note</h1>
-		
-		<time datetime="2020-01-03T15:02:43&#43;08:00">January 3, 2020</time>
-	</header>
-
-	<section><h2 id="icon">Icon</h2>
-<pre><code>Image(systemName: &quot;star.fill&quot;).imageScale(.medium).foregroundColor(.yellow)
-</code></pre><h2 id="bool">Bool</h2>
-<pre><code>bool.toggle()
-</code></pre><h2 id="binding">Binding</h2>
-<pre><code>@State private var isPlaying: Bool = false
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Evlos.blog() | SwiftUI Note</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=generator content="Hugo 0.76.5"><meta name=ROBOTS content="NOINDEX, NOFOLLOW"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-66839894-6');</script></head><body><header><div><nav role=navigation><div><a href=/>Evlos.blog()</a><div><ul><li><a href=/ title="Home page">Home</a></li></ul></div></div></nav></div></header><main role=main><article><header><p>POSTS</p><h1>SwiftUI Note</h1><time datetime=2020-01-03T15:02:43+08:00>January 3, 2020</time></header><section><h2 id=icon>Icon</h2><pre><code>Image(systemName: &quot;star.fill&quot;).imageScale(.medium).foregroundColor(.yellow)
+</code></pre><h2 id=bool>Bool</h2><pre><code>bool.toggle()
+</code></pre><h2 id=binding>Binding</h2><pre><code>@State private var isPlaying: Bool = false
 
 PlayButton(isPlaying: $isPlaying)
 </code></pre><pre><code>struct PlayButton : View {
 
 @Binding var isPlaying: Bool
-</code></pre><h2 id="onreceive">OnReceive</h2>
-<pre><code>.onReceive(PodcastPlayer.currentTimePublisher) { newCurrentTime in
+</code></pre><h2 id=onreceive>OnReceive</h2><pre><code>.onReceive(PodcastPlayer.currentTimePublisher) { newCurrentTime in
   self.currentTime = newCurrentTime
 }
-</code></pre><h2 id="weak">Weak</h2>
-<pre><code>DispatchQueue.main.async { [weak self] in
+</code></pre><h2 id=weak>Weak</h2><pre><code>DispatchQueue.main.async { [weak self] in
 DispatchQueue.global(qos: .background).async { [weak self] in
   guard let strongSelf = self else { return }
 
 weak var owner: Person?
-</code></pre><p><a href="https://www.appcoda.com/memory-management-swift/">https://www.appcoda.com/memory-management-swift/</a></p>
-<p>Product &gt; Profile &gt; Leaks</p>
-<h2 id="ui-tweaking">UI Tweaking</h2>
-<pre><code>.padding([.leading, .trailing])
+</code></pre><p><a href=https://www.appcoda.com/memory-management-swift/>https://www.appcoda.com/memory-management-swift/</a></p><p>Product > Profile > Leaks</p><h2 id=ui-tweaking>UI Tweaking</h2><pre><code>.padding([.leading, .trailing])
 .font(.caption)
 
 HStack {
@@ -119,9 +25,7 @@ HStack {
 }
 .lineLimit(1)
 
-</code></pre><p>237_building_custom_views_with_swiftui.pdf</p>
-<p>// Animation and draw grphaic</p>
-<pre><code>List(previousOrders) { order in
+</code></pre><p>237_building_custom_views_with_swiftui.pdf</p><p>// Animation and draw grphaic</p><pre><code>List(previousOrders) { order in
  HStack {
  VStack(alignment: .leading) {
  Text(order.summary)
@@ -202,9 +106,7 @@ Toggle(isOn: $order.includeSalt) {}
 Form {}
 .accentColor(Color(&quot;avocadoGreen&quot;))
 .disabled(!connectedToToastNetwork)
-</code></pre><p>216_swiftui_essentials.pdf</p>
-<h2 id="combine">Combine</h2>
-<pre><code>@Published var username: String = &quot;&quot;
+</code></pre><p>216_swiftui_essentials.pdf</p><h2 id=combine>Combine</h2><pre><code>@Published var username: String = &quot;&quot;
 var validatedUsername: AnyPublisher&lt;String?, Never&gt; {
  return $username
  .debounce(for: 0.5, scheduler: RunLoop.main)
@@ -247,48 +149,4 @@ override func viewDidLoad() {
  .receive(on: RunLoop.main)
  .assign(to: \.isEnabled, on: signupButton)
 }
-</code></pre><h2 id="resources">Resources</h2>
-<ul>
-<li><a href="https://www.jianshu.com/p/441930138de2">https://www.jianshu.com/p/441930138de2</a></li>
-<li><a href="https://fuckingswiftui.com/">https://fuckingswiftui.com/</a></li>
-<li><a href="https://www.hackingwithswift.com/quick-start/swiftui">https://www.hackingwithswift.com/quick-start/swiftui</a></li>
-<li><a href="https://www.hackingwithswift.com/100/swiftui">https://www.hackingwithswift.com/100/swiftui</a></li>
-<li><a href="https://swiftui-lab.com/">https://swiftui-lab.com/</a></li>
-<li><a href="https://swiftui-lab.com/custom-styling/">https://swiftui-lab.com/custom-styling/</a></li>
-</ul>
-<ul>
-	
-</ul></section>
-
-	<aside>
-
-
-
-</aside>
-
-</article>
-
-<p class="back-to-posts"><a href="/">[back]</a></p>
-
-	</main>
-	<footer role="contentinfo">
-	<br />
-	&copy; 2009-2020 <a href="/">Evlos.blog()</a>
-  <p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p>
-	<div>
-
-
-
-
-
-
-
-
-</div>
-</footer>
-
-	
-
-</body>
-
-</html>
+</code></pre><h2 id=resources>Resources</h2><ul><li><a href=https://www.jianshu.com/p/441930138de2>https://www.jianshu.com/p/441930138de2</a></li><li><a href=https://fuckingswiftui.com/>https://fuckingswiftui.com/</a></li><li><a href=https://www.hackingwithswift.com/quick-start/swiftui>https://www.hackingwithswift.com/quick-start/swiftui</a></li><li><a href=https://www.hackingwithswift.com/100/swiftui>https://www.hackingwithswift.com/100/swiftui</a></li><li><a href=https://swiftui-lab.com/>https://swiftui-lab.com/</a></li><li><a href=https://swiftui-lab.com/custom-styling/>https://swiftui-lab.com/custom-styling/</a></li></ul><ul></ul></section><aside></aside></article><p class=back-to-posts><a href=/>[back]</a></p></main><footer role=contentinfo><br>&copy; 2009-2020 <a href=/>Evlos.blog()</a><p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p><div></div></footer></body></html>
