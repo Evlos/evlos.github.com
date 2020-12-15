@@ -1,0 +1,119 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Evlos.blog() | Message forwarding based on WeChatExtension</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=generator content="Hugo 0.79.0"><meta name=ROBOTS content="NOINDEX, NOFOLLOW"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-66839894-6');</script></head><body><header><div><nav role=navigation><div><a href=/>Evlos.blog()</a><div><ul><li><a href=/ title="Home page">Home</a></li></ul></div></div></nav></div></header><main role=main><article><header><p>POSTS</p><h1>Message forwarding based on WeChatExtension</h1><time datetime=2020-12-15T10:53:25+08:00>December 15, 2020</time></header><section><h2 id=确认-hook-的调用位置>确认 Hook 的调用位置</h2><p><a href=https://github.com/MustangYM/WeChatExtension-ForMac/blob/aa270ddaa3e7b38143c420332d2c24e9cab9aec8/WeChatExtension/WeChatExtension/Sources/Hook/WeChat%2Bhook.m>https://github.com/MustangYM/WeChatExtension-ForMac/blob/aa270ddaa3e7b38143c420332d2c24e9cab9aec8/WeChatExtension/WeChatExtension/Sources/Hook/WeChat%2Bhook.m</a></p><pre><code>- (void)autoForwardingWithMsg:(AddMsg *)msg
+{
+    if (![[YMWeChatPluginConfig sharedConfig] autoForwardingEnable]) {
+         return;
+    }
+    if (msg.msgType != 1) {
+         return;
+    }
+
+    NSString *userName = msg.fromUserName.string;
+
+    MMSessionMgr *sessionMgr = [[objc_getClass(&quot;MMServiceCenter&quot;) defaultCenter] getService:objc_getClass(&quot;MMSessionMgr&quot;)];
+
+    WCContactData *msgContact = nil;
+    if (LargerOrEqualVersion(@&quot;2.3.26&quot;)) {
+        msgContact = [sessionMgr getSessionContact:userName];
+    } else {
+        msgContact = [sessionMgr getContact:userName];
+    }
+    if ([msgContact isBrandContact] || [msgContact isSelf]) {
+        return;
+    }
+    VAutoForwardingModel *model = [[YMWeChatPluginConfig sharedConfig] VAutoForwardingModel];
+
+    if ([[YMWeChatPluginConfig sharedConfig] autoForwardingAllFriend]) {
+        if (![msgContact isGroupChat]) {
+            [self forwardingWithMsg:msg];
+        }
+    }
+    [model.forwardingFromContacts enumerateObjectsUsingBlock:^(NSString *fromWxid, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([fromWxid isEqualToString:userName]) {
+            if ([fromWxid containsString:@&quot;@chatroom&quot;]) {
+                [self forwardingWithMsg:msg];
+            } else {
+                if (![[YMWeChatPluginConfig sharedConfig] autoForwardingAllFriend]) {
+                    [self forwardingWithMsg:msg];
+                }
+            }
+        }
+    }];
+}
+</code></pre><h2 id=确认消息数据结构>确认消息数据结构</h2><p><a href=https://github.com/MustangYM/WeChatExtension-ForMac/blob/784093070d11a5d46e03e332cdf350a37f2175a9/WeChatExtension/WeChatExtension/WeChatPlugin.h>https://github.com/MustangYM/WeChatExtension-ForMac/blob/784093070d11a5d46e03e332cdf350a37f2175a9/WeChatExtension/WeChatExtension/WeChatPlugin.h</a></p><pre><code>@interface AddMsg : NSObject
++ (id)parseFromData:(id)arg1;
+...
+@property(retain, nonatomic, setter=SetContent:) SKBuiltinString_t *content;
+@property(retain, nonatomic, setter=SetFromUserName:) SKBuiltinString_t *fromUserName;
+@property(nonatomic, setter=SetMsgType:) int msgType;
+@property(retain, nonatomic, setter=SetToUserName:) SKBuiltinString_t *toUserName;
+@property (nonatomic, assign) unsigned int createTime;
+@property(nonatomic, setter=SetNewMsgId:) long long newMsgId;
+@property (nonatomic, strong) SKBuiltinBuffer_t *imgBuf;
+@end
+</code></pre><h2 id=改造方法-草稿未运行>改造方法 (草稿，未运行)</h2><pre><code>if ([[YMWeChatPluginConfig sharedConfig] autoForwardingAllFriend]) {
+  [self forwardingWithMsgToRedis:msg];
+}
+
+- (void)forwardingWithMsgToRedis:(AddMsg *)msg
+{
+    MMSessionMgr *sessionMgr = [[objc_getClass(&quot;MMServiceCenter&quot;) defaultCenter] getService:objc_getClass(&quot;MMSessionMgr&quot;)];
+    NSString *userName = msg.fromUserName.string;
+
+    WCContactData *msgContact = nil;
+    if (LargerOrEqualVersion(@&quot;2.3.26&quot;)) {
+        msgContact = [sessionMgr getSessionContact:userName];
+    } else {
+        msgContact = [sessionMgr getContact:userName];
+    }
+
+    NSString *content = @&quot;&quot;;
+    NSString *desc = @&quot;&quot;;
+
+    ObjCHiredis * redis = [ObjCHiredis redis:@&quot;127.0.0.1&quot; on:[NSNumber numberWithInt:6379]];
+    if ([msgContact isGroupChat]) {
+        NSArray *contents = [msg.content.string componentsSeparatedByString:@&quot;:\n&quot;];
+        NSString *groupMemberWxid = contents[0];
+        MessageService *msgService = [[objc_getClass(&quot;MMServiceCenter&quot;) defaultCenter] getService:objc_getClass(&quot;MessageService&quot;)];
+        MessageData *msgData = [msgService GetMsgData:msg.fromUserName.string svrId:msg.newMsgId];
+        NSLog(@&quot;%@&quot;, msgData.groupChatSenderDisplayName);
+        NSString *groupMemberNickName = msgData.groupChatSenderDisplayName.length &gt; 0
+            ? msgData.groupChatSenderDisplayName : [YMIMContactsManager getGroupMemberNickName:groupMemberWxid];
+        content = contents[1];
+
+        let data: NSDictionary = [
+            &quot;msg_id&quot;: msg.newMsgId,
+            &quot;create_time&quot;: msg.createTime,
+            &quot;username&quot;: userName,
+            &quot;nickname&quot;: groupMemberNickName,
+            &quot;msg_type&quot;: &quot;Text&quot;,
+            &quot;text&quot;: content,
+            &quot;chatroom_nickname&quot;: msgContact.m_nsNickName,
+            &quot;mark&quot;: &quot;text&quot;,
+        ]
+    } else {
+        content = msg.content.string;
+        NSString *nickName = [msgContact.m_nsRemark isEqualToString:@&quot;&quot;] ? msgContact.m_nsNickName : msgContact.m_nsRemark;
+
+        let data: NSDictionary = [
+            &quot;msg_id&quot;: msg.newMsgId,
+            &quot;create_time&quot;: msg.createTime,
+            &quot;username&quot;: userName,
+            &quot;nickname&quot;: nickName,
+            &quot;msg_type&quot;: &quot;Text&quot;,
+            &quot;text&quot;: content,
+            &quot;mark&quot;: &quot;group_text&quot;,
+        ]
+    }
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data
+                                                       options:0
+                                                         error:&amp;error];
+    if (!jsonData) {
+        NSLog(@&quot;Got an error: %@&quot;, error);
+    } else {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    id retVal = [redis commandArgv:[NSArray arrayWithObjects: @&quot;RPUSH&quot;, @&quot;wechat_msg&quot;, jsonString, nil]];
+}
+</code></pre><ul></ul></section><aside></aside></article><p class=back-to-posts><a href=/>[back]</a></p></main><footer role=contentinfo><br>&copy; 2009-2020 <a href=/>Evlos.blog()</a><p>Theme: CSS-every-working-day-but-not-today made by Evlos.</p><div></div></footer></body></html>
