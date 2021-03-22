@@ -116,6 +116,8 @@ pre {
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #banner a {
   color: white;
