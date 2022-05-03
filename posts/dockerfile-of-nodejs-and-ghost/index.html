@@ -1,55 +1,9 @@
-<!doctype html><html lang=en-us>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
 2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit. GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied fatal: cannot update HEAD ref 发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。
-然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。">
-<meta property="og:title" content="升级 Windows 10 后 Git 因无权限无法 commit">
-<meta property="og:description" content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
+然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。"><meta property="og:title" content="升级 Windows 10 后 Git 因无权限无法 commit"><meta property="og:description" content="我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：
 2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit. GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied fatal: cannot update HEAD ref 发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。
-然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="/posts/dockerfile-of-nodejs-and-ghost/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2015-08-30T12:44:13+08:00">
-<meta property="article:modified_time" content="2015-08-30T12:44:13+08:00">
-<title>
-升级 Windows 10 后 Git 因无权限无法 commit
-</title>
-<link rel=canonical href=/posts/dockerfile-of-nodejs-and-ghost/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-66839894-6')</script>
-</head>
-<body lang>
-<section class="main post">
-<div class=container>
-<div class=content>
-<div class=front-matter>
-<div class=title-container>
-<h2>
-升级 Windows 10 后 Git 因无权限无法 commit
-</h2>
-</div>
-<div class=meta>
-<div class=date title="Sun Aug 30 2015 12:44:13 +0800">Aug 30, 2015</div>
-<div class=reading-time><div class=middot></div></div>
-</div>
-</div>
-<div class=markdown>
-<p>我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：</p>
-<pre tabindex=0><code>2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit.
+然后勾选底部的 使用可从此对象继承的权限项目替换所有子对象的权限项目，再点确定，问题即修复，可以正常 commit 啦。"><meta property="og:type" content="article"><meta property="og:url" content="/posts/dockerfile-of-nodejs-and-ghost/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2015-08-30T12:44:13+08:00"><meta property="article:modified_time" content="2015-08-30T12:44:13+08:00"><title>升级 Windows 10 后 Git 因无权限无法 commit</title><link rel=canonical href=/posts/dockerfile-of-nodejs-and-ghost/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>升级 Windows 10 后 Git 因无权限无法 commit</h2></div><div class=meta><div class=date title="Sun Aug 30 2015 12:44:13 +0800">Aug 30, 2015</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p>我习惯用 Git 来备份 Windows 上面一些软件的配置文件，这两天刚升上 Windows 10，安装了 Github Desktop 之后却发现无法 commit 了，查看错误日志：</p><pre tabindex=0><code>2015-08-30 20:37:35.1597|WARN|thread: 1|StandardUserErrors|Showing user error Failed to create a new commit.
 GitHub.IO.ProcessException: error: Unable to append to .git/logs/refs/heads/master: Permission denied
 fatal: cannot update HEAD ref
-</code></pre><p>发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。</p>
-<p>然后勾选底部的 <code>使用可从此对象继承的权限项目替换所有子对象的权限项目</code>，再点确定，问题即修复，可以正常 commit 啦。</p>
-<br>
-<p class=back-to-posts><a href=/>[back]</a></p>
-</div>
-<br>
-</div>
-</div>
-</section>
+</code></pre><p>发现 Git 因为权限问题无法提交，当即到属性 - 安全 - 高级选项里面一看，发现所有者是 S-1-5-21 开头的无法识别的用户，看来升级的时候权限并没有自动处理好。这时点开所有者边上的更改，输入当前我们的 Windows 帐号名，可以只输入一部分，点击检查名称后会自动补全，最后点确定。</p><p>然后勾选底部的 <code>使用可从此对象继承的权限项目替换所有子对象的权限项目</code>，再点确定，问题即修复，可以正常 commit 啦。</p><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>

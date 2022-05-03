@@ -1,72 +1,24 @@
-<!doctype html><html lang=en-us>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中
 webpackConfig.module.loaders.forEach(function(loader, index) { 之上（其实只要在这个 function 里面都可以），添加以下代码：
 webpackConfig.module.loaders.push({ test: /\.module\.sass$/, loader: path.join(path.dirname(require.resolve('extract-text-webpack-plugin')), 'loader.js') + '?{&#34;remove&#34;:true}!css?sourceMap&modules&localIdentName=[local]___[hash:base64:5]&-autoprefixer!' + 'postcss-loader!'+ 'sass-loader?sourceMap' }); 然后在
 webpackConfig.module.loaders.forEach(function(loader, index) { 之下添加以下代码即可：
-if (typeof loader.test === 'function' && loader.test.toString().indexOf('\\.sass$') > -1) { loader.include = /node_modules/; loader.test = /\.sass$/; } if (loader.test.toString() === '/\\.module\\.sass$/') { loader.exclude = /node_modules/; loader.test = /\.sass$/; } ">
-<meta property="og:title" content="如何在 dva 中使用 sass">
-<meta property="og:description" content="安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中
+if (typeof loader.test === 'function' && loader.test.toString().indexOf('\\.sass$') > -1) { loader.include = /node_modules/; loader.test = /\.sass$/; } if (loader.test.toString() === '/\\.module\\.sass$/') { loader.exclude = /node_modules/; loader.test = /\.sass$/; } "><meta property="og:title" content="如何在 dva 中使用 sass"><meta property="og:description" content="安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中
 webpackConfig.module.loaders.forEach(function(loader, index) { 之上（其实只要在这个 function 里面都可以），添加以下代码：
 webpackConfig.module.loaders.push({ test: /\.module\.sass$/, loader: path.join(path.dirname(require.resolve('extract-text-webpack-plugin')), 'loader.js') + '?{&#34;remove&#34;:true}!css?sourceMap&modules&localIdentName=[local]___[hash:base64:5]&-autoprefixer!' + 'postcss-loader!'+ 'sass-loader?sourceMap' }); 然后在
 webpackConfig.module.loaders.forEach(function(loader, index) { 之下添加以下代码即可：
-if (typeof loader.test === 'function' && loader.test.toString().indexOf('\\.sass$') > -1) { loader.include = /node_modules/; loader.test = /\.sass$/; } if (loader.test.toString() === '/\\.module\\.sass$/') { loader.exclude = /node_modules/; loader.test = /\.sass$/; } ">
-<meta property="og:type" content="article">
-<meta property="og:url" content="/posts/integrate-sass-with-dva/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2016-10-26T17:47:01+08:00">
-<meta property="article:modified_time" content="2016-10-26T17:47:01+08:00">
-<title>
-如何在 dva 中使用 sass
-</title>
-<link rel=canonical href=/posts/integrate-sass-with-dva/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-66839894-6')</script>
-</head>
-<body lang>
-<section class="main post">
-<div class=container>
-<div class=content>
-<div class=front-matter>
-<div class=title-container>
-<h2>
-如何在 dva 中使用 sass
-</h2>
-</div>
-<div class=meta>
-<div class=date title="Wed Oct 26 2016 17:47:01 +0800">Oct 26, 2016</div>
-<div class=reading-time><div class=middot></div></div>
-</div>
-</div>
-<div class=markdown>
-<p>安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中</p>
-<pre tabindex=0><code>webpackConfig.module.loaders.forEach(function(loader, index) {
-</code></pre><p>之上（其实只要在这个 function 里面都可以），添加以下代码：</p>
-<pre tabindex=0><code>webpackConfig.module.loaders.push({
+if (typeof loader.test === 'function' && loader.test.toString().indexOf('\\.sass$') > -1) { loader.include = /node_modules/; loader.test = /\.sass$/; } if (loader.test.toString() === '/\\.module\\.sass$/') { loader.exclude = /node_modules/; loader.test = /\.sass$/; } "><meta property="og:type" content="article"><meta property="og:url" content="/posts/integrate-sass-with-dva/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2016-10-26T17:47:01+08:00"><meta property="article:modified_time" content="2016-10-26T17:47:01+08:00"><title>如何在 dva 中使用 sass</title><link rel=canonical href=/posts/integrate-sass-with-dva/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>如何在 dva 中使用 sass</h2></div><div class=meta><div class=date title="Wed Oct 26 2016 17:47:01 +0800">Oct 26, 2016</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p>安装 sass-loader 和 node-sass 之后，在 webpack.config.js 中</p><pre tabindex=0><code>webpackConfig.module.loaders.forEach(function(loader, index) {
+</code></pre><p>之上（其实只要在这个 function 里面都可以），添加以下代码：</p><pre tabindex=0><code>webpackConfig.module.loaders.push({
   test: /\.module\.sass$/,
-  loader: path.join(path.dirname(require.resolve('extract-text-webpack-plugin')), 'loader.js') + '?{&quot;remove&quot;:true}!css?sourceMap&amp;modules&amp;localIdentName=[local]___[hash:base64:5]&amp;-autoprefixer!' + 'postcss-loader!'+ 'sass-loader?sourceMap'
+  loader: path.join(path.dirname(require.resolve(&#39;extract-text-webpack-plugin&#39;)), &#39;loader.js&#39;) + &#39;?{&#34;remove&#34;:true}!css?sourceMap&amp;modules&amp;localIdentName=[local]___[hash:base64:5]&amp;-autoprefixer!&#39; + &#39;postcss-loader!&#39;+ &#39;sass-loader?sourceMap&#39;
 });
-</code></pre><p>然后在</p>
-<pre tabindex=0><code>webpackConfig.module.loaders.forEach(function(loader, index) {
-</code></pre><p>之下添加以下代码即可：</p>
-<pre tabindex=0><code>if (typeof loader.test === 'function' &amp;&amp; loader.test.toString().indexOf('\\.sass$') &gt; -1) {
+</code></pre><p>然后在</p><pre tabindex=0><code>webpackConfig.module.loaders.forEach(function(loader, index) {
+</code></pre><p>之下添加以下代码即可：</p><pre tabindex=0><code>if (typeof loader.test === &#39;function&#39; &amp;&amp; loader.test.toString().indexOf(&#39;\\.sass$&#39;) &gt; -1) {
   loader.include = /node_modules/;
   loader.test = /\.sass$/;
 }
-if (loader.test.toString() === '/\\.module\\.sass$/') {
+if (loader.test.toString() === &#39;/\\.module\\.sass$/&#39;) {
   loader.exclude = /node_modules/;
   loader.test = /\.sass$/;
 }
-</code></pre>
-<br>
-<p class=back-to-posts><a href=/>[back]</a></p>
-</div>
-<br>
-</div>
-</div>
-</section>
+</code></pre><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>

@@ -1,87 +1,39 @@
-<!doctype html><html lang=en-us>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
  这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
 <img src=\'http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\' /> 一. Wordpress 的 Linux VPS 时间校正： 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。
 而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
 -bash-3.2# date // \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator>\&#34; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。
 数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
-function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?">
-<meta property="og:title" content="Wordpress 的 Linux VPS 时间校正">
-<meta property="og:description" content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?"><meta property="og:title" content="Wordpress 的 Linux VPS 时间校正"><meta property="og:description" content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
  这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
 <img src=\'http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\' /> 一. Wordpress 的 Linux VPS 时间校正： 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。
 而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
 -bash-3.2# date // \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator>\&#34; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。
 数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
-function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?">
-<meta property="og:type" content="article">
-<meta property="og:url" content="/posts/1957_correct-the-time-of-linux_vps/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2010-07-08T22:36:20+08:00">
-<meta property="article:modified_time" content="2010-07-08T22:36:20+08:00">
-<title>
-Wordpress 的 Linux VPS 时间校正
-</title>
-<link rel=canonical href=/posts/1957_correct-the-time-of-linux_vps/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-66839894-6')</script>
-</head>
-<body lang>
-<section class="main post">
-<div class=container>
-<div class=content>
-<div class=front-matter>
-<div class=title-container>
-<h2>
-Wordpress 的 Linux VPS 时间校正
-</h2>
-</div>
-<div class=meta>
-<div class=date title="Thu Jul 8 2010 22:36:20 +0800">Jul 8, 2010</div>
-<div class=reading-time><div class=middot></div></div>
-</div>
-</div>
-<div class=markdown>
-<p>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。</p>
-<hr>
-<p>这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。</p>
-<pre tabindex=0><code>&lt;img src=\'http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\' /&gt;
-</code></pre><h2 id=一-wordpress-的-linux-vps-时间校正>一. Wordpress 的 Linux VPS 时间校正：</h2>
-<p>在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。</p>
-<p>而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。</p>
-<pre tabindex=0><code>-bash-3.2# date
-// \&quot;-bash-3.2#\&quot; 是命令提示，就像 Win 下面的 \&quot;C:\\Documents and Settings\\Administrator&gt;\&quot; 一样
+function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?"><meta property="og:type" content="article"><meta property="og:url" content="/posts/1957_correct-the-time-of-linux_vps/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2010-07-08T22:36:20+08:00"><meta property="article:modified_time" content="2010-07-08T22:36:20+08:00"><title>Wordpress 的 Linux VPS 时间校正</title><link rel=canonical href=/posts/1957_correct-the-time-of-linux_vps/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>Wordpress 的 Linux VPS 时间校正</h2></div><div class=meta><div class=date title="Thu Jul 8 2010 22:36:20 +0800">Jul 8, 2010</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。</p><hr><p>这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。</p><pre tabindex=0><code>&lt;img src=\&#39;http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\&#39; /&gt;
+</code></pre><h2 id=一-wordpress-的-linux-vps-时间校正>一. Wordpress 的 Linux VPS 时间校正：</h2><p>在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。</p><p>而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。</p><pre tabindex=0><code>-bash-3.2# date
+// \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator&gt;\&#34; 一样
 // date 是显示当前服务器时间的函数
 Thu Jul  8 04:03:59 CST 2010
-</code></pre><p>而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。</p>
-<p>数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。</p>
-<pre tabindex=0><code>function get_comment_time( $d = \'\', $gmt = false, $translate = true ) {
+</code></pre><p>而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。</p><p>数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。</p><pre tabindex=0><code>function get_comment_time( $d = \&#39;\&#39;, $gmt = false, $translate = true ) {
 	global $comment;
 	$comment_date = $gmt ? $comment-&gt;comment_date_gmt : $comment-&gt;comment_date_gmt;
-	if ( \'\' == $d )
-		$date = mysql2date(get_option(\'time_format\'), $comment_date, $translate);
+	if ( \&#39;\&#39; == $d )
+		$date = mysql2date(get_option(\&#39;time_format\&#39;), $comment_date, $translate);
 	else
 		$date = mysql2date($d, $comment_date, $translate);
-	return apply_filters(\'get_comment_time\', $date, $d, $gmt, $translate);
+	return apply_filters(\&#39;get_comment_time\&#39;, $date, $d, $gmt, $translate);
 }
-</code></pre><pre tabindex=0><code>function get_comment_date( $d = \'\' ) {
+</code></pre><pre tabindex=0><code>function get_comment_date( $d = \&#39;\&#39; ) {
 	global $comment;
-	if ( \'\' == $d )
-		$date = mysql2date(get_option(\'date_format\'), $comment-&gt;comment_date_gmt);
+	if ( \&#39;\&#39; == $d )
+		$date = mysql2date(get_option(\&#39;date_format\&#39;), $comment-&gt;comment_date_gmt);
 	else
 		$date = mysql2date($d, $comment-&gt;comment_date_gmt);
-	return apply_filters(\'get_comment_date\', $date, $d);
+	return apply_filters(\&#39;get_comment_date\&#39;, $date, $d);
 }
-</code></pre><p>我把 $comment->comment_date 修改为 $comment->comment_date_gmt 就正常了。</p>
-<p>搞定了，现在直接显示 GMT 处的时间，修改的文件是 /wp-includes/comment-template.php。</p>
-<h2 id=二-linux-常用命令>二. Linux 常用命令：</h2>
-<pre tabindex=0><code>-bash-3.2# ls
+</code></pre><p>我把 $comment->comment_date 修改为 $comment->comment_date_gmt 就正常了。</p><p>搞定了，现在直接显示 GMT 处的时间，修改的文件是 /wp-includes/comment-template.php。</p><h2 id=二-linux-常用命令>二. Linux 常用命令：</h2><pre tabindex=0><code>-bash-3.2# ls
 bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
 //这个命令和 Windows 下面的 Dir 原理相同
 </code></pre><pre tabindex=0><code>-bash-3.2# ls -al
@@ -135,11 +87,4 @@ bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
 lnmp0.4-full.tar.gz  openvpn-as-1.5.0-CentOS5.x86_64.rpm
 lnmpi                pptpd-1.3.4-1.rhel5.1.i386.rpm
 -bash-3.2#
-</code></pre>
-<br>
-<p class=back-to-posts><a href=/>[back]</a></p>
-</div>
-<br>
-</div>
-</div>
-</section>
+</code></pre><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
