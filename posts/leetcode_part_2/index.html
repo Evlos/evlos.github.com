@@ -3,8 +3,8 @@ Strings First Unique Character in a String 暂不做优化，啥时候要炫技�
 count = {} for i, j in enumerate(s): if j in count: count[j] += 1 else: count[j] = 1 for i, j in enumerate(s): if count[j] == 1: return i return -1 做完之后看到有别人用 set，find 和 rfind 来提高效率，以后可以参考。
 Valid Anagram 我这个答案不说效率，应该是最精简的了：
 return sorted(s) == sorted(t) 而且效率也不算很低：
- Your runtime beats 31.55 % of python3 submissions.
- 顺便提交到了评论区，看看别人的看法：
+Your runtime beats 31.55 % of python3 submissions.
+顺便提交到了评论区，看看别人的看法：
 https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/882/discuss/185617/Python-1-line-(using-only-1-built-in-function)
 Valid Palindrome 排除了字母和数字之外的数据之后，就好办了：
 j = '' for i in s: if i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789': j += i."><meta property="og:title" content="Leetcode Part 2"><meta property="og:description" content="https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/
@@ -12,12 +12,12 @@ Strings First Unique Character in a String 暂不做优化，啥时候要炫技�
 count = {} for i, j in enumerate(s): if j in count: count[j] += 1 else: count[j] = 1 for i, j in enumerate(s): if count[j] == 1: return i return -1 做完之后看到有别人用 set，find 和 rfind 来提高效率，以后可以参考。
 Valid Anagram 我这个答案不说效率，应该是最精简的了：
 return sorted(s) == sorted(t) 而且效率也不算很低：
- Your runtime beats 31.55 % of python3 submissions.
- 顺便提交到了评论区，看看别人的看法：
+Your runtime beats 31.55 % of python3 submissions.
+顺便提交到了评论区，看看别人的看法：
 https://leetcode.com/explore/featured/card/top-interview-questions-easy/127/strings/882/discuss/185617/Python-1-line-(using-only-1-built-in-function)
 Valid Palindrome 排除了字母和数字之外的数据之后，就好办了：
 j = '' for i in s: if i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789': j += i."><meta property="og:type" content="article"><meta property="og:url" content="/posts/leetcode_part_2/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2018-10-25T19:09:12+08:00"><meta property="article:modified_time" content="2018-10-25T19:09:12+08:00"><title>Leetcode Part 2</title><link rel=canonical href=/posts/leetcode_part_2/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>Leetcode Part 2</h2></div><div class=meta><div class=date title="Thu Oct 25 2018 19:09:12 +0800">Oct 25, 2018</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p><a href=https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/>https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p><h2 id=strings>Strings</h2><h3 id=first-unique-character-in-a-string>First Unique Character in a String</h3><p>暂不做优化，啥时候要炫技吓人再说：</p><pre tabindex=0><code>count = {}
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>Leetcode Part 2</h2></div><div class=meta><div class=date title='Thu Oct 25 2018 19:09:12 +0800'>Oct 25, 2018</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p><a href=https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/>https://leetcode.com/explore/featured/card/top-interview-questions-easy/92/array/646/</a></p><h2 id=strings>Strings</h2><h3 id=first-unique-character-in-a-string>First Unique Character in a String</h3><p>暂不做优化，啥时候要炫技吓人再说：</p><pre tabindex=0><code>count = {}
 for i, j in enumerate(s):
     if j in count:
         count[j] += 1
