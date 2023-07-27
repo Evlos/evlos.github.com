@@ -25,23 +25,23 @@
 </span></span><span style=display:flex><span>update-grub
 </span></span><span style=display:flex><span>update-initramfs
 </span></span><span style=display:flex><span>reboot
-</span></span></code></pre></div><h2 id=my-working-configuration>My working configuration:</h2><pre tabindex=0><code>bios: ovmf
-boot: order=scsi0
-cores: 2
-cpu: host
-cpuunits: 2048
-efidisk0: local-lvm:vm-105-disk-1,size=4M
-hostpci0: 42:00,pcie=1,x-vga=1
-ide2: none,media=cdrom
-machine: q35
-memory: 4096
-name: Miner
-net0: virtio=6E:26:42:2E:63:56,bridge=vmbr0,firewall=1
-numa: 0
-ostype: l26
-scsi0: local-lvm:vm-105-disk-0,size=1964M
-scsihw: virtio-scsi-pci
-smbios1: uuid=6c867c83-f66b-435d-81a6-863e4eb65979
-sockets: 1
-vmgenid: 01d0e964-274c-4c52-afe1-369c944779dc
-</code></pre><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
+</span></span></code></pre></div><h2 id=my-working-configuration>My working configuration:</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>bios: ovmf
+</span></span><span style=display:flex><span>boot: order<span style=color:#f92672>=</span>scsi0
+</span></span><span style=display:flex><span>cores: <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>cpu: host
+</span></span><span style=display:flex><span>cpuunits: <span style=color:#ae81ff>2048</span>
+</span></span><span style=display:flex><span>efidisk0: local-lvm:vm-105-disk-1,size<span style=color:#f92672>=</span>4M
+</span></span><span style=display:flex><span>hostpci0: 42:00,pcie<span style=color:#f92672>=</span>1,x-vga<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>ide2: none,media<span style=color:#f92672>=</span>cdrom
+</span></span><span style=display:flex><span>machine: q35
+</span></span><span style=display:flex><span>memory: <span style=color:#ae81ff>4096</span>
+</span></span><span style=display:flex><span>name: Miner
+</span></span><span style=display:flex><span>net0: virtio<span style=color:#f92672>=</span>6E:26:42:2E:63:56,bridge<span style=color:#f92672>=</span>vmbr0,firewall<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>numa: <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>ostype: l26
+</span></span><span style=display:flex><span>scsi0: local-lvm:vm-105-disk-0,size<span style=color:#f92672>=</span>1964M
+</span></span><span style=display:flex><span>scsihw: virtio-scsi-pci
+</span></span><span style=display:flex><span>smbios1: uuid<span style=color:#f92672>=</span>6c867c83-f66b-435d-81a6-863e4eb65979
+</span></span><span style=display:flex><span>sockets: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>vmgenid: 01d0e964-274c-4c52-afe1-369c944779dc
+</span></span></code></pre></div><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>

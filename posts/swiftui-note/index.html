@@ -3,153 +3,153 @@ Product > Profile > Leaks
 UI Tweaking .padding([.leading, .trailing]) .font(.caption) HStack { Text(&#34;Delicious&#34;) Image(&#34;20x20_avocado&#34;) Text(&#34;Avocado Toast&#34;)."><meta property="og:title" content="SwiftUI"><meta property="og:description" content="Icon Image(systemName: &#34;star.fill&#34;).imageScale(.medium).foregroundColor(.yellow) Bool bool.toggle() Binding @State private var isPlaying: Bool = false PlayButton(isPlaying: $isPlaying) struct PlayButton : View { @Binding var isPlaying: Bool OnReceive .onReceive(PodcastPlayer.currentTimePublisher) { newCurrentTime in self.currentTime = newCurrentTime } Weak DispatchQueue.main.async { [weak self] in DispatchQueue.global(qos: .background).async { [weak self] in guard let strongSelf = self else { return } weak var owner: Person? https://www.appcoda.com/memory-management-swift/
 Product > Profile > Leaks
 UI Tweaking .padding([.leading, .trailing]) .font(.caption) HStack { Text(&#34;Delicious&#34;) Image(&#34;20x20_avocado&#34;) Text(&#34;Avocado Toast&#34;)."><meta property="og:type" content="article"><meta property="og:url" content="/posts/swiftui-note/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-01-03T15:02:43+08:00"><meta property="article:modified_time" content="2020-01-03T15:02:43+08:00"><title>SwiftUI</title><link rel=canonical href=/posts/swiftui-note/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>SwiftUI</h2></div><div class=meta><div class=date title='Fri Jan 3 2020 15:02:43 +0800'>Jan 3, 2020</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><h2 id=icon>Icon</h2><pre tabindex=0><code>Image(systemName: &#34;star.fill&#34;).imageScale(.medium).foregroundColor(.yellow)
-</code></pre><h2 id=bool>Bool</h2><pre tabindex=0><code>bool.toggle()
-</code></pre><h2 id=binding>Binding</h2><pre tabindex=0><code>@State private var isPlaying: Bool = false
-
-PlayButton(isPlaying: $isPlaying)
-</code></pre><pre tabindex=0><code>struct PlayButton : View {
-
-@Binding var isPlaying: Bool
-</code></pre><h2 id=onreceive>OnReceive</h2><pre tabindex=0><code>.onReceive(PodcastPlayer.currentTimePublisher) { newCurrentTime in
-  self.currentTime = newCurrentTime
-}
-</code></pre><h2 id=weak>Weak</h2><pre tabindex=0><code>DispatchQueue.main.async { [weak self] in
-DispatchQueue.global(qos: .background).async { [weak self] in
-  guard let strongSelf = self else { return }
-
-weak var owner: Person?
-</code></pre><p><a href=https://www.appcoda.com/memory-management-swift/>https://www.appcoda.com/memory-management-swift/</a></p><p>Product > Profile > Leaks</p><h2 id=ui-tweaking>UI Tweaking</h2><pre tabindex=0><code>.padding([.leading, .trailing])
-.font(.caption)
-
-HStack {
- Text(&#34;Delicious&#34;)
- Image(&#34;20x20_avocado&#34;)
- Text(&#34;Avocado Toast&#34;).layoutPriority(1) // so it will not be compressed when HStack width is not enough
-}
-.lineLimit(1)
-</code></pre><p>237_building_custom_views_with_swiftui.pdf</p><p>// Animation and draw grphaic</p><pre tabindex=0><code>List(previousOrders) { order in
- HStack {
- VStack(alignment: .leading) {
- Text(order.summary)
- Text(order.purchaseDate)
- .font(.subheadline)
- .foregroundColor(.secondary)
- }
- Spacer()
- if order.includeSalt {
- SaltIcon()
- }
- }
-}
-
-struct IconOrientationEditor : View {
- let flipped: Bool
- var body: some View {
- ZStack {
- Color.gray
- AppIcon()
- .rotationEffect(.degrees(flipped ? 180 : 0))
- }
- }
-}
-
-Form {
- Button(action: submitOrder) { Text(&#34;Order&#34;) }
- Section(header: ) { Text(&#34;Avocado Toast&#34;).font(.title)
- }.
- Toggle(isOn: $order.includeSalt) { }
- Toggle(isOn: $order.includeRedPepperFlakes) { }
- Stepper(value: $order.quantity, in: 1...10) { }
- }
- Section {
- Button(action: submitOrder) { Text(&#34;Order&#34;) }
- }
-}
-
-Button(action: submitOrder) {
- VStack {
- Image(&#34;Toast&#34;)
- Text(&#34;Order&#34;)
- }
-}
-
-@State private var order: Order
-struct Order {
-
-enum Spread : CaseIterable, Hashable, Identifiable {
- case none
- case almondButter
- case peanutButter
- case honey
- case almou
- case tapenade
- case hummus
- case mayonnaise
- case kyopolou
- case adjvar
- case pindjur
- case vegemite
- case chutney
- case cannedCheese
- case feroce
- case kartoffelkase
- case tartarSauce
-}
-Picker(selection: $order.spread, label: Text(&#34;Spread&#34;)) {
- ForEach(Spread.allCases) { spread in
- Text(spread.name).tag(spread)
- }.
-}
-
-Button(action: submitOrder) { Text(&#34;Order&#34;) }
- .disabled(order.quantity == 0)
-Toggle(isOn: $order.includeSalt) {}
-
-Form {}
-.accentColor(Color(&#34;avocadoGreen&#34;))
-.disabled(!connectedToToastNetwork)
-</code></pre><p>216_swiftui_essentials.pdf</p><h2 id=combine>Combine</h2><pre tabindex=0><code>@Published var username: String = &#34;&#34;
-var validatedUsername: AnyPublisher&lt;String?, Never&gt; {
- return $username
- .debounce(for: 0.5, scheduler: RunLoop.main)
- .removeDuplicates()
- .flatMap { username in
- return Future { promise in
- self.usernameAvailable(username) { available in
- promise(.success(available ? username : nil))
- }
- }
- }
- .eraseToAnyPublisher()
-}
-
-@Published var password: String = &#34;&#34;
-@Published var passwordAgain: String = &#34;&#34;
-var validatedPassword: AnyPublisher&lt;String?, Never&gt; {
- return CombineLatest($password, $passwordAgain) { password, passwordAgain in
- guard password == passwordAgain, password.count &gt; 8 else { return nil }
- return password
- }
- .map { $0 == &#34;password1&#34; ? nil : $0 }
- .eraseToAnyPublisher()
-}
-
-var validatedCredentials: AnyPublisher&lt;(String, String)?, Never&gt; {
- return CombineLatest(validatedUsername, validatedPassword) { username, password in
- guard let uname = username, let pwd = password else { return nil }
- return (uname, pwd)
- }
- .eraseToAnyPublisher()
-}
-
-@IBOutlet var signupButton: UIButton!
-var signupButtonStream: AnyCancellable?
-override func viewDidLoad() {
- super.viewDidLoad()
- self.signupButtonStream = self.validatedCredentials
- .map { $0 != nil }
- .receive(on: RunLoop.main)
- .assign(to: \.isEnabled, on: signupButton)
-}
-</code></pre><h2 id=resources>Resources</h2><ul><li><a href=https://www.jianshu.com/p/441930138de2>https://www.jianshu.com/p/441930138de2</a></li><li><a href=https://fuckingswiftui.com/>https://fuckingswiftui.com/</a></li><li><a href=https://www.hackingwithswift.com/quick-start/swiftui>https://www.hackingwithswift.com/quick-start/swiftui</a></li><li><a href=https://www.hackingwithswift.com/100/swiftui>https://www.hackingwithswift.com/100/swiftui</a></li><li><a href=https://swiftui-lab.com/>https://swiftui-lab.com/</a></li><li><a href=https://swiftui-lab.com/custom-styling/>https://swiftui-lab.com/custom-styling/</a></li></ul><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>SwiftUI</h2></div><div class=meta><div class=date title='Fri Jan 3 2020 15:02:43 +0800'>Jan 3, 2020</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><h2 id=icon>Icon</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>Image(systemName: <span style=color:#e6db74>&#34;star.fill&#34;</span>).imageScale(.medium).foregroundColor(.yellow)
+</span></span></code></pre></div><h2 id=bool>Bool</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>bool.toggle()
+</span></span></code></pre></div><h2 id=binding>Binding</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>@State <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> isPlaying: Bool = <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>PlayButton(isPlaying: <span style=color:#960050;background-color:#1e0010>$</span>isPlaying)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>PlayButton</span> : View {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@Binding <span style=color:#66d9ef>var</span> isPlaying: Bool
+</span></span></code></pre></div><h2 id=onreceive>OnReceive</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>.onReceive(PodcastPlayer.currentTimePublisher) { newCurrentTime <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>self</span>.currentTime = newCurrentTime
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=weak>Weak</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>DispatchQueue.main.async { [<span style=color:#66d9ef>weak</span> <span style=color:#66d9ef>self</span>] <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>DispatchQueue.global(qos: .background).async { [<span style=color:#66d9ef>weak</span> <span style=color:#66d9ef>self</span>] <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>guard</span> <span style=color:#66d9ef>let</span> strongSelf = <span style=color:#66d9ef>self</span> <span style=color:#66d9ef>else</span> { <span style=color:#66d9ef>return</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>weak</span> <span style=color:#66d9ef>var</span> owner: Person?
+</span></span></code></pre></div><p><a href=https://www.appcoda.com/memory-management-swift/>https://www.appcoda.com/memory-management-swift/</a></p><p>Product > Profile > Leaks</p><h2 id=ui-tweaking>UI Tweaking</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>.padding([.leading, .trailing])
+</span></span><span style=display:flex><span>.font(.caption)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>HStack {
+</span></span><span style=display:flex><span> Text(<span style=color:#e6db74>&#34;Delicious&#34;</span>)
+</span></span><span style=display:flex><span> Image(<span style=color:#e6db74>&#34;20x20_avocado&#34;</span>)
+</span></span><span style=display:flex><span> Text(<span style=color:#e6db74>&#34;Avocado Toast&#34;</span>).layoutPriority(<span style=color:#ae81ff>1</span>) <span style=color:#75715e>// so it will not be compressed when HStack width is not enough</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>.lineLimit(<span style=color:#ae81ff>1</span>)
+</span></span></code></pre></div><p>237_building_custom_views_with_swiftui.pdf</p><p>// Animation and draw grphaic</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>List(previousOrders) { order <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> HStack {
+</span></span><span style=display:flex><span> VStack(alignment: .leading) {
+</span></span><span style=display:flex><span> Text(order.summary)
+</span></span><span style=display:flex><span> Text(order.purchaseDate)
+</span></span><span style=display:flex><span> .font(.subheadline)
+</span></span><span style=display:flex><span> .foregroundColor(.secondary)
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> Spacer()
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>if</span> order.includeSalt {
+</span></span><span style=display:flex><span> SaltIcon()
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>IconOrientationEditor</span> : View {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>let</span> flipped: Bool
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>var</span> body: some View {
+</span></span><span style=display:flex><span> ZStack {
+</span></span><span style=display:flex><span> Color.gray
+</span></span><span style=display:flex><span> AppIcon()
+</span></span><span style=display:flex><span> .rotationEffect(.degrees(flipped ? <span style=color:#ae81ff>180</span> : <span style=color:#ae81ff>0</span>))
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Form {
+</span></span><span style=display:flex><span> Button(action: submitOrder) { Text(<span style=color:#e6db74>&#34;Order&#34;</span>) }
+</span></span><span style=display:flex><span> Section(header: ) { Text(<span style=color:#e6db74>&#34;Avocado Toast&#34;</span>).font(.title)
+</span></span><span style=display:flex><span> }.
+</span></span><span style=display:flex><span> Toggle(isOn: <span style=color:#960050;background-color:#1e0010>$</span>order.includeSalt) { }
+</span></span><span style=display:flex><span> Toggle(isOn: <span style=color:#960050;background-color:#1e0010>$</span>order.includeRedPepperFlakes) { }
+</span></span><span style=display:flex><span> Stepper(value: <span style=color:#960050;background-color:#1e0010>$</span>order.quantity, <span style=color:#66d9ef>in</span>: <span style=color:#ae81ff>1.</span>..<span style=color:#ae81ff>10</span>) { }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> Section {
+</span></span><span style=display:flex><span> Button(action: submitOrder) { Text(<span style=color:#e6db74>&#34;Order&#34;</span>) }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Button(action: submitOrder) {
+</span></span><span style=display:flex><span> VStack {
+</span></span><span style=display:flex><span> Image(<span style=color:#e6db74>&#34;Toast&#34;</span>)
+</span></span><span style=display:flex><span> Text(<span style=color:#e6db74>&#34;Order&#34;</span>)
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@State <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> order: Order
+</span></span><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Order</span> {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>enum</span> <span style=color:#a6e22e>Spread</span> : CaseIterable, Hashable, Identifiable {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>none</span>
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> almondButter
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> peanutButter
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> honey
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> almou
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> tapenade
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> hummus
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> mayonnaise
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> kyopolou
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> adjvar
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> pindjur
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> vegemite
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> chutney
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> cannedCheese
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> feroce
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> kartoffelkase
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>case</span> tartarSauce
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>Picker(selection: <span style=color:#960050;background-color:#1e0010>$</span>order.spread, label: Text(<span style=color:#e6db74>&#34;Spread&#34;</span>)) {
+</span></span><span style=display:flex><span> ForEach(Spread.allCases) { spread <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> Text(spread.name).tag(spread)
+</span></span><span style=display:flex><span> }.
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Button(action: submitOrder) { Text(<span style=color:#e6db74>&#34;Order&#34;</span>) }
+</span></span><span style=display:flex><span> .disabled(order.quantity == <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>Toggle(isOn: <span style=color:#960050;background-color:#1e0010>$</span>order.includeSalt) {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Form {}
+</span></span><span style=display:flex><span>.accentColor(Color(<span style=color:#e6db74>&#34;avocadoGreen&#34;</span>))
+</span></span><span style=display:flex><span>.disabled(<span style=color:#f92672>!</span>connectedToToastNetwork)
+</span></span></code></pre></div><p>216_swiftui_essentials.pdf</p><h2 id=combine>Combine</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=display:flex><span>@Published <span style=color:#66d9ef>var</span> username: String = <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> validatedUsername: AnyPublisher&lt;String?, Never&gt; {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>return</span> <span style=color:#960050;background-color:#1e0010>$</span>username
+</span></span><span style=display:flex><span> .debounce(<span style=color:#66d9ef>for</span>: <span style=color:#ae81ff>0.5</span>, scheduler: RunLoop.main)
+</span></span><span style=display:flex><span> .removeDuplicates()
+</span></span><span style=display:flex><span> .flatMap { username <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>return</span> Future { promise <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>self</span>.usernameAvailable(username) { available <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> promise(.success(available ? username : <span style=color:#66d9ef>nil</span>))
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> .eraseToAnyPublisher()
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@Published <span style=color:#66d9ef>var</span> password: String = <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span>@Published <span style=color:#66d9ef>var</span> passwordAgain: String = <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> validatedPassword: AnyPublisher&lt;String?, Never&gt; {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>return</span> CombineLatest(<span style=color:#960050;background-color:#1e0010>$</span>password, <span style=color:#960050;background-color:#1e0010>$</span>passwordAgain) { password, passwordAgain <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>guard</span> password == passwordAgain, password.count <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>8</span> <span style=color:#66d9ef>else</span> { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span> }
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>return</span> password
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> .map { $0 == <span style=color:#e6db74>&#34;password1&#34;</span> ? <span style=color:#66d9ef>nil</span> : $0 }
+</span></span><span style=display:flex><span> .eraseToAnyPublisher()
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> validatedCredentials: AnyPublisher<span style=color:#f92672>&lt;</span>(String, String)?, Never&gt; {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>return</span> CombineLatest(validatedUsername, validatedPassword) { username, password <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>guard</span> <span style=color:#66d9ef>let</span> uname = username, <span style=color:#66d9ef>let</span> pwd = password <span style=color:#66d9ef>else</span> { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span> }
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>return</span> (uname, pwd)
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span> .eraseToAnyPublisher()
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>@IBOutlet</span> <span style=color:#66d9ef>var</span> signupButton: UIButton!
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> signupButtonStream: AnyCancellable?
+</span></span><span style=display:flex><span><span style=color:#66d9ef>override</span> <span style=color:#66d9ef>func</span> <span style=color:#a6e22e>viewDidLoad</span>() {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>super</span>.viewDidLoad()
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>self</span>.signupButtonStream = <span style=color:#66d9ef>self</span>.validatedCredentials
+</span></span><span style=display:flex><span> .map { $0 <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> }
+</span></span><span style=display:flex><span> .receive(on: RunLoop.main)
+</span></span><span style=display:flex><span> .assign(to: <span style=color:#960050;background-color:#1e0010>\</span>.isEnabled, on: signupButton)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=resources>Resources</h2><ul><li><a href=https://www.jianshu.com/p/441930138de2>https://www.jianshu.com/p/441930138de2</a></li><li><a href=https://fuckingswiftui.com/>https://fuckingswiftui.com/</a></li><li><a href=https://www.hackingwithswift.com/quick-start/swiftui>https://www.hackingwithswift.com/quick-start/swiftui</a></li><li><a href=https://www.hackingwithswift.com/100/swiftui>https://www.hackingwithswift.com/100/swiftui</a></li><li><a href=https://swiftui-lab.com/>https://swiftui-lab.com/</a></li><li><a href=https://swiftui-lab.com/custom-styling/>https://swiftui-lab.com/custom-styling/</a></li></ul><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>

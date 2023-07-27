@@ -11,17 +11,17 @@ require('style-loader!css-loader!font-awesome/css/font-awesome.css?'); 然后图
 cnpm install -D css-loader style-loader 因为 raw-loader 的匹配正则被设置为 \.css$, 所以我们可以把 ? 问号加在行尾来 bypass 此正则，即使用以下代码来载入 font-awesome：
 require('style-loader!css-loader!font-awesome/css/font-awesome.css?'); 然后图标就可以正常显示了：
 <i class=&#34;fa fa-floppy-o&#34; aria-hidden=&#34;true&#34;></i> "><meta property="og:type" content="article"><meta property="og:url" content="/posts/integrate-font-awesome-with-angular2-webpack-starter/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2016-06-23T15:23:13+08:00"><meta property="article:modified_time" content="2016-06-23T15:23:13+08:00"><title>如何在 angular2-webpack-starter 中使用 font-awesome</title><link rel=canonical href=/posts/integrate-font-awesome-with-angular2-webpack-starter/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>如何在 angular2-webpack-starter 中使用 font-awesome</h2></div><div class=meta><div class=date title='Thu Jun 23 2016 15:23:13 +0800'>Jun 23, 2016</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p>如果你跟我一样是用 <a href=https://github.com/AngularClass/angular2-webpack-starter>angular2-webpack-starter</a> 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。</p><p>因为此脚手架的设定是用 <code>raw-loader</code> 来载入 CSS：</p><pre tabindex=0><code>/*
- * Raw loader support for *.css files
- * Returns file content as string
- *
- * See: https://github.com/webpack/raw-loader
- */
-{
-  test: /\.css$/,
-  loader: &#39;raw-loader&#39;
-},
-</code></pre><p>而 font-awesome 因为资源文件需要导入的原因就要用到 <code>css-loader</code> 和 <code>style-loader</code>，用 <code>raw-loader</code> 就载入不了图标了。</p><h3 id=解决方案>解决方案</h3><p>首先安装 <code>css-loader</code> 和 <code>style-loader</code>:</p><pre tabindex=0><code>cnpm install -D css-loader style-loader
-</code></pre><p>因为 <code>raw-loader</code> 的匹配正则被设置为 <code>\.css$</code>, 所以我们可以把 <code>?</code> 问号加在行尾来 bypass 此正则，即使用以下代码来载入 <code>font-awesome</code>：</p><pre tabindex=0><code>require(&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;);
-</code></pre><p>然后图标就可以正常显示了：</p><pre tabindex=0><code>&lt;i class=&#34;fa fa-floppy-o&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;
-</code></pre><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>如何在 angular2-webpack-starter 中使用 font-awesome</h2></div><div class=meta><div class=date title='Thu Jun 23 2016 15:23:13 +0800'>Jun 23, 2016</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><p>如果你跟我一样是用 <a href=https://github.com/AngularClass/angular2-webpack-starter>angular2-webpack-starter</a> 作为 Angular2 的脚手架的话，就可能在整合 font-awesome 时遇到问题。</p><p>因为此脚手架的设定是用 <code>raw-loader</code> 来载入 CSS：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Raw loader support for *.css files
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Returns file content as string
+</span></span></span><span style=display:flex><span><span style=color:#75715e> *
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * See: https://github.com/webpack/raw-loader
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>test</span><span style=color:#f92672>:</span> <span style=color:#e6db74>/\.css$/</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>loader</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;raw-loader&#39;</span>
+</span></span><span style=display:flex><span>},
+</span></span></code></pre></div><p>而 font-awesome 因为资源文件需要导入的原因就要用到 <code>css-loader</code> 和 <code>style-loader</code>，用 <code>raw-loader</code> 就载入不了图标了。</p><h3 id=解决方案>解决方案</h3><p>首先安装 <code>css-loader</code> 和 <code>style-loader</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cnpm install -D css-loader style-loader
+</span></span></code></pre></div><p>因为 <code>raw-loader</code> 的匹配正则被设置为 <code>\.css$</code>, 所以我们可以把 <code>?</code> 问号加在行尾来 bypass 此正则，即使用以下代码来载入 <code>font-awesome</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;style-loader!css-loader!font-awesome/css/font-awesome.css?&#39;</span>);
+</span></span></code></pre></div><p>然后图标就可以正常显示了：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>i</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;fa fa-floppy-o&#34;</span> <span style=color:#a6e22e>aria-hidden</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;true&#34;</span>&gt;&lt;/<span style=color:#f92672>i</span>&gt;
+</span></span></code></pre></div><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
