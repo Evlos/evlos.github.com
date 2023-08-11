@@ -60,7 +60,14 @@ function get_comment_time( $d = \&amp;#39;\&amp;#39;, $gmt = false, $translate =
 其实代码还是老代码，是给 WP 增加头像缓存的代码。
 一. Dabr 用户头像缓存功能： 直接修改 Dabr 程序中的这个文件即可 - /common/twitter.php，首先我们找到下面这个函数。
 function theme_avatar($url, $force_large = false) { $size = $force_large ? 48 : 24; return \&amp;#34;&amp;lt;img src=\&amp;#39;$url\&amp;#39; height=\&amp;#39;$size\&amp;#39; width=\&amp;#39;$size\&amp;#39; /&amp;gt;\&amp;#34;; } 然后修改成下面这样子即可，程序会自动创建 /ava/ 文件夹来存放头像缓存文件。
-function theme_avatar($url, $force_large = false) { $size = $force_large ? 48 : 24; $dir = \&amp;#39;./ava/\&amp;#39;; if (!is_dir($dir)) { mkdir($dir); } $time = 1209600; preg_match(\&amp;#39;/[^\\/]*$/i\&amp;#39;,$url,$name); $local = $dir.$name[0]; if (!</description></item><item><title>Gregarius 0.6.1 的错误函数修正</title><link>/posts/1261_fix-the-function-of-gregarius-061/</link><pubDate>Thu, 03 Dec 2009 00:47:09 +0800</pubDate><guid>/posts/1261_fix-the-function-of-gregarius-061/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。
+function theme_avatar($url, $force_large = false) { $size = $force_large ? 48 : 24; $dir = \&amp;#39;./ava/\&amp;#39;; if (!is_dir($dir)) { mkdir($dir); } $time = 1209600; preg_match(\&amp;#39;/[^\\/]*$/i\&amp;#39;,$url,$name); $local = $dir.$name[0]; if (!</description></item><item><title>RSS最新文章标题与链接多条读取程序</title><link>/posts/1938_get-rss-titles-and-links/</link><pubDate>Mon, 08 Mar 2010 01:08:17 +0800</pubDate><guid>/posts/1938_get-rss-titles-and-links/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 我打算把原先的 Rss 读取程序增强一下，变成可以自定义读取条数的。
+于是就花了 1 个小时去处理了一下，因为考虑特殊情况，所以我给单数和复数条目定义了不同的 Class，同时请自行加上 UL 标签。
+一. Get_More_RSS： 1. GMR 程序下载： 程序名 - Get_More_RSS （RSS文章标题链接读取器）
+版本 - v1.07 修正增强版
+$rssurl_save_time = 1296000; // RSS地址缓存时间，这个设置长一点儿没啥关系 $rsscont_save_time = 7200; // RSS内容缓存时间，这个设置看情况吧，请根据服务器负载自行调整 $rsscont_read_count = 5; // RSS读取出来的条数，按需求填写即可 GMR v107 程序代码下载传送门 - http://code.google.com/p/evlosbox/downloads/detail?name=get_more_rss.txt
+GMR v107 GBK 版下载传送门 - http://code.google.com/p/evlosbox/downloads/detail?name=get_more_rss.txt
+2. GMR 使用方法： &amp;lt;script type=&amp;#34;text/javascript&amp;#34; src=&amp;#34;do.php?url=evlos.org&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; 像上面这个样子的调用方法，很简单的，然后即可生成像文章顶部一样格式的 RSS 条目。
+3. GMR 编写手记： Maximum execution time of 30 seconds exceeded in do.</description></item><item><title>Gregarius 0.6.1 的错误函数修正</title><link>/posts/1261_fix-the-function-of-gregarius-061/</link><pubDate>Thu, 03 Dec 2009 00:47:09 +0800</pubDate><guid>/posts/1261_fix-the-function-of-gregarius-061/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。
 由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。
 &amp;lt;img src=\&amp;#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg\&amp;#34; /&amp;gt; 像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
 因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。
