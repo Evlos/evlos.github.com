@@ -69,7 +69,8 @@ GMR v107 GBK 版下载传送门 - http://code.google.com/p/evlosbox/downloads/de
 2. GMR 使用方法： &amp;lt;script type=&amp;#34;text/javascript&amp;#34; src=&amp;#34;do.php?url=evlos.org&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; 像上面这个样子的调用方法，很简单的，然后即可生成像文章顶部一样格式的 RSS 条目。
 3. GMR 编写手记： Maximum execution time of 30 seconds exceeded in do.</description></item><item><title>Gregarius 0.6.1 的错误函数修正</title><link>/posts/1261_fix-the-function-of-gregarius-061/</link><pubDate>Thu, 03 Dec 2009 00:47:09 +0800</pubDate><guid>/posts/1261_fix-the-function-of-gregarius-061/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。
 由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。
-&amp;lt;img src=\&amp;#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg\&amp;#34; /&amp;gt; 像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
+&amp;lt;img src=&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg&amp;quot; /&amp;gt;
+像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
 因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。
 1. Eregi 函数的语法： int eregi(string pattern,string string [,array regs]); 2. Eregi 函数的解释： 搜寻 string 来和 pattern 的正规表示比对。
 若找到比对则会呼叫第三个参数 regs，比对的结果会储存在 regs 的元素之中。

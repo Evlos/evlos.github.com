@@ -1,6 +1,7 @@
 <!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。
 由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。
-<img src=\&#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg\&#34; /> 像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
+<img src=&#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg&#34; />
+像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
 因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。
 1. Eregi 函数的语法： int eregi(string pattern,string string [,array regs]); 2. Eregi 函数的解释： 搜寻 string 来和 pattern 的正规表示比对。
 若找到比对则会呼叫第三个参数 regs，比对的结果会储存在 regs 的元素之中。
@@ -11,7 +12,8 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 搜寻是不区分大小写的。
 如果在 string 中比对到 pattern 则传回 true，如果比对不到或是发生错误则传回 false。"><meta property="og:title" content="Gregarius 0.6.1 的错误函数修正"><meta property="og:description" content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。
 由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。
-<img src=\&#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg\&#34; /> 像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
+<img src=&#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg&#34; />
+像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。
 因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。
 1. Eregi 函数的语法： int eregi(string pattern,string string [,array regs]); 2. Eregi 函数的解释： 搜寻 string 来和 pattern 的正规表示比对。
 若找到比对则会呼叫第三个参数 regs，比对的结果会储存在 regs 的元素之中。
@@ -22,36 +24,35 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 搜寻是不区分大小写的。
 如果在 string 中比对到 pattern 则传回 true，如果比对不到或是发生错误则传回 false。"><meta property="og:type" content="article"><meta property="og:url" content="/posts/1261_fix-the-function-of-gregarius-061/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2009-12-03T00:47:09+08:00"><meta property="article:modified_time" content="2009-12-03T00:47:09+08:00"><title>Gregarius 0.6.1 的错误函数修正</title><link rel=canonical href=/posts/1261_fix-the-function-of-gregarius-061/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script><style type=text/css>pre{width:100%;overflow:hidden}</style></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>Gregarius 0.6.1 的错误函数修正</h2></div><div class=meta><div class=date title='Thu Dec 3 2009 00:47:09 +0800'>Dec 3, 2009</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
-</span></span></code></pre></div><hr><p>最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。</p><p>由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。</p><pre tabindex=0><code>&lt;img src=\&#34;http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg\&#34; /&gt;
-</code></pre><p>像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。</p><p>因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。</p><h2 id=1-eregi-函数的语法>1. Eregi 函数的语法：</h2><pre tabindex=0><code>int eregi(string pattern,string string [,array regs]);
-</code></pre><h2 id=2-eregi-函数的解释>2. Eregi 函数的解释：</h2><p>搜寻 string 来和 pattern 的正规表示比对。</p><p>若找到比对则会呼叫第三个参数 regs，比对的结果会储存在 regs 的元素之中。</p><p>$regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs[2] 为符合第二个括弧的部份字符串。</p><p>以此类推，$regs[0] 为参数 string。</p><p>如果 ereg() 找到比对，则 $regs 会被十个元素来填满，即使是多于或少于十个括弧内的部份字符串。</p><p>也可以比对，这将不影响 ereg() 去比对更多部份字符串的能力。如果比对不到，$regs 将不会被 ereg() 改变。</p><p>搜寻是<strong>不区分大小写</strong>的。</p><p>如果在 string 中比对到 pattern 则传回 true，如果比对不到或是发生错误则传回 false。</p><h2 id=3-eregi-函数的官方范例>3. Eregi 函数的官方范例：</h2><pre tabindex=0><code>&lt;?php
-    $date=\&#34;2009-02-12\&#34;;
-    if (ereg (\&#34;([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})\&#34;, $date, $regs)) {
-          echo \&#34;$regs[3].$regs[2].$regs[1]\&#34;;
-    }
-       else {
-               echo \&#34;Invalid date format: $date\&#34;;
-       }
-?&gt;
-</code></pre><p>以上的范例会将日期格式 YYYY-MM-DD 切断，并且把它显示成 DD.MM.YYYY 的格式。</p><h2 id=4-如何使用新的函数>4. 如何使用新的函数：</h2><p>新的函数是 preg_match()，语法如下。</p><pre tabindex=0><code>int preg_match ( string $pattern , string $subject [,
-array &amp;$matches [, int $flags [, int $offset ]]] )
-</code></pre><h2 id=5-如何修复-gregarius-061>5. 如何修复 Gregarius 0.6.1：</h2><pre tabindex=0><code>function getPath($path=\&#39;\&#39;) {
-    static $ret;
-    if ($ret === NULL) {
-        $ret = dirname($_SERVER[\&#39;PHP_SELF\&#39;]);
-        if (defined(\&#39;RSS_FILE_LOCATION\&#39;) &amp;&amp; eregi(RSS_FILE_LOCATION.\&#34;\\$\&#34;, $ret)) {
-            $ret = substr($ret, 0, strlen($ret) - strlen(RSS_FILE_LOCATION));
-        }
-        if (substr($ret, -1) == \&#34;\\\\\&#34;) { // Take off trailing backslash
-            $ret = substr($ret, 0, -1);
-        }
-        if (substr($ret, -1) != \&#34;/\&#34;) {  // Add a frontslash
-            $ret .= \&#34;/\&#34;;
-        }
-    }
-    return $ret . $path;
-}
-$dummy = getPath();
-</code></pre><pre tabindex=0><code>eregi(RSS_FILE_LOCATION.\&#34;\\$\&#34;, $ret)
-</code></pre><p>以上的函数修复如下，即把 POSIX 表达式修改成 PCRE 表达式：</p><pre tabindex=0><code>preg_match(RSS_FILE_LOCATION.\&#34;\\$/i\&#34;, $ret)
-</code></pre><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
+</span></span></code></pre></div><p>最近在研究 RSS 聚合程序，个人觉得相对最好的程序是 Gregarius，效率高、负载低、口碑不错。</p><p>由于此程序的最后更新时间是 2008-11-26，那就要考虑到新版本PHP不支持函数的问题。</p><p>&lt;img src="http://www.evlos.org/ev-box/myimg/uploads/Capture0524.jpg" /></p><p>像上图一样，此函数在 PHP 5.3.0 中会被屏蔽，在 PHP 6.0.0 里会被删除掉，同时可被替代。</p><p>因为 PHP 团队将删除支持 Portable Operating System Interface (POSIX) 正则表达式的扩展。</p><h2 id=1-eregi-函数的语法>1. Eregi 函数的语法：</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#a6e22e>int</span> <span style=color:#a6e22e>eregi</span>(<span style=color:#a6e22e>string</span> <span style=color:#a6e22e>pattern</span>,<span style=color:#a6e22e>string</span> <span style=color:#a6e22e>string</span> [,<span style=color:#66d9ef>array</span> <span style=color:#a6e22e>regs</span>]);
+</span></span></code></pre></div><h2 id=2-eregi-函数的解释>2. Eregi 函数的解释：</h2><p>搜寻 string 来和 pattern 的正规表示比对。</p><p>若找到比对则会呼叫第三个参数 regs，比对的结果会储存在 regs 的元素之中。</p><p>$regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs[2] 为符合第二个括弧的部份字符串。</p><p>以此类推，$regs[0] 为参数 string。</p><p>如果 ereg() 找到比对，则 $regs 会被十个元素来填满，即使是多于或少于十个括弧内的部份字符串。</p><p>也可以比对，这将不影响 ereg() 去比对更多部份字符串的能力。如果比对不到，$regs 将不会被 ereg() 改变。</p><p>搜寻是<strong>不区分大小写</strong>的。</p><p>如果在 string 中比对到 pattern 则传回 true，如果比对不到或是发生错误则传回 false。</p><h2 id=3-eregi-函数的官方范例>3. Eregi 函数的官方范例：</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#f92672>&lt;?</span><span style=color:#a6e22e>php</span>
+</span></span><span style=display:flex><span>    $date<span style=color:#f92672>=</span><span style=color:#a6e22e>\</span><span style=color:#e6db74>&#34;2009-02-12</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    if (ereg (</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>, </span><span style=color:#e6db74>$date</span><span style=color:#e6db74>, </span><span style=color:#e6db74>$regs</span><span style=color:#e6db74>)) {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          echo </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>$regs[3]</span><span style=color:#e6db74>.</span><span style=color:#e6db74>$regs[2]</span><span style=color:#e6db74>.</span><span style=color:#e6db74>$regs[1]</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>       else {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>               echo </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>Invalid date format: </span><span style=color:#e6db74>$date\</span><span style=color:#e6db74>&#34;</span>;
+</span></span><span style=display:flex><span>       }
+</span></span><span style=display:flex><span><span style=color:#75715e>?&gt;</span><span style=color:#960050;background-color:#1e0010>
+</span></span></span></code></pre></div><p>以上的范例会将日期格式 YYYY-MM-DD 切断，并且把它显示成 DD.MM.YYYY 的格式。</p><h2 id=4-如何使用新的函数>4. 如何使用新的函数：</h2><p>新的函数是 preg_match()，语法如下。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#a6e22e>int</span> <span style=color:#a6e22e>preg_match</span> ( <span style=color:#a6e22e>string</span> $pattern , <span style=color:#a6e22e>string</span> $subject [,
+</span></span><span style=display:flex><span><span style=color:#66d9ef>array</span> <span style=color:#f92672>&amp;</span>$matches [, <span style=color:#a6e22e>int</span> $flags [, <span style=color:#a6e22e>int</span> $offset ]]] )
+</span></span></code></pre></div><h2 id=5-如何修复-gregarius-061>5. 如何修复 Gregarius 0.6.1：</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>getPath</span>($path<span style=color:#f92672>=</span><span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> $ret;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> ($ret <span style=color:#f92672>===</span> <span style=color:#66d9ef>NULL</span>) {
+</span></span><span style=display:flex><span>        $ret <span style=color:#f92672>=</span> <span style=color:#a6e22e>dirname</span>($_SERVER[<span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>PHP_SELF\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>]);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>defined</span>(<span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>RSS_FILE_LOCATION\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>) <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>eregi</span>(<span style=color:#a6e22e>RSS_FILE_LOCATION</span><span style=color:#f92672>.</span><span style=color:#a6e22e>\</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>$\</span><span style=color:#e6db74>&#34;</span>, $ret)) {
+</span></span><span style=display:flex><span>            $ret <span style=color:#f92672>=</span> <span style=color:#a6e22e>substr</span>($ret, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>strlen</span>($ret) <span style=color:#f92672>-</span> <span style=color:#a6e22e>strlen</span>(<span style=color:#a6e22e>RSS_FILE_LOCATION</span>));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>substr</span>($ret, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) <span style=color:#f92672>==</span> <span style=color:#a6e22e>\</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\\\\&#34;</span><span style=color:#e6db74>) { // Take off trailing backslash
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            </span><span style=color:#e6db74>$ret</span><span style=color:#e6db74> = substr(</span><span style=color:#e6db74>$ret</span><span style=color:#e6db74>, 0, -1);
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        if (substr(</span><span style=color:#e6db74>$ret</span><span style=color:#e6db74>, -1) != </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>/</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>) {  // Add a frontslash
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            </span><span style=color:#e6db74>$ret</span><span style=color:#e6db74> .= </span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>/</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    return </span><span style=color:#e6db74>$ret</span><span style=color:#e6db74> . </span><span style=color:#e6db74>$path</span><span style=color:#e6db74>;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74></span><span style=color:#e6db74>$dummy</span><span style=color:#e6db74> = getPath();
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#a6e22e>eregi</span>(<span style=color:#a6e22e>RSS_FILE_LOCATION</span><span style=color:#f92672>.</span><span style=color:#a6e22e>\</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>$\</span><span style=color:#e6db74>&#34;</span>, $ret)
+</span></span></code></pre></div><p>以上的函数修复如下，即把 POSIX 表达式修改成 PCRE 表达式：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#a6e22e>preg_match</span>(<span style=color:#a6e22e>RSS_FILE_LOCATION</span><span style=color:#f92672>.</span><span style=color:#a6e22e>\</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>$/i</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>, </span><span style=color:#e6db74>$ret</span><span style=color:#e6db74>)
+</span></span></span></code></pre></div><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
