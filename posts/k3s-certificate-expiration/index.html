@@ -17,11 +17,13 @@ telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.tel
 </span></span></code></pre></div><h2 id=certificate-has-expired>Certificate has expired</h2><p>Force k3s to rotate the certificate:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo rm /var/lib/rancher/k3s/server/tls/dynamic-cert.json
 </span></span><span style=display:flex><span>sudo kubectl --insecure-skip-tls-verify<span style=color:#f92672>=</span>true delete secret -n kube-system k3s-serving
 </span></span><span style=display:flex><span>sudo systemctl restart k3s
+</span></span><span style=display:flex><span>sudo journalctl -fxu k3s
 </span></span></code></pre></div><h2 id=fix-k3s-agent-error>Fix k3s-agent error</h2><p>Error message: <code>Error syncing pod, skipping</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo vim /etc/rancher/k3s/k3s.yaml
 </span></span><span style=display:flex><span><span style=color:#75715e># update the certificate data according to the server configuration</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>sudo systemctl restart k3s-agent
 </span></span><span style=display:flex><span>sudo systemctl status k3s-agent
+</span></span><span style=display:flex><span>sudo journalctl -fxu k3s-agent
 </span></span></code></pre></div><p>Restart kilo if needed; this could also fix the issue that the pod cannot resolve DNS requests.</p><h2 id=k3s-upgrade-optional>K3S upgrade (Optional)</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>/usr/local/bin/k3s -v
 </span></span><span style=display:flex><span>k3s version v1.25.3+k3s1 <span style=color:#f92672>(</span>f2585c16<span style=color:#f92672>)</span>
 </span></span><span style=display:flex><span>go version go1.19.2
