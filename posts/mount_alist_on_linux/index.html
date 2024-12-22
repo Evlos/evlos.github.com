@@ -30,4 +30,66 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>evlos@console ~&gt; df -lh
 </span></span><span style=display:flex><span>/dev/mapper/console--vg-root   31G   29G     <span style=color:#ae81ff>0</span> 100% /
-</span></span></code></pre></div><p>It seems I complicated a simple issue :)</p><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
+</span></span></code></pre></div><p>It seems I complicated a simple issue :)</p><h3 id=extend-devsda>Extend /dev/sda</h3><p>First, expand the disk size in Proxmox, and then:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>evlos@console ~&gt; sudo parted /dev/sda
+</span></span><span style=display:flex><span>GNU Parted 3.2
+</span></span><span style=display:flex><span>Using /dev/sda
+</span></span><span style=display:flex><span>Welcome to GNU Parted! Type <span style=color:#e6db74>&#39;help&#39;</span> to view a list of commands.
+</span></span><span style=display:flex><span><span style=color:#f92672>(</span>parted<span style=color:#f92672>)</span> print
+</span></span><span style=display:flex><span>Model: QEMU QEMU HARDDISK <span style=color:#f92672>(</span>scsi<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>Disk /dev/sda: 172GB
+</span></span><span style=display:flex><span>Sector size <span style=color:#f92672>(</span>logical/physical<span style=color:#f92672>)</span>: 512B/512B
+</span></span><span style=display:flex><span>Partition Table: msdos
+</span></span><span style=display:flex><span>Disk Flags:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Number  Start   End     Size    Type     File system  Flags
+</span></span><span style=display:flex><span> <span style=color:#ae81ff>1</span>      1049kB  34.4GB  34.4GB  primary               boot, lvm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>(</span>parted<span style=color:#f92672>)</span> resizepart <span style=color:#ae81ff>1</span> 100%
+</span></span><span style=display:flex><span><span style=color:#f92672>(</span>parted<span style=color:#f92672>)</span> quit
+</span></span><span style=display:flex><span>Information: You may need to update /etc/fstab.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>evlos@console ~&gt; sudo partprobe /dev/sda
+</span></span><span style=display:flex><span>evlos@console ~&gt; sudo pvresize /dev/sda1
+</span></span><span style=display:flex><span>  Physical volume <span style=color:#e6db74>&#34;/dev/sda1&#34;</span> changed
+</span></span><span style=display:flex><span>  <span style=color:#ae81ff>1</span> physical volume<span style=color:#f92672>(</span>s<span style=color:#f92672>)</span> resized / <span style=color:#ae81ff>0</span> physical volume<span style=color:#f92672>(</span>s<span style=color:#f92672>)</span> not resized
+</span></span><span style=display:flex><span>evlos@console ~&gt; sudo vgdisplay
+</span></span><span style=display:flex><span>  --- Volume group ---
+</span></span><span style=display:flex><span>  VG Name               console-vg
+</span></span><span style=display:flex><span>  System ID
+</span></span><span style=display:flex><span>  Format                lvm2
+</span></span><span style=display:flex><span>  Metadata Areas        <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  Metadata Sequence No  <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>  VG Access             read/write
+</span></span><span style=display:flex><span>  VG Status             resizable
+</span></span><span style=display:flex><span>  MAX LV                <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>  Cur LV                <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>  Open LV               <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  Max PV                <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>  Cur PV                <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  Act PV                <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  VG Size               &lt;160.00 GiB
+</span></span><span style=display:flex><span>  PE Size               4.00 MiB
+</span></span><span style=display:flex><span>  Total PE              <span style=color:#ae81ff>40959</span>
+</span></span><span style=display:flex><span>  Alloc PE / Size       <span style=color:#ae81ff>8191</span> / &lt;32.00 GiB
+</span></span><span style=display:flex><span>  Free  PE / Size       <span style=color:#ae81ff>32768</span> / 128.00 GiB
+</span></span><span style=display:flex><span>  VG UUID               3vPnjM-HCw0-tzPN-6Cwi-xHsH-vCL7-I40UM6
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>evlos@console ~&gt; sudo lvextend -l +100%FREE /dev/mapper/console--vg-root
+</span></span><span style=display:flex><span>  Size of logical volume console-vg/root changed from &lt;31.04 GiB <span style=color:#f92672>(</span><span style=color:#ae81ff>7946</span> extents<span style=color:#f92672>)</span> to &lt;159.04 GiB <span style=color:#f92672>(</span><span style=color:#ae81ff>40714</span> extents<span style=color:#f92672>)</span>.
+</span></span><span style=display:flex><span>  Logical volume console-vg/root successfully resized.
+</span></span><span style=display:flex><span>evlos@console ~&gt; sudo resize2fs /dev/mapper/console--vg-root
+</span></span><span style=display:flex><span>resize2fs 1.44.1 <span style=color:#f92672>(</span>24-Mar-2018<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>Filesystem at /dev/mapper/console--vg-root is mounted on /; on-line resizing required
+</span></span><span style=display:flex><span>old_desc_blocks <span style=color:#f92672>=</span> 4, new_desc_blocks <span style=color:#f92672>=</span> <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>The filesystem on /dev/mapper/console--vg-root is now <span style=color:#ae81ff>41691136</span> <span style=color:#f92672>(</span>4k<span style=color:#f92672>)</span> blocks long.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>evlos@console ~&gt; df -lh
+</span></span><span style=display:flex><span>Filesystem                    Size  Used Avail Use% Mounted on
+</span></span><span style=display:flex><span>udev                          7.9G     <span style=color:#ae81ff>0</span>  7.9G   0% /dev
+</span></span><span style=display:flex><span>tmpfs                         1.4G  736K  1.4G   1% /run
+</span></span><span style=display:flex><span>/dev/mapper/console--vg-root  157G   29G  121G  20% /
+</span></span><span style=display:flex><span>tmpfs                         4.0G     <span style=color:#ae81ff>0</span>  4.0G   0% /dev/shm
+</span></span><span style=display:flex><span>tmpfs                         5.0M     <span style=color:#ae81ff>0</span>  5.0M   0% /run/lock
+</span></span><span style=display:flex><span>tmpfs                         4.0G     <span style=color:#ae81ff>0</span>  4.0G   0% /sys/fs/cgroup
+</span></span><span style=display:flex><span>tmpfs                         825M     <span style=color:#ae81ff>0</span>  825M   0% /run/user/1000
+</span></span></code></pre></div><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
