@@ -1,89 +1,87 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
-<img src=\'http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\' /> 一. Wordpress 的 Linux VPS 时间校正： 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。
-而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
--bash-3.2# date // \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator>\&#34; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。
-数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
-function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?"><meta property="og:title" content="Wordpress 的 Linux VPS 时间校正"><meta property="og:description" content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。 这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
-<img src=\'http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\' /> 一. Wordpress 的 Linux VPS 时间校正： 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。
-而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
--bash-3.2# date // \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator>\&#34; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。
-数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
+<img src='http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png' />
+Wordpress 的 Linux VPS 时间校正 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
+-bash-3.2# date // \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator>\&#34; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
+function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?"><meta property="og:title" content="Wordpress 的 Linux VPS 时间校正"><meta property="og:description" content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。
+<img src='http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png' />
+Wordpress 的 Linux VPS 时间校正 在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。
+-bash-3.2# date // \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator>\&#34; 一样 // date 是显示当前服务器时间的函数 Thu Jul 8 04:03:59 CST 2010 而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。
 function get_comment_time( $d = \'\', $gmt = false, $translate = true ) { global $comment; $comment_date = $gmt ?"><meta property="og:type" content="article"><meta property="og:url" content="/posts/1957_correct-the-time-of-linux_vps/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2010-07-08T22:36:20+08:00"><meta property="article:modified_time" content="2010-07-08T22:36:20+08:00"><title>Wordpress 的 Linux VPS 时间校正</title><link rel=canonical href=/posts/1957_correct-the-time-of-linux_vps/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script><style type=text/css>pre{width:100%;overflow:hidden}img{max-width:90%}h2{color:#b3befe}a{color:#aaa;text-decoration:none}a:hover{text-decoration:underline}li.post-item{color:#6b6f84}li.post-item .meta{font-size:85%;padding-right:2px}li.post-item a{font-family:monospace;font-size:110%;color:#b3befe}body{background-color:#333;color:#eee}pre{background-color:#272822}code{max-width:98%;text-wrap-mode:wrap}footer{color:#555}header h1{text-transform:uppercase;font-family:monospace;background:#3facfe;color:rgba(255,255,255,.8);display:inline-block;margin:2px;padding:0 8px}</style></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>Wordpress 的 Linux VPS 时间校正</h2></div><div class=meta><div class=date title='Thu Jul 8 2010 22:36:20 +0800'>Jul 8, 2010</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
-</span></span></code></pre></div><hr><p>这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。</p><pre tabindex=0><code>&lt;img src=\&#39;http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png\&#39; /&gt;
-</code></pre><h2 id=一-wordpress-的-linux-vps-时间校正>一. Wordpress 的 Linux VPS 时间校正：</h2><p>在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。</p><p>而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。</p><pre tabindex=0><code>-bash-3.2# date
-// \&#34;-bash-3.2#\&#34; 是命令提示，就像 Win 下面的 \&#34;C:\\Documents and Settings\\Administrator&gt;\&#34; 一样
-// date 是显示当前服务器时间的函数
-Thu Jul  8 04:03:59 CST 2010
-</code></pre><p>而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。</p><p>数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。</p><pre tabindex=0><code>function get_comment_time( $d = \&#39;\&#39;, $gmt = false, $translate = true ) {
-	global $comment;
-	$comment_date = $gmt ? $comment-&gt;comment_date_gmt : $comment-&gt;comment_date_gmt;
-	if ( \&#39;\&#39; == $d )
-		$date = mysql2date(get_option(\&#39;time_format\&#39;), $comment_date, $translate);
-	else
-		$date = mysql2date($d, $comment_date, $translate);
-	return apply_filters(\&#39;get_comment_time\&#39;, $date, $d, $gmt, $translate);
-}
-</code></pre><pre tabindex=0><code>function get_comment_date( $d = \&#39;\&#39; ) {
-	global $comment;
-	if ( \&#39;\&#39; == $d )
-		$date = mysql2date(get_option(\&#39;date_format\&#39;), $comment-&gt;comment_date_gmt);
-	else
-		$date = mysql2date($d, $comment-&gt;comment_date_gmt);
-	return apply_filters(\&#39;get_comment_date\&#39;, $date, $d);
-}
-</code></pre><p>我把 $comment->comment_date 修改为 $comment->comment_date_gmt 就正常了。</p><p>搞定了，现在直接显示 GMT 处的时间，修改的文件是 /wp-includes/comment-template.php。</p><h2 id=二-linux-常用命令>二. Linux 常用命令：</h2><pre tabindex=0><code>-bash-3.2# ls
-bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
-//这个命令和 Windows 下面的 Dir 原理相同
-</code></pre><pre tabindex=0><code>-bash-3.2# ls -al
-//这个命令可以同时查看文件的权限大小以及修改日期等等信息
-total 40
-drwxr-x---  3 root root 4096 Jul  8 05:43 .
-drwxr-xr-x 21 root root 4096 Jul  6 02:16 ..
--rw-------  1 root root 9858 Jul  8 22:03 .bash_history
--rwxrwxrwx  1 root root  575 Jul  8 04:55 bak.sh
-drwxr-xr-x  3 root root 4096 Jul  6 08:14 downloads
-lrwxrwxrwx  1 root root    5 Jul  6 06:53 home -&gt; /home
--rwxr-xr-x  1 root root 2628 Jul  5 23:53 lnmp
-lrwxrwxrwx  1 root root   21 Jul  8 05:43 nconf -&gt; /usr/local/nginx/conf
--rwxr-xr-x  1 root root 1335 Jul  6 09:03 pureftpd
--rwxrwxrwx  1 root root   80 Jul  5 23:53 run.sh
-</code></pre><pre tabindex=0><code>-bash-3.2# df -lh
-//这个命令可以查看磁盘信息
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/sda1             9.6G  2.3G  6.9G  25% /
-</code></pre><pre tabindex=0><code>-bash-3.2# top
-//这个命令就像任务管理器一样，按 Shift+&lt; Shift+&gt; 翻页
-top - 22:25:53 up 2 days, 20:10,  1 user,  load average: 0.02, 0.03, 0.00
-Tasks:  53 total,   1 running,  52 sleeping,   0 stopped,   0 zombie
-Cpu(s):  0.4%us,  0.0%sy,  0.0%ni, 99.5%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
-Mem:    262320k total,   249892k used,    12428k free,    21116k buffers
-Swap:   524280k total,       32k used,   524248k free,    84420k cached
-
-  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
-    1 root      15   0  2172  740  640 S  0.0  0.3   0:00.06 init
-    2 root      RT  -5     0    0    0 S  0.0  0.0   0:00.00 migration/0
-    3 root      34  19     0    0    0 S  0.0  0.0   0:00.00 ksoftirqd/0
-    4 root      RT  -5     0    0    0 S  0.0  0.0   0:00.00 watchdog/0
-    5 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 events/0
-    6 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 khelper
-    7 root      12  -5     0    0    0 S  0.0  0.0   0:00.00 kthread
-    9 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 xenwatch
-   10 root      17  -5     0    0    0 S  0.0  0.0   0:00.00 xenbus
-   16 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 kblockd/0
-   17 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 cqueue/0
-   21 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 khubd
-   23 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 kseriod
-   83 root      15   0     0    0    0 S  0.0  0.0   0:00.02 pdflush
-   84 root      15   0     0    0    0 S  0.0  0.0   0:00.02 pdflush
-   85 root      10  -5     0    0    0 S  0.0  0.0   0:00.08 kswapd0
-   86 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 aio/0
-</code></pre><pre tabindex=0><code>-bash-3.2# ls
-bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
--bash-3.2# cd downloads
-//cd 命令和 Windows 下面用法几乎一样，但是返回上层目录是 cd ../
--bash-3.2# ls
-lnmp0.4-full.tar.gz  openvpn-as-1.5.0-CentOS5.x86_64.rpm
-lnmpi                pptpd-1.3.4-1.rhel5.1.i386.rpm
--bash-3.2#
-</code></pre><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script><style type=text/css>pre{width:100%;overflow:hidden}img{max-width:90%}h2{color:#b3befe;text-transform:uppercase;font-family:fangsong,sans-serif}a{color:#aaa;text-decoration:none}a:hover{text-decoration:underline}li.post-item{color:#6b6f84}li.post-item .meta{font-size:85%;padding-right:2px}li.post-item a{font-family:monospace;font-size:110%;color:#b3befe}body{background-color:#333;color:#eee}pre{background-color:#272822}code{max-width:98%;text-wrap-mode:wrap}footer{color:#555}header h1{text-transform:uppercase;font-family:monospace;background:#3facfe;color:rgba(255,255,255,.8);display:inline-block;margin:2px;padding:0 8px}</style></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>Wordpress 的 Linux VPS 时间校正</h2></div><div class=meta><div class=date title='Thu Jul 8 2010 22:36:20 +0800'>Jul 8, 2010</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><blockquote><p>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。</p></blockquote><hr><p>这篇文章主要通过修改 Wordpress 函数来修正时间，以及一部分 Linux 服务器常用命令说明。</p><p>&lt;img src='http://www.evlos.org/ev-box/myimg/uploads/Cap0000419.png' /></p><h2 id=wordpress-的-linux-vps-时间校正>Wordpress 的 Linux VPS 时间校正</h2><p>在 WP 后台设置显示的是 “UTC 时间是2010-07-07 8:03:59 本地时间为 2010-07-08 4:03:59”。而实际上现在我的电脑上的时间现在是 2010-07-07 20:03:59。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>-bash-3.2# date
+</span></span><span style=display:flex><span>// <span style=color:#ae81ff>\&#34;</span>-bash-3.2#<span style=color:#ae81ff>\&#34;</span> 是命令提示，就像 Win 下面的 <span style=color:#ae81ff>\&#34;</span>C:<span style=color:#ae81ff>\\</span>Documents and Settings<span style=color:#ae81ff>\\</span>Administrator&gt;<span style=color:#ae81ff>\&#34;</span> 一样
+</span></span><span style=display:flex><span>// date 是显示当前服务器时间的函数
+</span></span><span style=display:flex><span>Thu Jul  <span style=color:#ae81ff>8</span> 04:03:59 CST <span style=color:#ae81ff>2010</span>
+</span></span></code></pre></div><p>而且在 Wordpress 的后台选择的时区是上海，这个是没有错的。但是在数据库里面乱套了。数据库里的 GMT 时间却是北京时间，正常时间却是美国时间，然后经过设置纠正，就诡异了。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>get_comment_time</span>( $d <span style=color:#f92672>=</span> <span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>, $gmt <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>, $translate <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span> ) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>global</span> $comment;
+</span></span><span style=display:flex><span>	$comment_date <span style=color:#f92672>=</span> $gmt <span style=color:#f92672>?</span> $comment<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>comment_date_gmt</span> <span style=color:#f92672>:</span> $comment<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>comment_date_gmt</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> ( <span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span> <span style=color:#f92672>==</span> $d )
+</span></span><span style=display:flex><span>		$date <span style=color:#f92672>=</span> <span style=color:#a6e22e>mysql2date</span>(<span style=color:#a6e22e>get_option</span>(<span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>time_format\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>), $comment_date, $translate);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>		$date <span style=color:#f92672>=</span> <span style=color:#a6e22e>mysql2date</span>($d, $comment_date, $translate);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>apply_filters</span>(<span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>get_comment_time\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>, $date, $d, $gmt, $translate);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>get_comment_date</span>( $d <span style=color:#f92672>=</span> <span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span> ) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>global</span> $comment;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> ( <span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span> <span style=color:#f92672>==</span> $d )
+</span></span><span style=display:flex><span>		$date <span style=color:#f92672>=</span> <span style=color:#a6e22e>mysql2date</span>(<span style=color:#a6e22e>get_option</span>(<span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>date_format\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>), $comment<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>comment_date_gmt</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>		$date <span style=color:#f92672>=</span> <span style=color:#a6e22e>mysql2date</span>($d, $comment<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>comment_date_gmt</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>apply_filters</span>(<span style=color:#a6e22e>\</span><span style=color:#960050;background-color:#1e0010>&#39;</span><span style=color:#a6e22e>get_comment_date\</span><span style=color:#960050;background-color:#1e0010>&#39;</span>, $date, $d);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>我把 $comment->comment_date 修改为 $comment->comment_date_gmt 就正常了。搞定了，现在直接显示 GMT 处的时间，修改的文件是 /wp-includes/comment-template.php。</p><h2 id=linux-常用命令>Linux 常用命令</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>-bash-3.2# ls
+</span></span><span style=display:flex><span>bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
+</span></span><span style=display:flex><span>//这个命令和 Windows 下面的 Dir 原理相同
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>-bash-3.2# ls -al
+</span></span><span style=display:flex><span>//这个命令可以同时查看文件的权限大小以及修改日期等等信息
+</span></span><span style=display:flex><span>total <span style=color:#ae81ff>40</span>
+</span></span><span style=display:flex><span>drwxr-x---  <span style=color:#ae81ff>3</span> root root <span style=color:#ae81ff>4096</span> Jul  <span style=color:#ae81ff>8</span> 05:43 .
+</span></span><span style=display:flex><span>drwxr-xr-x <span style=color:#ae81ff>21</span> root root <span style=color:#ae81ff>4096</span> Jul  <span style=color:#ae81ff>6</span> 02:16 ..
+</span></span><span style=display:flex><span>-rw-------  <span style=color:#ae81ff>1</span> root root <span style=color:#ae81ff>9858</span> Jul  <span style=color:#ae81ff>8</span> 22:03 .bash_history
+</span></span><span style=display:flex><span>-rwxrwxrwx  <span style=color:#ae81ff>1</span> root root  <span style=color:#ae81ff>575</span> Jul  <span style=color:#ae81ff>8</span> 04:55 bak.sh
+</span></span><span style=display:flex><span>drwxr-xr-x  <span style=color:#ae81ff>3</span> root root <span style=color:#ae81ff>4096</span> Jul  <span style=color:#ae81ff>6</span> 08:14 downloads
+</span></span><span style=display:flex><span>lrwxrwxrwx  <span style=color:#ae81ff>1</span> root root    <span style=color:#ae81ff>5</span> Jul  <span style=color:#ae81ff>6</span> 06:53 home -&gt; /home
+</span></span><span style=display:flex><span>-rwxr-xr-x  <span style=color:#ae81ff>1</span> root root <span style=color:#ae81ff>2628</span> Jul  <span style=color:#ae81ff>5</span> 23:53 lnmp
+</span></span><span style=display:flex><span>lrwxrwxrwx  <span style=color:#ae81ff>1</span> root root   <span style=color:#ae81ff>21</span> Jul  <span style=color:#ae81ff>8</span> 05:43 nconf -&gt; /usr/local/nginx/conf
+</span></span><span style=display:flex><span>-rwxr-xr-x  <span style=color:#ae81ff>1</span> root root <span style=color:#ae81ff>1335</span> Jul  <span style=color:#ae81ff>6</span> 09:03 pureftpd
+</span></span><span style=display:flex><span>-rwxrwxrwx  <span style=color:#ae81ff>1</span> root root   <span style=color:#ae81ff>80</span> Jul  <span style=color:#ae81ff>5</span> 23:53 run.sh
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>-bash-3.2# df -lh
+</span></span><span style=display:flex><span>//这个命令可以查看磁盘信息
+</span></span><span style=display:flex><span>Filesystem            Size  Used Avail Use% Mounted on
+</span></span><span style=display:flex><span>/dev/sda1             9.6G  2.3G  6.9G  25% /
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>-bash-3.2# top
+</span></span><span style=display:flex><span>//这个命令就像任务管理器一样，按 Shift+&lt; Shift+&gt; 翻页
+</span></span><span style=display:flex><span>top - 22:25:53 up <span style=color:#ae81ff>2</span> days, 20:10,  <span style=color:#ae81ff>1</span> user,  load average: 0.02, 0.03, 0.00
+</span></span><span style=display:flex><span>Tasks:  <span style=color:#ae81ff>53</span> total,   <span style=color:#ae81ff>1</span> running,  <span style=color:#ae81ff>52</span> sleeping,   <span style=color:#ae81ff>0</span> stopped,   <span style=color:#ae81ff>0</span> zombie
+</span></span><span style=display:flex><span>Cpu<span style=color:#f92672>(</span>s<span style=color:#f92672>)</span>:  0.4%us,  0.0%sy,  0.0%ni, 99.5%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+</span></span><span style=display:flex><span>Mem:    262320k total,   249892k used,    12428k free,    21116k buffers
+</span></span><span style=display:flex><span>Swap:   524280k total,       32k used,   524248k free,    84420k cached
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>1</span> root      <span style=color:#ae81ff>15</span>   <span style=color:#ae81ff>0</span>  <span style=color:#ae81ff>2172</span>  <span style=color:#ae81ff>740</span>  <span style=color:#ae81ff>640</span> S  0.0  0.3   0:00.06 init
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>2</span> root      RT  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 migration/0
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>3</span> root      <span style=color:#ae81ff>34</span>  <span style=color:#ae81ff>19</span>     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 ksoftirqd/0
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>4</span> root      RT  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 watchdog/0
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>5</span> root      <span style=color:#ae81ff>10</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 events/0
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>6</span> root      <span style=color:#ae81ff>10</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 khelper
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>7</span> root      <span style=color:#ae81ff>12</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 kthread
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>9</span> root      <span style=color:#ae81ff>10</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 xenwatch
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>10</span> root      <span style=color:#ae81ff>17</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 xenbus
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>16</span> root      <span style=color:#ae81ff>20</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 kblockd/0
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>17</span> root      <span style=color:#ae81ff>20</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 cqueue/0
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>21</span> root      <span style=color:#ae81ff>20</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 khubd
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>23</span> root      <span style=color:#ae81ff>10</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 kseriod
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>83</span> root      <span style=color:#ae81ff>15</span>   <span style=color:#ae81ff>0</span>     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.02 pdflush
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>84</span> root      <span style=color:#ae81ff>15</span>   <span style=color:#ae81ff>0</span>     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.02 pdflush
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>85</span> root      <span style=color:#ae81ff>10</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.08 kswapd0
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>86</span> root      <span style=color:#ae81ff>20</span>  -5     <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span>    <span style=color:#ae81ff>0</span> S  0.0  0.0   0:00.00 aio/0
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>-bash-3.2# ls
+</span></span><span style=display:flex><span>bak.sh  downloads  home  lnmp  nconf  pureftpd  run.sh
+</span></span><span style=display:flex><span>-bash-3.2# cd downloads
+</span></span><span style=display:flex><span>//cd 命令和 Windows 下面用法几乎一样，但是返回上层目录是 cd ../
+</span></span><span style=display:flex><span>-bash-3.2# ls
+</span></span><span style=display:flex><span>lnmp0.4-full.tar.gz  openvpn-as-1.5.0-CentOS5.x86_64.rpm
+</span></span><span style=display:flex><span>lnmpi                pptpd-1.3.4-1.rhel5.1.i386.rpm
+</span></span><span style=display:flex><span>-bash-3.2#
+</span></span></code></pre></div><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>
