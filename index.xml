@@ -96,7 +96,17 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 &amp;lt;img src=&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0562.jpg&amp;quot; /&amp;gt;
 1. 使用说明： 下载并运行 Dnsspeeder 即可，他会自动把你的 DNS 服务器设置为 127.0.0.1 的本地地址。
 左上角的下拉菜单是缓存时间，默认是一个小时，不过我是设置成了 24 小时，效果可能更明显一点。左下角的表示启动时自动隐藏在系统托盘，这样需要开机启动只要勾选并拉到开始菜单的启动项里就好了。缓存 24 小时的弊端是某些网站使用了动态的 IP ，这样会是它们无法被访问。
-要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>DB Cache Reloaded 一个顶俩</title><link>/posts/761_db-cache-reloaded/</link><pubDate>Sun, 01 Nov 2009 19:59:00 +0800</pubDate><guid>/posts/761_db-cache-reloaded/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>Ajax 评论与邮件通知插件测试结果报告</title><link>/posts/771_test-result-for-ajax-comments-and-mail-to-comments/</link><pubDate>Mon, 02 Nov 2009 13:05:56 +0800</pubDate><guid>/posts/771_test-result-for-ajax-comments-and-mail-to-comments/</guid><description> 以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+这份测试报告包含了以下三款插件：
+Mail To Commenter Quick Comments Wordpress Thread Comment （测试使用的是 Elegant-box 模板。）
+1. Mail To Commenter 首先来说说这款插件，它的使用还是比较广泛的，而且功能非常全面。不过让人头疼的是，它经常会和各种其他插件产生冲突。比如和下面会提到的 Quick Comments 一起用时，就会导致 AJAX 失效并弹出错误提示。另外，它的发件人地址必须得自己从代码里手动修改，如果不管它的话，发出去的邮件经常会直接被塞进别人的垃圾邮件箱里。
+2. Quick Comments 这款插件整体感觉还是挺不错的。比较有特色的是它丰富的 AJAX 效果，包含了滑动、淡入和直接出现等动画。但是最让人遗憾的一点是，它不支持倒序评论。
+3. Wordpress Thread Comment 接下来就是我重点想向大家推荐的插件了！它完美提供了 AJAX 评论功能和邮件通知功能。最重要的是，你根本不必去开启 WP 自带的嵌套支持，它自己就能够实现嵌套评论。而且非常省心的是，就算以后你把它卸载了，原来的嵌套评论也会自动还原为正常顺序的非嵌套评论，完全不用担心数据错乱。
+如何使用： 去官方插件库搜索并下载它。 上传至网站的插件目录并在后台启用。 在设置里的“启用 AJAX”处打个钩。 选择触发邮件发送的条件（比如只有管理员或者文章作者回复时才发送，当然这个随你意愿啦）。 大功告成！ (^o^)/</description></item><item><title>非常漂亮的 Digg Comments</title><link>/posts/764_digg-comments/</link><pubDate>Sun, 01 Nov 2009 20:07:16 +0800</pubDate><guid>/posts/764_digg-comments/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+刚刚体验了这款插件，发现它的界面做得非常漂亮，所以迫不及待地想推荐给大家！实际的效果可以参考下方的截图。
+[图片]
+个人觉得在Web2.0时代，站点的交互体验真的是非常重要的。引入Digg（顶/踩）这样的功能，不仅能极大地提升用户的参与度和活跃度，而且实际效果十分显著。
+如果你也感兴趣，可以直接前往 WordPress 官方插件库搜索“Wordpress Comment Digg”进行下载体验哦！</description></item><item><title>DB Cache Reloaded 一个顶俩</title><link>/posts/761_db-cache-reloaded/</link><pubDate>Sun, 01 Nov 2009 19:59:00 +0800</pubDate><guid>/posts/761_db-cache-reloaded/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
 以前我们常常会用到两款缓存插件：一个是专门用来缓存侧边栏的 WP Widget Cache，另一个则是提供页面缓存（但貌似不包含边栏）的 WP Super Cache。
 为什么现在不需要它们了？ 原因很简单，因为 DB Cache Reloaded 插件出现了！
 这款插件有着更加高效的工作原理，它直接对数据库查询进行缓存。相比于以前的方案，它带来了几个让人无法拒绝的优点：
