@@ -96,7 +96,13 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 &amp;lt;img src=&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0562.jpg&amp;quot; /&amp;gt;
 1. 使用说明： 下载并运行 Dnsspeeder 即可，他会自动把你的 DNS 服务器设置为 127.0.0.1 的本地地址。
 左上角的下拉菜单是缓存时间，默认是一个小时，不过我是设置成了 24 小时，效果可能更明显一点。左下角的表示启动时自动隐藏在系统托盘，这样需要开机启动只要勾选并拉到开始菜单的启动项里就好了。缓存 24 小时的弊端是某些网站使用了动态的 IP ，这样会是它们无法被访问。
-要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>参加火炬之光 3DM 汉化小组</title><link>/posts/689_torchlight-3dm-translate-team/</link><pubDate>Thu, 29 Oct 2009 15:24:33 +0800</pubDate><guid>/posts/689_torchlight-3dm-translate-team/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>DB Cache Reloaded 一个顶俩</title><link>/posts/761_db-cache-reloaded/</link><pubDate>Sun, 01 Nov 2009 19:59:00 +0800</pubDate><guid>/posts/761_db-cache-reloaded/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+以前我们常常会用到两款缓存插件：一个是专门用来缓存侧边栏的 WP Widget Cache，另一个则是提供页面缓存（但貌似不包含边栏）的 WP Super Cache。
+为什么现在不需要它们了？ 原因很简单，因为 DB Cache Reloaded 插件出现了！
+这款插件有着更加高效的工作原理，它直接对数据库查询进行缓存。相比于以前的方案，它带来了几个让人无法拒绝的优点：
+它不需要占用更多的服务器空间来保存各种各样的 Cache 文件。 它不会和 AJAX 类插件、AutoOptimise 插件，或者是 WPPostView 产生冲突。 最省心的是，它完全不需要你去修改烦人的 .htaccess 文件。 如果你心动了，可以直接去 WordPress 官方插件库搜索“DB Cache Reloaded”进行下载替换。
+附：如何彻底删除 WP Super Cache 如果你决定换用新插件，这里附带一下彻底删除 WP Super Cache 的方法。因为这款旧插件比较“顽固”，仅仅在后台停用是不够的：
+首先，在 Super Cache 的设置页面里把现有的缓存全部清空，然后再到插件列表里把它禁用掉。 因为 Super Cache 修改了你的 .htaccess 文件，所以你需要手动修复它：打开你的 .htaccess 文件，把 BEGIN Super Cache 和 END Super Cache 之间的内容全部删除。 进入你的 wp-content 目录，删除里面的 advanced-cache.php 和 wp-cache-config.php 这两个文件。 顺手把 wp-content 目录下的 cache 整个文件夹也删掉。 最后，到 plugins 目录中，把 wp-super-cache 文件夹彻底删除。 按照以上步骤，你就可以把旧的缓存插件清理得干干净净啦！</description></item><item><title>参加火炬之光 3DM 汉化小组</title><link>/posts/689_torchlight-3dm-translate-team/</link><pubDate>Thu, 29 Oct 2009 15:24:33 +0800</pubDate><guid>/posts/689_torchlight-3dm-translate-team/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
 《火炬之光》(Torchlight)完整硬盘版 给大家分享一下《火炬之光》的版本说明，这次是英文、完整无损版。
 安装步骤非常简单：
 解压缩文件
