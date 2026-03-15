@@ -96,7 +96,16 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 &amp;lt;img src=&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0562.jpg&amp;quot; /&amp;gt;
 1. 使用说明： 下载并运行 Dnsspeeder 即可，他会自动把你的 DNS 服务器设置为 127.0.0.1 的本地地址。
 左上角的下拉菜单是缓存时间，默认是一个小时，不过我是设置成了 24 小时，效果可能更明显一点。左下角的表示启动时自动隐藏在系统托盘，这样需要开机启动只要勾选并拉到开始菜单的启动项里就好了。缓存 24 小时的弊端是某些网站使用了动态的 IP ，这样会是它们无法被访问。
-要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>关于域名的 NS/A/MX/CNAME 记录</title><link>/posts/667_domain-ns-a-mx-cname/</link><pubDate>Thu, 29 Oct 2009 11:20:26 +0800</pubDate><guid>/posts/667_domain-ns-a-mx-cname/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>参加火炬之光 3DM 汉化小组</title><link>/posts/689_torchlight-3dm-translate-team/</link><pubDate>Thu, 29 Oct 2009 15:24:33 +0800</pubDate><guid>/posts/689_torchlight-3dm-translate-team/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+《火炬之光》(Torchlight)完整硬盘版 给大家分享一下《火炬之光》的版本说明，这次是英文、完整无损版。
+安装步骤非常简单：
+解压缩文件
+运行setup.bat进行安装
+点击桌面快捷方式即可进入游戏
+P.s. 顺便感谢exia给我指出我的配色误区！
+翻译任务更新 之后我又接手了《火炬之光》全部高级装备的翻译任务。在这里贴出来给大家看一下。以下只是我所负责汉化文档中的一小部分：
+50：退出到标题界面 51：选择 52：在原地复活，但是要受到损失金钱、经验和荣誉值的惩罚 53：在此处入口复活，只受到损失金钱和荣誉值的惩罚 54：在小镇复活，不受到惩罚 下载地址 ed2k://|file|%5B%E7%81%AB%E7%82%AC%E4%B9%8B%E5%85%89%5D.Torchlight.full.rip.rar|362389978|47ff0527176e4467a6dac47141fc80b4|/
+http://www.verycd.com/topics/2777404/</description></item><item><title>关于域名的 NS/A/MX/CNAME 记录</title><link>/posts/667_domain-ns-a-mx-cname/</link><pubDate>Thu, 29 Oct 2009 11:20:26 +0800</pubDate><guid>/posts/667_domain-ns-a-mx-cname/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
 最近发现网上关于域名管理的那些说明，真的是让人看着云里雾里，根本没法理解。干脆我就拿自己的实际情况做个现身说法，给大家用大白话说明一下。
 目前我的域名主要用到了 NS 记录、A 记录、CNAME 记录和 MX 记录。虽然还有 TXT、AAAA 以及 SRV 记录暂时没用到，不过下面我还是会挨个给大家讲解清楚。
 1. A 记录 我的 A 记录一共做了四条。
