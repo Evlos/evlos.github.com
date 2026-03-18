@@ -1,0 +1,236 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+最近在摆弄数据库的时候，无意间瞥见 WordPress 数据库里保存的密码全是一长串以 $P$ 开头的字符。这一下激起了我的好奇心，于是顺藤摸瓜找出了 WP 生成密码的底层代码，打算好好研究一番。
+简易版调用代码 <?php require( './wp-includes/class-phpass.php'); $psw = '123456'; global $psw1; $psw1 = new PasswordHash(8, TRUE); echo $psw1->HashPassword($psw); ?> 密码的生成过程 简单来说，它的加密流程主要分为下面这几步：
+随机产生一个 salt（盐值），然后把这个 salt 和明文密码拼接在一起。 接着进行 count 次循环的 MD5 加密，再将得到的 hash 值进行 base64 编码（encode64）累加。 最后，在生成的字符串前加上特定的 $P$ 前缀，大功告成！ 简易版代码说明 最近恰好在努力学习 PHP，所以试着自己写了这么一小段代码。 只要把这段代码丢到 WordPress 的根目录下运行，就能快速生成一个加密后的密码了。 首先，代码里引用了核心的 class-phpass.php 文件。 接着，把你想要加密的明文密码赋给 $psw 这个变量。 最后，用 $psw1 代表并实例化一个 PasswordHash 类，调用一下它的生成方法就搞定了！
+完整版底层代码 如果不想依赖 WordPress 的环境，可以直接把核心类搬出来单独用。下面是提取出的完整版代码：
+<?php class PasswordHash { var $itoa64; var $iteration_count_log2; var $portable_hashes; var $random_state; function PasswordHash($iteration_count_log2, $portable_hashes) { $this->itoa64 = '."><meta property="og:title" content="关于 WordPress 密码生成过程"><meta property="og:description" content="以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+最近在摆弄数据库的时候，无意间瞥见 WordPress 数据库里保存的密码全是一长串以 $P$ 开头的字符。这一下激起了我的好奇心，于是顺藤摸瓜找出了 WP 生成密码的底层代码，打算好好研究一番。
+简易版调用代码 <?php require( './wp-includes/class-phpass.php'); $psw = '123456'; global $psw1; $psw1 = new PasswordHash(8, TRUE); echo $psw1->HashPassword($psw); ?> 密码的生成过程 简单来说，它的加密流程主要分为下面这几步：
+随机产生一个 salt（盐值），然后把这个 salt 和明文密码拼接在一起。 接着进行 count 次循环的 MD5 加密，再将得到的 hash 值进行 base64 编码（encode64）累加。 最后，在生成的字符串前加上特定的 $P$ 前缀，大功告成！ 简易版代码说明 最近恰好在努力学习 PHP，所以试着自己写了这么一小段代码。 只要把这段代码丢到 WordPress 的根目录下运行，就能快速生成一个加密后的密码了。 首先，代码里引用了核心的 class-phpass.php 文件。 接着，把你想要加密的明文密码赋给 $psw 这个变量。 最后，用 $psw1 代表并实例化一个 PasswordHash 类，调用一下它的生成方法就搞定了！
+完整版底层代码 如果不想依赖 WordPress 的环境，可以直接把核心类搬出来单独用。下面是提取出的完整版代码：
+<?php class PasswordHash { var $itoa64; var $iteration_count_log2; var $portable_hashes; var $random_state; function PasswordHash($iteration_count_log2, $portable_hashes) { $this->itoa64 = '."><meta property="og:type" content="article"><meta property="og:url" content="/posts/907_wordpress-password/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2009-11-13T09:30:41+08:00"><meta property="article:modified_time" content="2009-11-13T09:30:41+08:00"><title>关于 WordPress 密码生成过程</title><link rel=canonical href=/posts/907_wordpress-password/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-66839894-6"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-66839894-6")</script><style type=text/css>pre{width:100%;overflow:hidden}section{width:100%;overflow-x:hidden;word-break:break-all}img{max-width:90%}h2{color:#b3befe;text-transform:uppercase;font-family:fangsong,sans-serif}a{color:#aaa;text-decoration:none}a:hover{text-decoration:underline}ul{padding:0 8px}li.post-item{color:#6b6f84;list-style:none}li.post-item .meta{font-size:85%;padding-right:6px;font-family:monospace;display:inline-block;width:8em;text-align:right}li.post-item a{font-family:monospace;font-size:110%;color:#b3befe}li.post-item.no-bullet{padding-top:8px}body{background-color:#333;color:#eee}pre{background-color:#272822}code{max-width:98%;text-wrap-mode:wrap}footer{color:#555}header h1{text-transform:uppercase;font-family:fangsong,sans-serif;border-left:3px solid #3facfe;color:rgba(255,255,255,.8);display:inline-block;margin:2px;padding:0 8px}</style></head><body lang><section class="main post"><div class=container><div class=content><div class=front-matter><div class=title-container><h2>关于 WordPress 密码生成过程</h2></div><div class=meta><div class=date title='Fri Nov 13 2009 09:30:41 +0800'>Nov 13, 2009</div><div class=reading-time><div class=middot></div></div></div></div><div class=markdown><blockquote><p>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。</p></blockquote><hr><p>最近在摆弄数据库的时候，无意间瞥见 WordPress 数据库里保存的密码全是一长串以 <code>$P$</code> 开头的字符。这一下激起了我的好奇心，于是顺藤摸瓜找出了 WP 生成密码的底层代码，打算好好研究一番。</p><h3 id=简易版调用代码>简易版调用代码</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#f92672>&lt;?</span><span style=color:#a6e22e>php</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>require</span>( <span style=color:#e6db74>&#39;./wp-includes/class-phpass.php&#39;</span>);
+</span></span><span style=display:flex><span>$psw <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;123456&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>global</span> $psw1;
+</span></span><span style=display:flex><span>$psw1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>PasswordHash</span>(<span style=color:#ae81ff>8</span>, <span style=color:#66d9ef>TRUE</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>echo</span> $psw1<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>HashPassword</span>($psw);
+</span></span><span style=display:flex><span><span style=color:#75715e>?&gt;</span><span style=color:#960050;background-color:#1e0010>
+</span></span></span></code></pre></div><h3 id=密码的生成过程>密码的生成过程</h3><p>简单来说，它的加密流程主要分为下面这几步：</p><ul><li>随机产生一个 salt（盐值），然后把这个 salt 和明文密码拼接在一起。</li><li>接着进行 <code>count</code> 次循环的 MD5 加密，再将得到的 hash 值进行 base64 编码（encode64）累加。</li><li>最后，在生成的字符串前加上特定的 <code>$P$</code> 前缀，大功告成！</li></ul><h3 id=简易版代码说明>简易版代码说明</h3><p>最近恰好在努力学习 PHP，所以试着自己写了这么一小段代码。
+只要把这段代码丢到 WordPress 的根目录下运行，就能快速生成一个加密后的密码了。
+首先，代码里引用了核心的 <code>class-phpass.php</code> 文件。
+接着，把你想要加密的明文密码赋给 <code>$psw</code> 这个变量。
+最后，用 <code>$psw1</code> 代表并实例化一个 <code>PasswordHash</code> 类，调用一下它的生成方法就搞定了！</p><h3 id=完整版底层代码>完整版底层代码</h3><p>如果不想依赖 WordPress 的环境，可以直接把核心类搬出来单独用。下面是提取出的完整版代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#f92672>&lt;?</span><span style=color:#a6e22e>php</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>PasswordHash</span> {
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> $itoa64;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> $iteration_count_log2;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> $portable_hashes;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> $random_state;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>PasswordHash</span>($iteration_count_log2, $portable_hashes)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($iteration_count_log2 <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>4</span> <span style=color:#f92672>||</span> $iteration_count_log2 <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>31</span>)
+</span></span><span style=display:flex><span>$iteration_count_log2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>8</span>;
+</span></span><span style=display:flex><span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>iteration_count_log2</span> <span style=color:#f92672>=</span> $iteration_count_log2;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>portable_hashes</span> <span style=color:#f92672>=</span> $portable_hashes;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>random_state</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>microtime</span>() <span style=color:#f92672>.</span> 
+</span></span><span style=display:flex><span>(<span style=color:#a6e22e>function_exists</span>(<span style=color:#e6db74>&#39;getmypid&#39;</span>) <span style=color:#f92672>?</span> <span style=color:#a6e22e>getmypid</span>() <span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;&#39;</span>) <span style=color:#f92672>.</span> <span style=color:#a6e22e>uniqid</span>(<span style=color:#a6e22e>rand</span>(), <span style=color:#66d9ef>TRUE</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>get_random_bytes</span>($count)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (($fh <span style=color:#f92672>=</span> <span style=color:#f92672>@</span><span style=color:#a6e22e>fopen</span>(<span style=color:#e6db74>&#39;/dev/urandom&#39;</span>, <span style=color:#e6db74>&#39;rb&#39;</span>))) {
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#a6e22e>fread</span>($fh, $count);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fclose</span>($fh);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($output) <span style=color:#f92672>&lt;</span> $count) {
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> ($i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; $i <span style=color:#f92672>&lt;</span> $count; $i <span style=color:#f92672>+=</span> <span style=color:#ae81ff>16</span>) {
+</span></span><span style=display:flex><span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>random_state</span> <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>md5</span>(<span style=color:#a6e22e>microtime</span>() <span style=color:#f92672>.</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>random_state</span>);
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pack</span>(<span style=color:#e6db74>&#39;H*&#39;</span>, <span style=color:#a6e22e>md5</span>($this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>random_state</span>));
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#a6e22e>substr</span>($output, <span style=color:#ae81ff>0</span>, $count);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>encode64</span>($input, $count)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;</span>;
+</span></span><span style=display:flex><span>$i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>do</span> {
+</span></span><span style=display:flex><span>$value <span style=color:#f92672>=</span> <span style=color:#a6e22e>ord</span>($input[$i<span style=color:#f92672>++</span>]);
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[$value <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>&lt;</span> $count)
+</span></span><span style=display:flex><span>$value <span style=color:#f92672>|=</span> <span style=color:#a6e22e>ord</span>($input[$i]) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#ae81ff>8</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[($value <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>6</span>) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($i<span style=color:#f92672>++</span> <span style=color:#f92672>&gt;=</span> $count)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>&lt;</span> $count)
+</span></span><span style=display:flex><span>$value <span style=color:#f92672>|=</span> <span style=color:#a6e22e>ord</span>($input[$i]) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#ae81ff>16</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[($value <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>12</span>) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($i<span style=color:#f92672>++</span> <span style=color:#f92672>&gt;=</span> $count)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[($value <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>18</span>) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span>} <span style=color:#66d9ef>while</span> ($i <span style=color:#f92672>&lt;</span> $count);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>gensalt_private</span>($input)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;$P$&#39;</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[<span style=color:#a6e22e>min</span>($this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>iteration_count_log2</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>((<span style=color:#66d9ef>PHP_VERSION</span> <span style=color:#f92672>&gt;=</span> <span style=color:#e6db74>&#39;5&#39;</span>) <span style=color:#f92672>?</span> <span style=color:#ae81ff>5</span> <span style=color:#f92672>:</span> <span style=color:#ae81ff>3</span>), <span style=color:#ae81ff>30</span>)];
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>encode64</span>($input, <span style=color:#ae81ff>6</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>crypt_private</span>($password, $setting)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;*0&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>substr</span>($setting, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>2</span>) <span style=color:#f92672>==</span> $output)
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;*1&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>substr</span>($setting, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>3</span>) <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#39;$P$&#39;</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$count_log2 <span style=color:#f92672>=</span> <span style=color:#a6e22e>strpos</span>($this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>, $setting[<span style=color:#ae81ff>3</span>]);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($count_log2 <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>7</span> <span style=color:#f92672>||</span> $count_log2 <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>30</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$count <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>&lt;&lt;</span> $count_log2;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$salt <span style=color:#f92672>=</span> <span style=color:#a6e22e>substr</span>($setting, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>8</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($salt) <span style=color:#f92672>!=</span> <span style=color:#ae81ff>8</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#66d9ef>PHP_VERSION</span> <span style=color:#f92672>&gt;=</span> <span style=color:#e6db74>&#39;5&#39;</span>) {
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span> <span style=color:#a6e22e>md5</span>($salt <span style=color:#f92672>.</span> $password, <span style=color:#66d9ef>TRUE</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>do</span> {
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span> <span style=color:#a6e22e>md5</span>($hash <span style=color:#f92672>.</span> $password, <span style=color:#66d9ef>TRUE</span>);
+</span></span><span style=display:flex><span>} <span style=color:#66d9ef>while</span> (<span style=color:#f92672>--</span>$count);
+</span></span><span style=display:flex><span>} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span> <span style=color:#a6e22e>pack</span>(<span style=color:#e6db74>&#39;H*&#39;</span>, <span style=color:#a6e22e>md5</span>($salt <span style=color:#f92672>.</span> $password));
+</span></span><span style=display:flex><span><span style=color:#66d9ef>do</span> {
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span> <span style=color:#a6e22e>pack</span>(<span style=color:#e6db74>&#39;H*&#39;</span>, <span style=color:#a6e22e>md5</span>($hash <span style=color:#f92672>.</span> $password));
+</span></span><span style=display:flex><span>} <span style=color:#66d9ef>while</span> (<span style=color:#f92672>--</span>$count);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#a6e22e>substr</span>($setting, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>12</span>);
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>encode64</span>($hash, <span style=color:#ae81ff>16</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>gensalt_extended</span>($input)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$count_log2 <span style=color:#f92672>=</span> <span style=color:#a6e22e>min</span>($this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>iteration_count_log2</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>24</span>);
+</span></span><span style=display:flex><span>$count <span style=color:#f92672>=</span> (<span style=color:#ae81ff>1</span> <span style=color:#f92672>&lt;&lt;</span> $count_log2) <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;_&#39;</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[$count <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[($count <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>6</span>) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[($count <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>12</span>) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>itoa64</span>[($count <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>18</span>) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>encode64</span>($input, <span style=color:#ae81ff>3</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>gensalt_blowfish</span>($input)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$itoa64 <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;$2a$&#39;</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> <span style=color:#a6e22e>chr</span>(<span style=color:#a6e22e>ord</span>(<span style=color:#e6db74>&#39;0&#39;</span>) <span style=color:#f92672>+</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>iteration_count_log2</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>10</span>);
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> <span style=color:#a6e22e>chr</span>(<span style=color:#a6e22e>ord</span>(<span style=color:#e6db74>&#39;0&#39;</span>) <span style=color:#f92672>+</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>iteration_count_log2</span> <span style=color:#f92672>%</span> <span style=color:#ae81ff>10</span>);
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> <span style=color:#e6db74>&#39;$&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>do</span> {
+</span></span><span style=display:flex><span>$c1 <span style=color:#f92672>=</span> <span style=color:#a6e22e>ord</span>($input[$i<span style=color:#f92672>++</span>]);
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $itoa64[$c1 <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>2</span>];
+</span></span><span style=display:flex><span>$c1 <span style=color:#f92672>=</span> ($c1 <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x03</span>) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#ae81ff>4</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>16</span>) {
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $itoa64[$c1];
+</span></span><span style=display:flex><span><span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$c2 <span style=color:#f92672>=</span> <span style=color:#a6e22e>ord</span>($input[$i<span style=color:#f92672>++</span>]);
+</span></span><span style=display:flex><span>$c1 <span style=color:#f92672>|=</span> $c2 <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>4</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $itoa64[$c1];
+</span></span><span style=display:flex><span>$c1 <span style=color:#f92672>=</span> ($c2 <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x0f</span>) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#ae81ff>2</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$c2 <span style=color:#f92672>=</span> <span style=color:#a6e22e>ord</span>($input[$i<span style=color:#f92672>++</span>]);
+</span></span><span style=display:flex><span>$c1 <span style=color:#f92672>|=</span> $c2 <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>6</span>;
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $itoa64[$c1];
+</span></span><span style=display:flex><span>$output <span style=color:#f92672>.=</span> $itoa64[$c2 <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0x3f</span>];
+</span></span><span style=display:flex><span>} <span style=color:#66d9ef>while</span> (<span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $output;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>HashPassword</span>($password)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$random <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>CRYPT_BLOWFISH</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>portable_hashes</span>) {
+</span></span><span style=display:flex><span>$random <span style=color:#f92672>=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>get_random_bytes</span>(<span style=color:#ae81ff>16</span>);
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>crypt</span>($password, $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>gensalt_blowfish</span>($random));
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($hash) <span style=color:#f92672>==</span> <span style=color:#ae81ff>60</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $hash;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>CRYPT_EXT_DES</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>$this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>portable_hashes</span>) {
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($random) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>3</span>)
+</span></span><span style=display:flex><span>$random <span style=color:#f92672>=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>get_random_bytes</span>(<span style=color:#ae81ff>3</span>);
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>crypt</span>($password, $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>gensalt_extended</span>($random));
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($hash) <span style=color:#f92672>==</span> <span style=color:#ae81ff>20</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $hash;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($random) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>6</span>)
+</span></span><span style=display:flex><span>$random <span style=color:#f92672>=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>get_random_bytes</span>(<span style=color:#ae81ff>6</span>);
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>    $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>crypt_private</span>($password,
+</span></span><span style=display:flex><span>    $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>gensalt_private</span>($random));
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($hash) <span style=color:#f92672>==</span> <span style=color:#ae81ff>34</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $hash;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;*&#39;</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>CheckPassword</span>($password, $stored_hash)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span> $this<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>crypt_private</span>($password, $stored_hash);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($hash[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;*&#39;</span>)
+</span></span><span style=display:flex><span>$hash <span style=color:#f92672>=</span> <span style=color:#a6e22e>crypt</span>($password, $stored_hash);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> $hash <span style=color:#f92672>==</span> $stored_hash;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$psw <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;123456&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>global</span> $psw1;
+</span></span><span style=display:flex><span>$psw1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>PasswordHash</span>(<span style=color:#ae81ff>8</span>, <span style=color:#66d9ef>TRUE</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>echo</span> $psw1<span style=color:#f92672>-&gt;</span><span style=color:#a6e22e>HashPassword</span>($psw);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>?&gt;</span><span style=color:#960050;background-color:#1e0010>
+</span></span></span></code></pre></div><h3 id=完整代码段说明>完整代码段说明</h3><p>上面这段代码本身就已经把 <code>class-phpass.php</code> 的核心实现包含进去了，所以你完全不必再去 require 那个源文件。
+它的优点在于可以独立运行——你不需要像上一段代码那样非得把它丢在 WP 根目录下，随便找个能跑 PHP 的环境执行一下，它就能顺畅生成加密字符。</p><br><p class=back-to-posts><a href=/>[back]</a></p></div><br></div></div></section>

@@ -96,7 +96,23 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 &amp;lt;img src=&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0562.jpg&amp;quot; /&amp;gt;
 1. 使用说明： 下载并运行 Dnsspeeder 即可，他会自动把你的 DNS 服务器设置为 127.0.0.1 的本地地址。
 左上角的下拉菜单是缓存时间，默认是一个小时，不过我是设置成了 24 小时，效果可能更明显一点。左下角的表示启动时自动隐藏在系统托盘，这样需要开机启动只要勾选并拉到开始菜单的启动项里就好了。缓存 24 小时的弊端是某些网站使用了动态的 IP ，这样会是它们无法被访问。
-要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>不怎么习惯用 Windows7</title><link>/posts/884_not-accustomed-to-using-windows7/</link><pubDate>Mon, 09 Nov 2009 12:47:49 +0800</pubDate><guid>/posts/884_not-accustomed-to-using-windows7/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>关于 WordPress 密码生成过程</title><link>/posts/907_wordpress-password/</link><pubDate>Fri, 13 Nov 2009 09:30:41 +0800</pubDate><guid>/posts/907_wordpress-password/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+最近在摆弄数据库的时候，无意间瞥见 WordPress 数据库里保存的密码全是一长串以 $P$ 开头的字符。这一下激起了我的好奇心，于是顺藤摸瓜找出了 WP 生成密码的底层代码，打算好好研究一番。
+简易版调用代码 &amp;lt;?php require( &amp;#39;./wp-includes/class-phpass.php&amp;#39;); $psw = &amp;#39;123456&amp;#39;; global $psw1; $psw1 = new PasswordHash(8, TRUE); echo $psw1-&amp;gt;HashPassword($psw); ?&amp;gt; 密码的生成过程 简单来说，它的加密流程主要分为下面这几步：
+随机产生一个 salt（盐值），然后把这个 salt 和明文密码拼接在一起。 接着进行 count 次循环的 MD5 加密，再将得到的 hash 值进行 base64 编码（encode64）累加。 最后，在生成的字符串前加上特定的 $P$ 前缀，大功告成！ 简易版代码说明 最近恰好在努力学习 PHP，所以试着自己写了这么一小段代码。 只要把这段代码丢到 WordPress 的根目录下运行，就能快速生成一个加密后的密码了。 首先，代码里引用了核心的 class-phpass.php 文件。 接着，把你想要加密的明文密码赋给 $psw 这个变量。 最后，用 $psw1 代表并实例化一个 PasswordHash 类，调用一下它的生成方法就搞定了！
+完整版底层代码 如果不想依赖 WordPress 的环境，可以直接把核心类搬出来单独用。下面是提取出的完整版代码：
+&amp;lt;?php class PasswordHash { var $itoa64; var $iteration_count_log2; var $portable_hashes; var $random_state; function PasswordHash($iteration_count_log2, $portable_hashes) { $this-&amp;gt;itoa64 = &amp;#39;.</description></item><item><title>如何使用马甲登录器</title><link>/posts/892_how-to-use-swapcookie/</link><pubDate>Wed, 11 Nov 2009 14:53:45 +0800</pubDate><guid>/posts/892_how-to-use-swapcookie/</guid><description> 以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+刚刚歪歪玛童鞋问我怎么使用Swapcookie这个管理马甲的神器。需要先说明一下，这个软件目前仅支持IE浏览器，当然用FF的童鞋如果有需要也可以单独来问我。
+这个马甲登录器能让你非常方便地在同一个论坛同时登录多个帐号。最棒的功能是它完美支持WebGame双开，比如想同时挂几个开心农场之类的Flash游戏，用它就对了。
+第一次使用步骤 首先下载Swapcookie的压缩包，并输入提供的解压密码（evlos.org），解压到你喜欢的任意位置。 运行解压出的SwapCookie.exe程序，屏幕右下角就会出现一个可爱的乌龟头图标。 右击这个图标呼出菜单，点击管理马甲，会弹出一个设置窗口。 软件里原本就自带了3个备用马甲文件，我们直接用起来不要浪费。 点击列表里的小马甲1号，然后点击修改，马甲名称随便填，只要你自己能分清楚就好。 在默认网址处填入你要登录的论坛或网站主页即可。 接着点击右边的编辑马甲按键进行保存。 这样你的第一个马甲就设置好了，剩下的马甲也可以按照上面的方法依次修改。 如何日常使用 右击右下角的乌龟头图标，直接点击你要使用的马甲名称。 系统会自动弹出一个IE窗口，正常登录你的账号，并记得勾选下次自动登陆。 搞定啦，以后只要点击对应的马甲名称，它就会全自动帮你登录好。 如果想同时使用其他马甲，重复以上步骤多开窗口即可。 操作时多留意一下IE的标题栏，上面会贴心地提示你当前正在使用的是哪个马甲。</description></item><item><title>如何使用火炬之光转换器</title><link>/posts/889_torchlight-mod-diy-globals/</link><pubDate>Tue, 10 Nov 2009 12:34:21 +0800</pubDate><guid>/posts/889_torchlight-mod-diy-globals/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+我发现《火炬之光》关于Mod的中文教程一直不是很多，所以就在这里稍微给大家讲解一下。当然，这里提供的并不是从零开始的完整教程，只是一点补充经验。如果你觉得有用想要转载，请务必加个署名“邪罗刹”，谢谢啦。
+关于编辑器 转换器主要是用来把游戏里的 .DAT.adm 文件进行格式转换的。操作非常无脑，只要把这类文件直接拖到转换器上，它就会自动进行转换，并生成一个同名的 .DAT 文件。转换完成之后，你就可以直接使用普通的文本编辑器打开它进行修改了。
+例如，如果你想修改Global文件，具体步骤如下： 首先到 Pak.zip 文件的根目录里找到 GLOBALS.DAT.adm 并把它提取出来。 使用转换器处理后打开它，接下来只要搞清楚里面每一条代码的意思就可以随意修改了。 举个例子：&amp;lt;FLOAT&amp;gt;ENCHANTER_MAGIC_CHANCE 代表的是附魔成功率。 如果你把它修改成 99.000000，就表示你在游戏里的附魔成功率变成了99%。
+如何使用Mod 修改完成后，你完全不需要把它转换回原来的格式，直接放置在特定的media文件夹里就可以了。XP系统下的路径参考如下： C:\Documents and Settings\Administrator\Application Data\runic games\torchlight\mods 在里面新建一个文件夹，结构保持为 \你取的Mod名字\media\ 即可。
+另外需要特别注意的是，放置的位置必须严格按照游戏原本的文件层级结构。 比如，这个文件原本在 Pak.zip 里的路径是 \media\units\items\potions\， 那么你就应该按照这样的路径来放置你的修改文件：\你取的Mod名字\media\units\items\potions\。
+为什么不放回原压缩包 这点只是个人的经验之谈。首先，这样做绝对不会破坏游戏的原文件。 我感觉游戏的读取机制是这样的：在扫描Mod文件夹后，如果发现有新增的Mod，就会优先读取Mod中的文件，而不再去读取 Pak.zip 里的同名文件。 可以说，这是一种非常方便又安全的替换文件模式，容错率很高。
+为什么不必转换回去 因为游戏在运行的时候，系统会自动把它转换回原格式的，完全不用你去管它，嘿嘿。
+为什么我无法使用 如果你照做后发现没有效果，最可能的原因是最新的Save存档有时候会无法直接生效。 解决方法很简单：随便新建一个人物，进入游戏后再退出，接着重新读取你原来的人物存档就可以正常使用了。</description></item><item><title>不怎么习惯用 Windows7</title><link>/posts/884_not-accustomed-to-using-windows7/</link><pubDate>Mon, 09 Nov 2009 12:47:49 +0800</pubDate><guid>/posts/884_not-accustomed-to-using-windows7/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
 ╮(╯▽╰)╭ 真是怪咧，我就是死活不习惯用 Windows 7。各种纠结啊，难道我骨子里其实是个死忠“XP控”？神啊，赶紧来救救我吧！
 Windows 7 界面确实炫酷得很，新版任务栏也很带感，很多细节功能肉眼可见地更完善了。但我个人实在是用不惯 Win7 的文件管理器，这点上还是更偏爱老当益壮的 XP。而且现在好多软件都没跟上 Win7 的步伐，兼容性显得有些尴尬。最让我心疼的是我的小本本，饱受新系统折磨，可怜的它居然因为显卡芯片过热直接强行关机了！
 Ubuntu 这系统绝对是高效又自由，但咱毕竟还是个要玩玩游戏的人呐。我只想安安稳稳只装一个系统，纠结死我了，在上面迅雷居然跑不起来。网上还说什么用 Wine 加上国际版迅雷，在网络负载高的地方根本下不动东西嘛，实在太折腾了。
