@@ -96,7 +96,17 @@ $regs[1] 为符合第一个左边括弧 (parenthesis) 的部份字符串，$regs
 &amp;lt;img src=&amp;quot;http://www.evlos.org/ev-box/myimg/uploads/Capture0562.jpg&amp;quot; /&amp;gt;
 1. 使用说明： 下载并运行 Dnsspeeder 即可，他会自动把你的 DNS 服务器设置为 127.0.0.1 的本地地址。
 左上角的下拉菜单是缓存时间，默认是一个小时，不过我是设置成了 24 小时，效果可能更明显一点。左下角的表示启动时自动隐藏在系统托盘，这样需要开机启动只要勾选并拉到开始菜单的启动项里就好了。缓存 24 小时的弊端是某些网站使用了动态的 IP ，这样会是它们无法被访问。
-要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>Gzip 混开一定要慎重</title><link>/posts/870_open-many-cache-plugins-isnot-so-good/</link><pubDate>Thu, 05 Nov 2009 19:26:01 +0800</pubDate><guid>/posts/870_open-many-cache-plugins-isnot-so-good/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+要稍等一下，然后软件图标会变红并自动刷新缓存，再访问就没有问题了。</description></item><item><title>不怎么习惯用 Windows7</title><link>/posts/884_not-accustomed-to-using-windows7/</link><pubDate>Mon, 09 Nov 2009 12:47:49 +0800</pubDate><guid>/posts/884_not-accustomed-to-using-windows7/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+╮(╯▽╰)╭ 真是怪咧，我就是死活不习惯用 Windows 7。各种纠结啊，难道我骨子里其实是个死忠“XP控”？神啊，赶紧来救救我吧！
+Windows 7 界面确实炫酷得很，新版任务栏也很带感，很多细节功能肉眼可见地更完善了。但我个人实在是用不惯 Win7 的文件管理器，这点上还是更偏爱老当益壮的 XP。而且现在好多软件都没跟上 Win7 的步伐，兼容性显得有些尴尬。最让我心疼的是我的小本本，饱受新系统折磨，可怜的它居然因为显卡芯片过热直接强行关机了！
+Ubuntu 这系统绝对是高效又自由，但咱毕竟还是个要玩玩游戏的人呐。我只想安安稳稳只装一个系统，纠结死我了，在上面迅雷居然跑不起来。网上还说什么用 Wine 加上国际版迅雷，在网络负载高的地方根本下不动东西嘛，实在太折腾了。
+Mac OS 似乎还是卡在硬件驱动的问题上，目前只能继续观望中。
+Windows XP 虽说很多功能现在看确实老旧了，但我个人感觉它的操作效率反而是最高的。只要你别手欠去装一堆杂七杂八的浏览器工具栏，别搞得开机启动项满天飞，它基本能非常顺滑地跑上好长一段时间，而且系统资源消耗也小。用 XP 的时候，我能真真切切地感觉到自己是完全掌控这个系统的，里面的每一个进程、每一个服务我都熟门熟路。不过话说回来，人总得赶赶潮流，XP 迟早是要被淘汰的，纠结半天，咱要不还是先把 Win7 凑合用着好啦。
+唉，继续纠结中，到底装个什么系统才好哩？</description></item><item><title>如何指定 WP-Thread-Comment 的发件人</title><link>/posts/878_wp-thread-comment-poster/</link><pubDate>Fri, 06 Nov 2009 19:54:26 +0800</pubDate><guid>/posts/878_wp-thread-comment-poster/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
+一般这个插件默认的发件人邮箱都是类似 no-reply@你的域名 这种格式。我个人不太喜欢这种冷冰冰的地址，所以决定把它换成自定义的邮箱，比如使用 xxx@gmail.com 作为发件人。
+原本的 PHP 代码是这样的：
+$wp_email = &amp;#39;no-reply@&amp;#39; . preg_replace(&amp;#39;#^www\.#&amp;#39;, &amp;#39;&amp;#39;, strtolower($_SERVER[&amp;#39;SERVER_NAME&amp;#39;])); $from = &amp;#34;From: \&amp;#34;&amp;#34;.get_option(&amp;#39;blogname&amp;#39;).&amp;#34;\&amp;#34; &amp;lt;$wp_email&amp;gt;&amp;#34;; 只需要稍微改动一下，直接指定你的发件人地址即可：
+$wp_email = &amp;#39;指定的发件人地址&amp;#39;; $from = &amp;#34;From: \&amp;#34;&amp;#34;.get_option(&amp;#39;blogname&amp;#39;).&amp;#34;\&amp;#34; &amp;lt;$wp_email&amp;gt;&amp;#34;; 注意： 如果使用类似 Foxmail 这样的邮箱，要当心它经常会被 Gmail 误判成垃圾邮件发件者。建议大家修改完之后一定要自己发封邮件测试一下，要是邮件直接进了垃圾箱，那可就杯具了 ╮(╯▽╰)╭</description></item><item><title>Gzip 混开一定要慎重</title><link>/posts/870_open-many-cache-plugins-isnot-so-good/</link><pubDate>Thu, 05 Nov 2009 19:26:01 +0800</pubDate><guid>/posts/870_open-many-cache-plugins-isnot-so-good/</guid><description>以下内容恢复自 Wordpress 时期的数据库备份，内容已经严重过期，仅留作纪念。
 非常感谢林木木提醒我，菠萝阁居然全变成了乱码！
 这个问题冒出来得简直突兀又莫名其妙。我赶紧拉了几个在线的同学帮忙测试，结果很诡异：几个人看完全正常，另外几个看却是满屏乱码。最后我自己用Wap上网一查，好家伙，也是全屏乱码。
 后来我干脆把所有缓存插件全关掉，嘿，立马就恢复正常了。
