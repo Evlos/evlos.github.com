@@ -1,178 +1,128 @@
-/* search.js ── 站内搜索（⌘K / Ctrl+K / 「/」唤起）。
-   索引由 Hugo 构建期内联进 #search-index，字段 t/u/d/y/g 分别是
-   标题 / 相对链接 / 日期 / 年份 / 标签。 */
+/* logbook ── 站内搜索：⌘K / Ctrl+K / "/" 打开，原生 <dialog> 兜底焦点陷阱。 */
 (function () {
   'use strict';
 
-  var modal = document.getElementById('search-modal');
-  if (!modal) return;
-
+  var dlg = document.getElementById('search');
   var input = document.getElementById('search-input');
-  var list = document.getElementById('search-results');
-  var countEl = document.getElementById('search-count');
-  var scrim = document.getElementById('search-scrim');
-  var tplWrap = document.getElementById('search-item-tpl');
-  var btn = document.getElementById('search-btn');
+  var out = document.getElementById('search-results');
   var raw = document.getElementById('search-index');
+  if (!dlg || !input || !out || !raw || typeof dlg.showModal !== 'function') return;
 
-  var index = [];
-  try { index = JSON.parse(raw ? raw.textContent : '[]') || []; } catch (e) { index = []; }
-  if (!index.length) return;
+  var index;
+  try { index = JSON.parse(raw.textContent); } catch (e) { return; }
+  if (!index || !index.length) return;
 
-  var selected = 0;
-  var results = [];
+  /* 预编译小写检索串：中文不分词，直接子串匹配即可，英文再按词首字母兜一层 */
+  var items = index.map(function (it) {
+    return {
+      title: it.t, url: it.u, date: it.d, year: it.y, tags: it.g || [],
+      hay: (it.t + ' ' + it.s + ' ' + (it.g || []).join(' ')).toLowerCase()
+    };
+  });
+
+  var active = -1;
+  var hits = [];
 
   function esc(s) {
-    return s.replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
     });
   }
 
-  /* 把命中的片段包进 <mark>，先转义再插入，避免 XSS。
-     用 \u0001 / \u0002 做哨兵，避免嵌套替换互相吃掉标签。 */
-  var MARK = '\u0001', MARK_END = '\u0002';
-  function highlight(text, terms) {
-    var out = esc(text);
-    terms.forEach(function (t) {
-      if (!t) return;
-      var re = new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
-      out = out.replace(re, MARK + '$1' + MARK_END);
-    });
-    return out.split(MARK).join('<mark>').split(MARK_END).join('</mark>');
+  function mark(text, q) {
+    var safe = esc(text);
+    if (!q) return safe;
+    var lower = text.toLowerCase();
+    var i = lower.indexOf(q);
+    if (i === -1) return safe;
+    return esc(text.slice(0, i)) + '<mark>' + esc(text.slice(i, i + q.length)) + '</mark>' + esc(text.slice(i + q.length));
   }
 
-  function subsequence(hay, needle) {
-    var i = 0;
-    for (var j = 0; j < hay.length && i < needle.length; j++) {
-      if (hay[j] === needle[i]) i++;
-    }
-    return i === needle.length;
-  }
-
-  function score(item, q, terms) {
-    var t = item.t.toLowerCase();
-    if (t === q) return 1000;
-    if (t.indexOf(q) === 0) return 600;
-    var idx = t.indexOf(q);
-    if (idx > 0) return 500 - Math.min(idx, 60);
-    if ((item.g || '').toLowerCase().indexOf(q) > -1) return 300;
-    if (terms.length > 1 && terms.every(function (w) { return t.indexOf(w) > -1; })) return 200;
-    if (t.indexOf(q) > -1) return 150;
-    if (terms.length > 1 && subsequence(t, q.replace(/\s+/g, ''))) return 80;
-    return 0;
-  }
-
-  function run(raw2) {
-    var q = raw2.trim().toLowerCase();
-    list.textContent = '';
-    results = [];
-
+  function render(q) {
+    active = -1;
+    hits = [];
     if (!q) {
-      list.innerHTML = '<p class="search-empty px-3 py-8 text-center">输入关键词开始搜索。' +
-        (index.length) + ' 篇文章已就绪。</p>';
-      countEl.textContent = '';
+      out.innerHTML = '<p class="search-empty">输入关键词开始搜索。支持 <kbd class="border border-rule px-1 font-mono text-[0.85em]">⌘K</kbd> 或 <kbd class="border border-rule px-1 font-mono text-[0.85em]">/</kbd> 打开。</p>';
       return;
     }
 
-    var terms = q.split(/\s+/).filter(Boolean);
-    results = index
-      .map(function (item) { return { item: item, s: score(item, q, terms) }; })
-      .filter(function (r) { return r.s > 0; })
-      .sort(function (a, b) { return b.s - a.s || (a.item.d < b.item.d ? 1 : -1); })
-      .slice(0, 30)
-      .map(function (r) { return r.item; });
+    hits = items.filter(function (it) { return it.hay.indexOf(q) !== -1; }).slice(0, 40);
 
-    if (!results.length) {
-      list.innerHTML = '<p class="search-empty px-3 py-10 text-center">没有匹配「' + esc(raw2.trim()) + '」的文章。</p>';
-      countEl.textContent = '0 个结果';
+    if (!hits.length) {
+      out.innerHTML = '<p class="search-empty">没有匹配「' + esc(q) + '」的条目。换个词试试，或者直接去<a href="/posts/" class="underline" style="text-decoration-color:var(--signal-line)">全部文章</a>里翻。</p>';
       return;
     }
 
-    var frag = document.createDocumentFragment();
-    results.forEach(function (item, i) {
-      var node = tplWrap.querySelector('[data-tpl]').cloneNode(true);
-      node.href = item.u;
-      node.id = 'search-hit-' + i;
-      node.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-
-      var icon = node.querySelector('[data-icon]');
-      icon.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" ' +
-        'stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' +
-        '<path d="M4.5 19.5 9 15l4 4 6.5-8.5"/><path d="M14.5 10.5h5v5"/></svg>';
-
-      node.querySelector('[data-title]').innerHTML = highlight(item.t, terms);
-      node.querySelector('[data-meta]').textContent = item.d + (item.g ? ' · ' + item.g : '');
-
-      frag.appendChild(node);
-    });
-    list.appendChild(frag);
-
-    selected = 0;
-    countEl.textContent = results.length >= 30 ? '前 30 个结果' : results.length + ' 个结果';
+    out.innerHTML = hits.map(function (it, i) {
+      return '<a class="search-hit" role="option" aria-selected="false" href="' + esc(it.url) + '" data-i="' + i + '">' +
+        '<span class="flex items-baseline justify-between gap-3">' +
+          '<span class="text-[14.5px] font-semibold leading-snug text-ink">' + mark(it.title, q) + '</span>' +
+          '<span class="eyebrow shrink-0 tabular-nums">' + esc(it.year) + '</span>' +
+        '</span>' +
+        '<span class="mt-1 block text-[12.5px] text-ink-mute">' + esc(it.date) + (it.tags.length ? ' · #' + esc(it.tags.join(' #')) : '') + '</span>' +
+      '</a>';
+    }).join('');
   }
 
-  function markSelected() {
-    var nodes = list.querySelectorAll('[data-tpl]');
-    for (var i = 0; i < nodes.length; i++) {
-      nodes[i].setAttribute('aria-selected', i === selected ? 'true' : 'false');
+  function move(step) {
+    var nodes = out.querySelectorAll('.search-hit');
+    if (!nodes.length) return;
+    if (active >= 0) {
+      nodes[active].setAttribute('aria-selected', 'false');
+      nodes[active].style.background = '';
     }
-    var cur = nodes[selected];
-    if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+    active = (active + step + nodes.length) % nodes.length;
+    nodes[active].setAttribute('aria-selected', 'true');
+    nodes[active].style.background = 'var(--signal-soft)';
+    nodes[active].scrollIntoView({ block: 'nearest' });
   }
 
   function open() {
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(function () { scrim.classList.remove('opacity-0'); scrim.classList.add('opacity-100'); });
+    if (!dlg.open) dlg.showModal();
     input.focus();
     input.select();
   }
 
-  function close() {
-    modal.classList.add('hidden');
-    scrim.classList.remove('opacity-100');
-    scrim.classList.add('opacity-0');
-    document.body.style.overflow = '';
-  }
-
-  function isOpen() { return !modal.classList.contains('hidden'); }
-
-  if (btn) btn.addEventListener('click', function () { isOpen() ? close() : open(); });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-open-search]'), function (b) {
-    b.addEventListener('click', open);
+  document.querySelectorAll('[data-search-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (!dlg.open) { open(); }
+    });
   });
-  scrim.addEventListener('click', close);
-
-  input.addEventListener('input', function () { run(input.value); });
 
   document.addEventListener('keydown', function (e) {
-    var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+    var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement && document.activeElement.tagName);
 
     if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
-      isOpen() ? close() : open();
+      dlg.open ? dlg.close() : open();
       return;
     }
-    if (e.key === '/' && !typing && !isOpen()) {
+    if (e.key === '/' && !typing && !dlg.open) {
       e.preventDefault();
       open();
       return;
     }
-    if (!isOpen()) return;
+    if (!dlg.open) return;
 
-    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-      if (!results.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+    else if (e.key === 'Enter' && active >= 0) {
       e.preventDefault();
-      selected = (selected + (e.key === 'ArrowDown' ? 1 : results.length - 1)) % results.length;
-      markSelected();
-      return;
-    }
-    if (e.key === 'Enter') {
-      var cur = list.querySelectorAll('[data-tpl]')[selected];
-      if (cur) { e.preventDefault(); window.location.href = cur.getAttribute('href'); }
+      var node = out.querySelector('[data-i="' + active + '"]');
+      if (node) { dlg.close(); window.location.href = node.getAttribute('href'); }
     }
   });
 
-  run('');
+  var t;
+  input.addEventListener('input', function () {
+    clearTimeout(t);
+    var q = input.value.trim().toLowerCase();
+    t = setTimeout(function () { render(q); }, 80);
+  });
+
+  /* 关掉时清空，下次打开是干净的 */
+  dlg.addEventListener('close', function () {
+    input.value = '';
+    render('');
+  });
 })();

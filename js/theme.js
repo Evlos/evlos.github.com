@@ -1,84 +1,58 @@
-/* theme.js ── 三态配色主题：跟随系统 → 浅色 → 深色 → 跟随系统。
-   首次访问没有 localStorage 记录时默认跟随系统。
-   关键约定：html[data-mode] 存的是「用户偏好」，.dark 类决定实际配色，
-   head 里的内联脚本已经在首绘前把两者写好，这里只负责后续切换。 */
+/* logbook ── 配色切换：跟随系统 / 浅色 / 深色 三态循环。
+   写 localStorage 的 key 必须和 head.html 里防 FOUC 那段脚本一致（logbook-mode）。 */
 (function () {
-  'use strict';
-
-  var KEY = 'aurora-theme';
-  var ORDER = ['system', 'light', 'dark'];
-  var NEXT = {
-    system: 'light',
-    light: 'dark',
-    dark: 'system'
-  };
-  var LABEL = {
-    system: '跟随系统',
-    light: '浅色',
-    dark: '深色'
-  };
-
+  var KEY = 'logbook-mode';
   var root = document.documentElement;
-  var btn = document.getElementById('theme-toggle');
-  var mq = window.matchMedia('(prefers-color-scheme: dark)');
-
-  function resolve(pref) {
-    return pref === 'system' ? (mq.matches ? 'dark' : 'light') : pref;
-  }
-
-  function syncColorScheme(mode) {
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (!meta) return;
-    var canvas = getComputedStyle(root).getPropertyValue('--canvas').trim();
-    if (canvas) meta.setAttribute('content', canvas);
-    root.style.colorScheme = mode;
-  }
-
-  function paint(pref) {
-    var eff = resolve(pref);
-    root.dataset.mode = pref;
-    root.classList.toggle('dark', eff === 'dark');
-    syncColorScheme(eff);
-    if (btn) {
-      var next = NEXT[pref];
-      btn.title = '配色：' + LABEL[pref] + ' · 点击切换到' + LABEL[next];
-      btn.setAttribute('aria-label', btn.title);
-    }
-  }
+  var buttons = document.querySelectorAll('[data-theme-toggle]');
+  if (!buttons.length) return;
 
   function read() {
     try {
       var v = localStorage.getItem(KEY);
-      return ORDER.indexOf(v) > -1 ? v : 'system';
-    } catch (e) {
-      return 'system';
-    }
+      return (v === 'light' || v === 'dark' || v === 'system') ? v : 'system';
+    } catch (e) { return 'system'; }
   }
 
-  var pref = root.dataset.mode || read();
+  function apply(pref) {
+    var mode = pref;
+    if (pref === 'system') {
+      mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.dataset.modePref = 'system';
+    } else {
+      delete root.dataset.modePref;
+    }
+    root.dataset.mode = mode;
+    root.classList.toggle('dark', mode === 'dark');
+    syncThemeColor(mode);
+  }
 
-  if (btn) {
+  /* head.html 里放了两条带 media 的 theme-color（跟随系统）。用户一旦手动
+     选定配色，它们就不准了 —— 换成一条不带 media 的，由 JS 跟着当前模式更新。 */
+  function syncThemeColor(mode) {
+    document.querySelectorAll('meta[name="theme-color"][media]').forEach(function (m) { m.remove(); });
+    var meta = document.querySelector('meta[name="theme-color"]:not([media])');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      document.head.appendChild(meta);
+    }
+    meta.content = mode === 'dark' ? '#0e1110' : '#e9ebe7';
+  }
+
+  var ORDER = ['system', 'light', 'dark'];
+
+  buttons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      pref = NEXT[pref] || 'light';
-      try { localStorage.setItem(KEY, pref); } catch (e) { /* 隐私模式忽略 */ }
-      paint(pref);
+      var cur = read();
+      var next = ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length];
+      try { localStorage.setItem(KEY, next); } catch (e) { /* 隐私模式忽略 */ }
+      apply(next);
     });
-  }
-
-  // 系统主题变化时，只有在「跟随系统」状态下才跟随
-  var onSystemChange = function () {
-    if ((root.dataset.mode || 'system') === 'system') paint('system');
-  };
-  if (mq.addEventListener) mq.addEventListener('change', onSystemChange);
-  else if (mq.addListener) mq.addListener(onSystemChange);
-
-  paint(pref);
-
-  // 多标签页同步
-  window.addEventListener('storage', function (e) {
-    if (e.key === KEY) {
-      pref = read();
-      paint(pref);
-    }
   });
+
+  /* 「跟随系统」状态下，用户改系统主题，页面要立刻跟着变 */
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  var onChange = function () { if (read() === 'system') apply('system'); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
 })();

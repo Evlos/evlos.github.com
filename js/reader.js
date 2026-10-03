@@ -1,192 +1,167 @@
-/* reader.js ── 阅读体验增强：阅读进度、代码复制、表格横向滚动、标题锚点、
-   目录滚动高亮、回到顶部、照片灯箱。全部无依赖，渐进增强：
-   任何一段失效都不影响正文可读。 */
+/* logbook ── 阅读体验：书脊进度、目录高亮、代码复制、表格横滚、回到顶部、抽屉。
+   这些增强都在 JS 不加载时保持页面可读（内容本身不依赖 JS）。 */
 (function () {
   'use strict';
 
-  /* ── 阅读进度 ───────────────────────────────────────── */
-  var bar = document.getElementById('progress');
-  if (bar) {
+  /* ── 1. 阅读进度：书脊（lg+）与顶边（<lg）二选一 ───────────────── */
+  var spine = document.getElementById('spine-fill');
+  var top = document.getElementById('top-fill');
+
+  function paint() {
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
+    if (spine) spine.style.transform = 'scaleY(' + p + ')';
+    if (top) top.style.transform = 'scaleX(' + p + ')';
+  }
+
+  if (spine || top) {
     var ticking = false;
-    var paint = function () {
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      var p = max > 0 ? Math.min(1, Math.max(0, h.scrollTop / max)) : 0;
-      bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-      ticking = false;
+    var onScroll = function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { paint(); ticking = false; });
     };
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
-    }, { passive: true });
-    window.addEventListener('resize', paint, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     paint();
   }
 
-  var prose = document.querySelector('.prose');
+  /* ── 2. 目录：滚动时高亮当前小节 ─────────────────────────────── */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-nav a'));
+  if (tocLinks.length) {
+    var targets = tocLinks
+      .map(function (a) {
+        var id = decodeURIComponent((a.getAttribute('href') || '').replace(/^#/, ''));
+        var el = id && document.getElementById(id);
+        return el ? { link: a, el: el } : null;
+      })
+      .filter(Boolean);
 
-  if (prose) {
-    /* ── 代码块：包一层壳 + 注入语言标签与复制按钮 ───── */
-    Array.prototype.forEach.call(prose.querySelectorAll('pre'), function (pre) {
-      var block = pre.closest('.code-block');
-      if (!block) {
-        block = document.createElement('div');
-        block.className = 'code-block';
-        var holder = pre.parentElement;
-        if (holder && holder.classList.contains('highlight')) {
-          holder.parentNode.insertBefore(block, holder);
-          block.appendChild(holder);
-        } else {
-          pre.parentNode.insertBefore(block, pre);
-          block.appendChild(pre);
-        }
-      }
-      if (block.querySelector('.code-bar')) return;
+    if (targets.length) {
+      var mark = function (entry) {
+        tocLinks.forEach(function (a) { a.removeAttribute('aria-current'); });
+        if (entry) entry.link.setAttribute('aria-current', 'true');
+      };
 
-      var code = pre.querySelector('code');
-      var m = code ? /language-([\w+#-]+)/.exec(code.className || '') : null;
+      var visible = [];
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var i = targets.findIndex(function (t) { return t.el === en.target; });
+          if (i === -1) return;
+          if (en.isIntersecting) visible.push(i);
+          else visible = visible.filter(function (v) { return v !== i; });
+        });
+        if (visible.length) mark(targets[visible[0]]);
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
 
-      var lang = document.createElement('span');
-      lang.className = 'code-lang';
-      lang.textContent = m ? m[1] : 'text';
+      targets.forEach(function (t) { observer.observe(t.el); });
+      mark(targets[0]);
+    }
+  }
 
-      var copy = document.createElement('button');
-      copy.type = 'button';
-      copy.className = 'code-copy';
-      copy.setAttribute('data-state', 'idle');
-      copy.textContent = '复制';
-      copy.addEventListener('click', function () {
-        var text = pre.innerText.replace(/\n$/, '');
-        var done = function () {
-          copy.setAttribute('data-state', 'done');
-          copy.textContent = '已复制';
-          window.setTimeout(function () {
-            copy.setAttribute('data-state', 'idle');
-            copy.textContent = '复制';
-          }, 1600);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(done, function () { fallback(pre, done); });
-        } else {
-          fallback(pre, done);
-        }
-      });
+  /* ── 3. 代码块：语言标签 + 复制按钮 ──────────────────────────── */
+  document.querySelectorAll('.prose pre > code').forEach(function (code) {
+    var pre = code.parentElement;
+    /* Hugo 的 Chroma 输出是 <div class="highlight"><pre><code>，
+       包一层框应该包 .highlight，而不是把 pre 从它里面拆出来。 */
+    var hl = pre.closest('.highlight');
+    var target = hl || pre;
+    var block = target.closest('.code-block') || wrapBlock(target);
+    if (!block || block.querySelector('.code-bar')) return;
 
-      var bar2 = document.createElement('div');
-      bar2.className = 'code-bar';
-      bar2.appendChild(lang);
-      bar2.appendChild(copy);
-      block.appendChild(bar2);
+    var lang = '';
+    code.className.split(/\s+/).forEach(function (c) {
+      if (c.indexOf('language-') === 0) lang = c.slice(9);
     });
 
-    function fallback(pre, done) {
-      var ta = document.createElement('textarea');
-      ta.value = pre.innerText;
-      ta.setAttribute('readonly', '');
-      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); done(); } catch (e) { /* 忽略 */ }
-      document.body.removeChild(ta);
+    var bar = document.createElement('div');
+    bar.className = 'code-bar';
+
+    if (lang) {
+      var label = document.createElement('span');
+      label.textContent = lang;
+      bar.appendChild(label);
     }
 
-    /* ── 表格：套一层容器，窄屏可横向滚动 ─────────────── */
-    Array.prototype.forEach.call(prose.querySelectorAll('table'), function (table) {
-      if (table.parentElement && table.parentElement.classList.contains('table-scroll')) return;
-      var wrap = document.createElement('div');
-      wrap.className = 'table-scroll';
-      table.parentNode.insertBefore(wrap, table);
-      wrap.appendChild(table);
-    });
-
-    /* ── 标题锚点 ─────────────────────────────────────── */
-    Array.prototype.forEach.call(prose.querySelectorAll('h2[id], h3[id], h4[id]'), function (h) {
-      if (h.querySelector('.heading-anchor')) return;
-      var a = document.createElement('a');
-      a.className = 'heading-anchor';
-      a.href = '#' + h.id;
-      a.setAttribute('aria-label', '链接到此标题');
-      a.textContent = '#';
-      h.insertBefore(a, h.firstChild);
-    });
-  }
-
-  /* ── 目录：滚动高亮 ─────────────────────────────────── */
-  var links = Array.prototype.slice.call(document.querySelectorAll('.toc-nav a[href^="#"]'));
-  if (links.length) {
-    var targets = links.map(function (a) {
-      return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
-    }).filter(Boolean);
-
-    var current = -1;
-    var spy = function () {
-      var line = window.scrollY + 130;
-      var idx = 0;
-      for (var i = 0; i < targets.length; i++) {
-        if (targets[i].offsetTop <= line) idx = i; else break;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-copy';
+    btn.setAttribute('aria-label', '复制代码');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></svg><span>复制</span>';
+    btn.addEventListener('click', function () {
+      var text = code.innerText;
+      var done = function () {
+        btn.dataset.state = 'done';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span>已复制</span>';
+        setTimeout(function () {
+          delete btn.dataset.state;
+          btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></svg><span>复制</span>';
+        }, 1600);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else {
+        fallback(text, done);
       }
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-        idx = targets.length - 1;
-      }
-      if (idx === current) return;
-      current = idx;
-      var id = targets[idx].id;
-      links.forEach(function (a) {
-        var on = decodeURIComponent(a.getAttribute('href').slice(1)) === id;
-        if (on) a.setAttribute('aria-current', 'true');
-        else a.removeAttribute('aria-current');
-      });
-    };
-
-    var spyTicking = false;
-    window.addEventListener('scroll', function () {
-      if (spyTicking) return;
-      spyTicking = true;
-      requestAnimationFrame(function () { spy(); spyTicking = false; });
-    }, { passive: true });
-
-    // 小屏目录点完自动收起
-    links.forEach(function (a) {
-      a.addEventListener('click', function () {
-        var d = a.closest('details');
-        if (d) d.open = false;
-      });
     });
-
-    spy();
-  }
-
-  /* ── 回到顶部 ───────────────────────────────────────── */
-  Array.prototype.forEach.call(document.querySelectorAll('[data-scroll-top]'), function (b) {
-    b.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    bar.appendChild(btn);
+    /* 插在第一行：这是一条头部带，不是浮在代码上的角标 */
+    block.insertBefore(bar, block.firstChild);
   });
 
-  /* ── 照片灯箱 ───────────────────────────────────────── */
-  var lb = document.getElementById('lightbox');
-  if (lb) {
-    var lbImg = lb.querySelector('[data-lightbox-img]');
-    var closeLb = function () {
-      lb.setAttribute('hidden', '');
-      lbImg.removeAttribute('src');
-      document.body.style.overflow = '';
-    };
-    Array.prototype.forEach.call(document.querySelectorAll('[data-lightbox-src]'), function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        lbImg.src = a.getAttribute('data-lightbox-src');
-        lbImg.alt = a.getAttribute('data-lightbox-alt') || '';
-        lb.removeAttribute('hidden');
-        document.body.style.overflow = 'hidden';
-        var closer = lb.querySelector('[data-lightbox-close]:not([data-lightbox-img])');
-        if (closer) closer.focus();
-      });
+  function wrapBlock(pre) {
+    var div = document.createElement('div');
+    pre.parentNode.insertBefore(div, pre);
+    div.appendChild(pre);
+    div.className = 'code-block';
+    return div;
+  }
+
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:absolute;left:-9999px;top:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) { /* 无权限就算了 */ }
+    document.body.removeChild(ta);
+  }
+
+  /* ── 4. 表格横向滚动：窄屏表格不该撑破正文 ──────────────────── */
+  document.querySelectorAll('.prose table').forEach(function (table) {
+    if (table.parentElement && table.parentElement.classList.contains('table-scroll')) return;
+    var box = document.createElement('div');
+    box.className = 'table-scroll';
+    box.setAttribute('tabindex', '0');
+    box.setAttribute('role', 'region');
+    box.setAttribute('aria-label', '表格（可横向滚动）');
+    table.parentNode.insertBefore(box, table);
+    box.appendChild(table);
+  });
+
+  /* ── 5. 回到顶部 ────────────────────────────────────────────── */
+  var toTop = document.querySelector('[data-scroll-top]');
+  if (toTop) {
+    toTop.addEventListener('click', function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
     });
-    lb.addEventListener('click', function (e) {
-      if (e.target.closest('[data-lightbox-close]')) closeLb();
+  }
+
+  /* ── 6. 移动端抽屉 ──────────────────────────────────────────── */
+  var drawer = document.getElementById('drawer');
+  if (drawer && typeof drawer.showModal === 'function') {
+    document.querySelectorAll('[data-drawer-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () { drawer.showModal(); });
     });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !lb.hasAttribute('hidden')) closeLb();
+    drawer.querySelectorAll('[data-drawer-close]').forEach(function (btn) {
+      btn.addEventListener('click', function () { drawer.close(); });
+    });
+    /* 点遮罩（dialog 外部）关闭 */
+    drawer.addEventListener('click', function (e) {
+      if (e.target === drawer) drawer.close();
     });
   }
 })();
